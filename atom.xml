@@ -4,9 +4,9 @@
   <subtitle>U see U say</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://blog.v2say.com/"/>
+  <link href="https://v2say.com/"/>
   <updated>2017-03-26T07:37:48.000Z</updated>
-  <id>http://blog.v2say.com/</id>
+  <id>https://v2say.com/</id>
   
   <author>
     <name>Floor23</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://blog.v2say.com/2017/03/26/hello-world/"/>
-    <id>http://blog.v2say.com/2017/03/26/hello-world/</id>
+    <link href="https://v2say.com/2017/03/26/hello-world/"/>
+    <id>https://v2say.com/2017/03/26/hello-world/</id>
     <published>2017-03-26T07:37:48.000Z</published>
     <updated>2017-03-26T07:37:48.000Z</updated>
     
