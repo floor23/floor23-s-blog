@@ -390,7 +390,7 @@
               
                 
                 <a class="post-title-link" href="/2017/04/01/Markdown Tutorial Inline Syntax/" itemprop="url">
-                  Markdown Tutorial Inline Syntax
+                  Markdown 官方教程内联（Inline）语法（二）
                 </a>
               
             
@@ -465,140 +465,15 @@
 
       
         
-          
-            <hr>
-<h2 id="内联元素"><a href="#内联元素" class="headerlink" title="内联元素"></a>内联元素</h2><p>内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考<a href="https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/">上一篇</a><br><!-- Read more --></p>
-<hr>
-<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>Markdown 支持两种风格的链接: <strong>行内链接</strong> 和 <strong>引用链接</strong>。</p>
-<p>两种风格的链接均用中括号扩起来 [ ]。</p>
-<p>行内链接由两部分组成，方括号<code>[ ]</code>括起来的链接描述，以及紧跟方括号的链接地址，地址由括弧<code>( )</code>包围。括弧内可以选择为该链接添加标题。例如：</p>
-<pre><code>   This is [an example](http://example.com/ &quot;Title&quot;) inline link.
-
-[This link](http://example.net/) has no title attribute.
-</code></pre><p>如果想要链接到当前服务器的页面，链接地址可以是相对地址：</p>
-<pre><code>See my [About](/about/) page for details.   
-</code></pre><p>引用类型的链接采用两对方括号进行表示，其中第一个方括号内容为链接的描述信息，第二个内容为链接的ID：</p>
-<pre><code>This is [an example][id] reference-style link.
-</code></pre><p>然后，你需要做的是在文档的任何位置，定义 ID 所对应的链接：</p>
-<pre><code>[id]: http://example.com/  &quot;Optional Title Here&quot;
-</code></pre><p>规则说明：</p>
-<ul>
-<li>ID 由方括号包围 ，距离左边距不超过 3 个空格</li>
-<li>一个冒号</li>
-<li>一个或多个空格</li>
-<li>链接地址</li>
-<li>链接标题—可以由单引号，双引号或者括号包围起来</li>
-</ul>
-<p>以下三种表达方式是等价的：</p>
-<pre><code>[foo]: http://example.com/  &quot;Optional Title Here&quot;
-[foo]: http://example.com/  &apos;Optional Title Here&apos;
-[foo]: http://example.com/  (Optional Title Here)
-</code></pre><p><strong>注意：</strong> 链接名称可以由字母，数字，空格等组成，但是链接是大小写不敏感的，即链接大小写是一样的：</p>
-<pre><code>[link text][a]
-[link text][A]
-</code></pre><p>是一样的。</p>
-<p>关于链接也可以简写如下：</p>
-<pre><code>[Google][]
-</code></pre><p>然后链接的定义如下：</p>
-<pre><code>[Google]: http://google.com/
-</code></pre><p>下面是一个使用的示范：</p>
-<pre><code>I get 10 times more traffic from [Google] [1] than from
-[Yahoo] [2] or [MSN] [3].
-
-[1]: http://google.com/        &quot;Google&quot;
-[2]: http://search.yahoo.com/  &quot;Yahoo Search&quot;
-[3]: http://search.msn.com/    &quot;MSN Search&quot;
-</code></pre><p>简写的方式如下：</p>
-<pre><code>I get 10 times more traffic from [Google][] than from
-[Yahoo][] or [MSN][].
-
-  [google]: http://google.com/        &quot;Google&quot;
-  [yahoo]:  http://search.yahoo.com/  &quot;Yahoo Search&quot;
-  [msn]:    http://search.msn.com/    &quot;MSN Search&quot;
-</code></pre><p>为了对比写法上的区别，将行内链接的写法也贴出来：</p>
-<pre><code>I get 10 times more traffic from [Google](http://google.com/ &quot;Google&quot;)
-than from [Yahoo](http://search.yahoo.com/ &quot;Yahoo Search&quot;) or
-[MSN](http://search.msn.com/ &quot;MSN Search&quot;).
-</code></pre><p>由此可以看出来，引用链接的方式看起来更加利于编写和阅读。</p>
-<hr>
-<h3 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h3><p>Markdown 使用 (<code>*</code>) 和 (<code>_</code>) 来标记强调的字符。单个 <code>*</code> 或 <code>_</code> 最终被转化为<br>HTML <code>&lt;em&gt;</code> 标签；两个 <code>*</code> 或 <code>_</code>最终被转化为 HTML<br><code>&lt;strong&gt;</code> 标签：</p>
-<pre><code>*single asterisks*
-
-_single underscores_
-
-**double asterisks**
-
-__double underscores__
-</code></pre><p>将会转化为：</p>
-<pre><code>&lt;em&gt;single asterisks&lt;/em&gt;
-
-&lt;em&gt;single underscores&lt;/em&gt;
-
-&lt;strong&gt;double asterisks&lt;/strong&gt;
-
-&lt;strong&gt;double underscores&lt;/strong&gt;
-</code></pre><p><strong>注意：</strong> <code>*</code> 和 <code>_</code> 两侧不能有空格，否则会被当作单独字符处理。如果想要单独输出以上两个字符，则需要在字符前加 <code>\</code> 做转义。</p>
-<hr>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>我们可以使用两个 (<code>` </code>) 来包围表示一段代码：</p>
-<pre><code>Use the `printf()` function.
-</code></pre><p>将会转化为：</p>
-<pre><code>&lt;p&gt;Use the &lt;code&gt;printf()&lt;/code&gt; function.&lt;/p&gt;
-</code></pre><p>在代码块中使用 `，必需在代码块起始和末尾加入多个`：</p>
-<pre><code>``There is a literal backtick (`) here.``
-</code></pre><p>在代码块内部，符合和尖括号会被自动转义为 HTML 实体：</p>
-<pre><code>Please don&apos;t use any `&lt;blink&gt;` tags.
-</code></pre><p>会被转化为：</p>
-<pre><code>&lt;p&gt;Please don&apos;t use any &lt;code&gt;&amp;lt;blink&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
-</code></pre><hr>
-<h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p>Markdown 中的图片语法与链接类似，也分为行内图片和引用两种。</p>
-<p>行内图片语法如下：</p>
-<pre><code>![Alt text](/path/to/img.jpg)
-
-![Alt text](/path/to/img.jpg &quot;Optional title&quot;)
-</code></pre><p>规则如下：</p>
-<ul>
-<li>语法说明字符<code>!</code>开头</li>
-<li>一对方括号，包含图片的 <code>alt</code> 属性</li>
-<li>一对括弧包含图片的地址，还可选择性的加上图片的标题 <code>title</code> </li>
-</ul>
-<p>引用型的图片语法如下：</p>
-<pre><code>![Alt text][id]
-</code></pre><p><code>id</code> 是图片的引用地址，其定义的语法与链接完全一致：</p>
-<pre><code>[id]: url/to/image  &quot;Optional title attribute&quot;
-</code></pre><p>该表示方法没有设置图片大小的语法，如果想要设置，则可以直接食用 HTML <code>&lt;img&gt;</code> 标签。</p>
-<hr>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><hr>
-<h3 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h3><p>Markdown 支持为 URL 和 email 自动生成链接。你需要做的就是用尖括号把地址括起来：</p>
-<pre><code>&lt;http://example.com/&gt;
-</code></pre><p>Markdown 会将上面的句子转化为：</p>
-<pre><code>&lt;a href=&quot;http://example.com/&quot;&gt;http://example.com/&lt;/a&gt;
-</code></pre><p>email的自动链接与 URL 基本一致，不同的地方在于为了防止 email 地址被 spambots 处理，故进行了转义：</p>
-<pre><code>&lt;address@example.com&gt;
-</code></pre><p>会被 Markdown 解析为：</p>
-<pre><code>&lt;a href=&quot;&amp;#x6D;&amp;#x61;i&amp;#x6C;&amp;#x74;&amp;#x6F;:&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;
-&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;
-&amp;#109;&quot;&gt;&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;
-&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;
-</code></pre><p>在浏览器中可以被转化为可以点击的 email 地址 “address@example.com”</p>
-<hr>
-<h3 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h3><p>Markdown 语法可以使用反斜线 <code>\</code> 来表示字符本身。如果想要在文字中展示 <code>*</code> ，则需要在 <code>*</code> 前加上反斜线：</p>
-<pre><code>\*literal asterisks\*
-</code></pre><p>Markdown 支持用反斜线的字符：</p>
-<pre><code>\   反斜线
-`   点号
-*   星号
-_   下划线
-{}  大括号
-[]  方括号
-()  小括弧
-#   井号
-+    加号
--    减号
-.   英文句号
-!   感叹号
-</code></pre><p><a href="https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/">上一篇Markdown语法介绍</a></p>
-
-          
+          <hr>
+<h2 id="内联元素"><a href="#内联元素" class="headerlink" title="内联元素"></a>内联元素</h2><p>内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考<a href="https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/">上一篇</a><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/01/Markdown Tutorial Inline Syntax/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -663,7 +538,7 @@ _   下划线
               
                 
                 <a class="post-title-link" href="/2017/03/30/Markdown Tutorial Block Syntax/" itemprop="url">
-                  Markdown Tutorial Block Syntax
+                  Markdown 官方教程块级（Block）语法
                 </a>
               
             
