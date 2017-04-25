@@ -345,4 +345,40 @@ _   下划线
     
   </entry>
   
+  <entry>
+    <title>获取微信公众号所有历史文章</title>
+    <link href="https://v2say.com/2017/03/30/%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%85%AC%E4%BC%97%E5%8F%B7%E6%89%80%E6%9C%89%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0/"/>
+    <id>https://v2say.com/2017/03/30/如何获取公众号所有历史文章/</id>
+    <published>2017-03-30T05:12:30.000Z</published>
+    <updated>2017-04-24T12:50:57.107Z</updated>
+    
+    <content type="html"><![CDATA[<p>#如何获取公众号所有历史文章</p>
+<hr>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>微信公众号历史文章的查看大家都会，公众号里有历史文章可以翻阅。但要想看一年前的历史文章怎么办，一页一页翻？有人说历史文章可以搜索，那如果不记得文章内容或关键字怎么办。</p>
+<p>那一天你正在查看某知名大V（譬如 caoz）的历史文章，看的津津有味，这个时候女朋友的微信来了，你说是回还是不回。回完微信，再次翻阅历史或者搜索又是一阵忙碌，内心很是崩溃。这里分享一个方法教大家如何获取微信公众号的所有历史文章，你需要准备以下几个软件：</p>
+<p><strong>Fiddler</strong> ：HTTP 代理工具，可以帮我们找到公众号历史文章的链接地址<br><strong>chrome</strong> ：谷歌浏览器，可以帮我们查找微信公众号历史文章的链接规律<br><strong>微信 Windows 版</strong> ：为了方便操作，当然手机微信也可以，将手机代理改为 Fiddler 即可<br><a id="more"></a></p>
+<p>##设置代理</p>
+<p>安装 Fiddler 并将 Fiddler 设置为电脑全局代理。打开Fiddler，点击工具栏菜单Tools–&gt;Telerik Fiddler Options–&gt;Connections。设置代理端口并勾选作为系统代理选项</p>
+<p>##访问公众号历史文章<br>通过 Windows 版微信访问公众号历史文章，以caoz的公众号（caoz的梦呓）为例。点击公众号历史文章按钮，查看 Fiddler 窗口中所展示的所有链接，右键点击蓝色链接（如下图）并拷贝该URL，在 Chrome 中打开链接，此时可以看到我们在浏览器中可以查看公众号的所有历史文章。</p>
+<p>##获取公众号历史文章接口<br>在 Chrome 浏览器打开历史文章列表后，按F12打开 Chrome 的开发工具。如图所示选中XHR,在下拉公众号历史文章列表的过程中，我们可以看到有左边的链接和右边的结果。此时的结果是JSON字符串，由此我们可以断定这就是微信公众号历史文章的接口及结果集。</p>
+<p><strong>注意</strong><br><img src="http://mmbiz.qpic.cn/mmbiz_jpg/woJcTGyzhmx7XmOlCrZztIU0NKOFzSUTWID0nqfSrOVQpN8JPRJUbhJibQaibHsdFKrG1alY7EHMSdWyObVxhvQg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="图文版详情请关注下图公众号查看"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;#如何获取公众号所有历史文章&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;微信公众号历史文章的查看大家都会，公众号里有历史文章可以翻阅。但要想看一年前的历史文章怎么办，一页一页翻？有人说历史文章可以搜索，那如果不记得文章内容或关键字怎么办。&lt;/p&gt;
+&lt;p&gt;那一天你正在查看某知名大V（譬如 caoz）的历史文章，看的津津有味，这个时候女朋友的微信来了，你说是回还是不回。回完微信，再次翻阅历史或者搜索又是一阵忙碌，内心很是崩溃。这里分享一个方法教大家如何获取微信公众号的所有历史文章，你需要准备以下几个软件：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Fiddler&lt;/strong&gt; ：HTTP 代理工具，可以帮我们找到公众号历史文章的链接地址&lt;br&gt;&lt;strong&gt;chrome&lt;/strong&gt; ：谷歌浏览器，可以帮我们查找微信公众号历史文章的链接规律&lt;br&gt;&lt;strong&gt;微信 Windows 版&lt;/strong&gt; ：为了方便操作，当然手机微信也可以，将手机代理改为 Fiddler 即可&lt;br&gt;
+    
+    </summary>
+    
+      <category term="100000" scheme="https://v2say.com/categories/100000/"/>
+    
+    
+      <category term="微信公众号历史文章 所有历史文章 caoz的梦呓 小道消息 微信公众号" scheme="https://v2say.com/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0-%E6%89%80%E6%9C%89%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0-caoz%E7%9A%84%E6%A2%A6%E5%91%93-%E5%B0%8F%E9%81%93%E6%B6%88%E6%81%AF-%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/"/>
+    
+  </entry>
+  
 </feed>
