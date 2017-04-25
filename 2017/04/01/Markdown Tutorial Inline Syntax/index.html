@@ -68,18 +68,20 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+  
+
+<link href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Markdown Grammar JOHN GRUBER Markdown语法 10分钟学会Markdown," />
+  <meta name="keywords" content="Markdown Grammar,JOHN GRUBER,Markdown语法,10分钟学会Markdown," />
 
 
 
 
 
-  <link rel="alternate" href="/atom.xml" title="V2Say" type="application/atom+xml" />
+  <link rel="alternate" href="/atom.xml" title="纷享" type="application/atom+xml" />
 
 
 
@@ -91,16 +93,25 @@
 
 
 
-<meta name="description" content="内联元素内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考上一篇">
+<meta name="description" content="内联元素内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考上一篇
+
+链接Markdown 支持两种风格的链接: 行内链接 和 引用链接。
+两种风格的链接均用中括号扩起来 [ ]。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Markdown 官方教程内联（Inline）语法（二）">
 <meta property="og:url" content="https://v2say.com/2017/04/01/Markdown Tutorial Inline Syntax/index.html">
-<meta property="og:site_name" content="V2Say">
-<meta property="og:description" content="内联元素内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考上一篇">
-<meta property="og:updated_time" content="2017-04-24T12:38:30.864Z">
+<meta property="og:site_name" content="纷享">
+<meta property="og:description" content="内联元素内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考上一篇
+
+链接Markdown 支持两种风格的链接: 行内链接 和 引用链接。
+两种风格的链接均用中括号扩起来 [ ]。">
+<meta property="og:updated_time" content="2017-04-25T12:49:39.402Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Markdown 官方教程内联（Inline）语法（二）">
-<meta name="twitter:description" content="内联元素内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考上一篇">
+<meta name="twitter:description" content="内联元素内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考上一篇
+
+链接Markdown 支持两种风格的链接: 行内链接 和 引用链接。
+两种风格的链接均用中括号扩起来 [ ]。">
 
 
 
@@ -134,7 +145,7 @@
 
 
 
-  <title> Markdown 官方教程内联（Inline）语法（二） | V2Say </title>
+  <title> Markdown 官方教程内联（Inline）语法（二） | 纷享 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -195,12 +206,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">V2Say</span>
+        <span class="site-title">纷享</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <h1 class="site-subtitle" itemprop="description">U see U say</h1>
+        <h1 class="site-subtitle" itemprop="description">分享产生价值</h1>
       
   </div>
 
@@ -221,7 +232,7 @@
       
         
         <li class="menu-item menu-item-100000">
-          <a href="/100000" rel="section">
+          <a href="/categories/100000" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-wechat"></i> <br />
             
@@ -241,7 +252,7 @@
       
         
         <li class="menu-item menu-item-tools">
-          <a href="/tools" rel="section">
+          <a href="/categories/tools" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br />
             
@@ -369,13 +380,13 @@
     <link itemprop="mainEntityOfPage" href="https://v2say.com/2017/04/01/Markdown Tutorial Inline Syntax/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Floor23">
+      <meta itemprop="name" content="OOoo">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="V2Say">
+      <meta itemprop="name" content="纷享">
     </span>
 
     
@@ -461,11 +472,10 @@
 
       
         <hr>
-<h2 id="内联元素"><a href="#内联元素" class="headerlink" title="内联元素"></a>内联元素</h2><p>内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考<a href="https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/">上一篇</a><br><a id="more"></a></p>
+<h2 id="内联元素"><a href="#内联元素" class="headerlink" title="内联元素"></a>内联元素</h2><p>内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考<a href="https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/">上一篇</a></p>
 <hr>
 <h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>Markdown 支持两种风格的链接: <strong>行内链接</strong> 和 <strong>引用链接</strong>。</p>
-<p>两种风格的链接均用中括号扩起来 [ ]。</p>
-<p>行内链接由两部分组成，方括号<code>[ ]</code>括起来的链接描述，以及紧跟方括号的链接地址，地址由括弧<code>( )</code>包围。括弧内可以选择为该链接添加标题。例如：</p>
+<p>两种风格的链接均用中括号扩起来 [ ]。<br><a id="more"></a><br>行内链接由两部分组成，方括号<code>[ ]</code>括起来的链接描述，以及紧跟方括号的链接地址，地址由括弧<code>( )</code>包围。括弧内可以选择为该链接添加标题。例如：</p>
 <pre><code>   This is [an example](http://example.com/ &quot;Title&quot;) inline link.
 
 [This link](http://example.net/) has no title attribute.
@@ -599,8 +609,8 @@ _   下划线
       
         
 <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="/wechat-qrcode.jpg" alt="Floor23 wechat" style="width: 200px; max-width: 100%;"/>
-    <div>欢迎订阅我的微信公众号</div>
+    <img id="wechat_subscriber_qcode" src="/wechat-qrcode.jpg" alt="OOoo wechat" style="width: 200px; max-width: 100%;"/>
+    <div>更多有趣内容请关注微信公众号</div>
 </div>
 
 
@@ -610,27 +620,6 @@ _   下划线
     <div>
       
         
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>Thank You For Your Support</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/wechat.jpg" alt="Floor23 WeChat Pay"/>
-          <p>微信打赏</p>
-        </div>
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/alipay.jpg" alt="Floor23 Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
 
       
     </div>
@@ -646,7 +635,13 @@ _   下划线
       
         <div class="post-tags">
           
-            <a href="/tags/Markdown-Grammar-JOHN-GRUBER-Markdown语法-10分钟学会Markdown/" rel="tag"># Markdown Grammar JOHN GRUBER Markdown语法 10分钟学会Markdown</a>
+            <a href="/tags/Markdown-Grammar/" rel="tag"># Markdown Grammar</a>
+          
+            <a href="/tags/JOHN-GRUBER/" rel="tag"># JOHN GRUBER</a>
+          
+            <a href="/tags/Markdown语法/" rel="tag"># Markdown语法</a>
+          
+            <a href="/tags/10分钟学会Markdown/" rel="tag"># 10分钟学会Markdown</a>
           
         </div>
       
@@ -659,7 +654,7 @@ _   下划线
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/30/Markdown Tutorial Block Syntax/" rel="next" title="Markdown 官方教程块级（Block）语法">
+              <a href="/2017/03/20/Markdown Tutorial Block Syntax/" rel="next" title="Markdown 官方教程块级（Block）语法">
                 <i class="fa fa-chevron-left"></i> Markdown 官方教程块级（Block）语法
               </a>
             
@@ -668,6 +663,10 @@ _   下划线
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/25/如何获取公众号所有历史文章/" rel="prev" title="获取微信公众号所有历史文章">
+                获取微信公众号所有历史文章 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -728,8 +727,8 @@ _   下划线
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/avatar.jpg"
-               alt="Floor23" />
-          <p class="site-author-name" itemprop="name">Floor23</p>
+               alt="OOoo" />
+          <p class="site-author-name" itemprop="name">OOoo</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
            
@@ -761,7 +760,7 @@ _   下划线
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -809,7 +808,7 @@ _   下划线
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://v2say.com/wechat.jpg" target="_blank" title="Wechat">
+                <a href="https://v2say.com/about.html" target="_blank" title="Wechat">
                   
                     <i class="fa fa-fw fa-globe"></i>
                   
@@ -875,7 +874,7 @@ _   下划线
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Floor23</span>
+  <span class="author" itemprop="copyrightHolder">OOoo</span>
 </div>
 
 
@@ -925,13 +924,13 @@ _   下划线
 
 
   
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 
   
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="http://apps.bdimg.com/libs/fastclick/1.0.0/fastclick.min.js"></script>
 
   
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery-lazyload/1.9.5/jquery.lazyload.js"></script>
 
   
   <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
@@ -940,7 +939,7 @@ _   下划线
   <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript" src="http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
 
 
   

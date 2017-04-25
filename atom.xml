@@ -1,33 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>V2Say</title>
-  <subtitle>U see U say</subtitle>
+  <title>纷享</title>
+  <subtitle>分享产生价值</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://v2say.com/"/>
-  <updated>2017-04-24T12:38:30.864Z</updated>
+  <updated>2017-04-25T12:49:17.887Z</updated>
   <id>https://v2say.com/</id>
   
   <author>
-    <name>Floor23</name>
+    <name>OOoo</name>
     
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>获取微信公众号所有历史文章</title>
+    <link href="https://v2say.com/2017/04/25/%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%85%AC%E4%BC%97%E5%8F%B7%E6%89%80%E6%9C%89%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0/"/>
+    <id>https://v2say.com/2017/04/25/如何获取公众号所有历史文章/</id>
+    <published>2017-04-25T05:12:30.000Z</published>
+    <updated>2017-04-25T12:49:17.887Z</updated>
+    
+    <content type="html"><![CDATA[<p>#如何获取公众号所有历史文章</p>
+<hr>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>微信公众号历史文章的查看大家都会，公众号里有历史文章可以翻阅。但要想看一年前的历史文章怎么办，一页一页翻？有人说历史文章可以搜索，那如果不记得文章内容或关键字怎么办。</p>
+<p>那一天你正在查看某知名大V（譬如 caoz）的历史文章，看的津津有味，这个时候女朋友的微信来了，你说是回还是不回。回完微信，再次翻阅历史或者搜索又是一阵忙碌，内心很是崩溃。这里分享一个方法教大家如何获取微信公众号的所有历史文章，你需要准备以下几个软件：</p>
+<p><strong>Fiddler</strong> ：HTTP 代理工具，可以帮我们找到公众号历史文章的链接地址<br><strong>chrome</strong> ：谷歌浏览器，可以帮我们查找微信公众号历史文章的链接规律<br><strong>微信 Windows 版</strong> ：为了方便操作，当然手机微信也可以，将手机代理改为 Fiddler 即可</p>
+<p>##设置代理</p>
+<p>安装 Fiddler 并将 Fiddler 设置为电脑全局代理。打开Fiddler，点击工具栏菜单Tools–&gt;Telerik Fiddler Options–&gt;Connections。设置代理端口并勾选作为系统代理选项<br><a id="more"></a></p>
+<p>##访问公众号历史文章<br>通过 Windows 版微信访问公众号历史文章，以caoz的公众号（caoz的梦呓）为例。点击公众号历史文章按钮，查看 Fiddler 窗口中所展示的所有链接，右键点击蓝色链接（如下图）并拷贝该URL，在 Chrome 中打开链接，此时可以看到我们在浏览器中可以查看公众号的所有历史文章。</p>
+<p>##获取公众号历史文章接口<br>在 Chrome 浏览器打开历史文章列表后，按F12打开 Chrome 的开发工具。如图所示选中XHR,在下拉公众号历史文章列表的过程中，我们可以看到有左边的链接和右边的结果。此时的结果是JSON字符串，由此我们可以断定这就是微信公众号历史文章的接口及结果集。</p>
+<p><strong>注意</strong><br><img src="http://mmbiz.qpic.cn/mmbiz_jpg/woJcTGyzhmx7XmOlCrZztIU0NKOFzSUTWID0nqfSrOVQpN8JPRJUbhJibQaibHsdFKrG1alY7EHMSdWyObVxhvQg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="图文版详情请关注下图公众号查看"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;#如何获取公众号所有历史文章&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;微信公众号历史文章的查看大家都会，公众号里有历史文章可以翻阅。但要想看一年前的历史文章怎么办，一页一页翻？有人说历史文章可以搜索，那如果不记得文章内容或关键字怎么办。&lt;/p&gt;
+&lt;p&gt;那一天你正在查看某知名大V（譬如 caoz）的历史文章，看的津津有味，这个时候女朋友的微信来了，你说是回还是不回。回完微信，再次翻阅历史或者搜索又是一阵忙碌，内心很是崩溃。这里分享一个方法教大家如何获取微信公众号的所有历史文章，你需要准备以下几个软件：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Fiddler&lt;/strong&gt; ：HTTP 代理工具，可以帮我们找到公众号历史文章的链接地址&lt;br&gt;&lt;strong&gt;chrome&lt;/strong&gt; ：谷歌浏览器，可以帮我们查找微信公众号历史文章的链接规律&lt;br&gt;&lt;strong&gt;微信 Windows 版&lt;/strong&gt; ：为了方便操作，当然手机微信也可以，将手机代理改为 Fiddler 即可&lt;/p&gt;
+&lt;p&gt;##设置代理&lt;/p&gt;
+&lt;p&gt;安装 Fiddler 并将 Fiddler 设置为电脑全局代理。打开Fiddler，点击工具栏菜单Tools–&amp;gt;Telerik Fiddler Options–&amp;gt;Connections。设置代理端口并勾选作为系统代理选项&lt;br&gt;
+    
+    </summary>
+    
+      <category term="100000" scheme="https://v2say.com/categories/100000/"/>
+    
+    
+      <category term="微信公众号历史文章" scheme="https://v2say.com/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0/"/>
+    
+      <category term="所有历史文章" scheme="https://v2say.com/tags/%E6%89%80%E6%9C%89%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0/"/>
+    
+      <category term="caoz的梦呓" scheme="https://v2say.com/tags/caoz%E7%9A%84%E6%A2%A6%E5%91%93/"/>
+    
+      <category term="小道消息" scheme="https://v2say.com/tags/%E5%B0%8F%E9%81%93%E6%B6%88%E6%81%AF/"/>
+    
+      <category term="微信公众号" scheme="https://v2say.com/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Markdown 官方教程内联（Inline）语法（二）</title>
     <link href="https://v2say.com/2017/04/01/Markdown%20Tutorial%20Inline%20Syntax/"/>
     <id>https://v2say.com/2017/04/01/Markdown Tutorial Inline Syntax/</id>
     <published>2017-04-01T02:50:13.000Z</published>
-    <updated>2017-04-24T12:38:30.864Z</updated>
+    <updated>2017-04-25T12:49:39.402Z</updated>
     
     <content type="html"><![CDATA[<hr>
-<h2 id="内联元素"><a href="#内联元素" class="headerlink" title="内联元素"></a>内联元素</h2><p>内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考<a href="https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/">上一篇</a><br><a id="more"></a></p>
+<h2 id="内联元素"><a href="#内联元素" class="headerlink" title="内联元素"></a>内联元素</h2><p>内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考<a href="https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/">上一篇</a></p>
 <hr>
 <h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>Markdown 支持两种风格的链接: <strong>行内链接</strong> 和 <strong>引用链接</strong>。</p>
-<p>两种风格的链接均用中括号扩起来 [ ]。</p>
-<p>行内链接由两部分组成，方括号<code>[ ]</code>括起来的链接描述，以及紧跟方括号的链接地址，地址由括弧<code>( )</code>包围。括弧内可以选择为该链接添加标题。例如：</p>
+<p>两种风格的链接均用中括号扩起来 [ ]。<br><a id="more"></a><br>行内链接由两部分组成，方括号<code>[ ]</code>括起来的链接描述，以及紧跟方括号的链接地址，地址由括弧<code>( )</code>包围。括弧内可以选择为该链接添加标题。例如：</p>
 <pre><code>   This is [an example](http://example.com/ &quot;Title&quot;) inline link.
 
 [This link](http://example.net/) has no title attribute.
@@ -158,30 +203,41 @@ _   下划线
     <summary type="html">
     
       &lt;hr&gt;
-&lt;h2 id=&quot;内联元素&quot;&gt;&lt;a href=&quot;#内联元素&quot; class=&quot;headerlink&quot; title=&quot;内联元素&quot;&gt;&lt;/a&gt;内联元素&lt;/h2&gt;&lt;p&gt;内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考&lt;a href=&quot;https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/&quot;&gt;上一篇&lt;/a&gt;&lt;br&gt;
+&lt;h2 id=&quot;内联元素&quot;&gt;&lt;a href=&quot;#内联元素&quot; class=&quot;headerlink&quot; title=&quot;内联元素&quot;&gt;&lt;/a&gt;内联元素&lt;/h2&gt;&lt;p&gt;内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考&lt;a href=&quot;https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/&quot;&gt;上一篇&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;链接&quot;&gt;&lt;a href=&quot;#链接&quot; class=&quot;headerlink&quot; title=&quot;链接&quot;&gt;&lt;/a&gt;链接&lt;/h3&gt;&lt;p&gt;Markdown 支持两种风格的链接: &lt;strong&gt;行内链接&lt;/strong&gt; 和 &lt;strong&gt;引用链接&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;两种风格的链接均用中括号扩起来 [ ]。&lt;br&gt;
     
     </summary>
     
       <category term="100000" scheme="https://v2say.com/categories/100000/"/>
     
     
-      <category term="Markdown Grammar JOHN GRUBER Markdown语法 10分钟学会Markdown" scheme="https://v2say.com/tags/Markdown-Grammar-JOHN-GRUBER-Markdown%E8%AF%AD%E6%B3%95-10%E5%88%86%E9%92%9F%E5%AD%A6%E4%BC%9AMarkdown/"/>
+      <category term="Markdown Grammar" scheme="https://v2say.com/tags/Markdown-Grammar/"/>
+    
+      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
+    
+      <category term="Markdown语法" scheme="https://v2say.com/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
+    
+      <category term="10分钟学会Markdown" scheme="https://v2say.com/tags/10%E5%88%86%E9%92%9F%E5%AD%A6%E4%BC%9AMarkdown/"/>
     
   </entry>
   
   <entry>
     <title>Markdown 官方教程块级（Block）语法</title>
-    <link href="https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/"/>
-    <id>https://v2say.com/2017/03/30/Markdown Tutorial Block Syntax/</id>
-    <published>2017-03-30T05:12:30.000Z</published>
-    <updated>2017-04-24T12:38:32.610Z</updated>
+    <link href="https://v2say.com/2017/03/20/Markdown%20Tutorial%20Block%20Syntax/"/>
+    <id>https://v2say.com/2017/03/20/Markdown Tutorial Block Syntax/</id>
+    <published>2017-03-20T05:12:30.000Z</published>
+    <updated>2017-04-25T12:49:56.983Z</updated>
     
     <content type="html"><![CDATA[<p>Markdown 语法<br>参考：JOHN GRUBER「Markdown 语法作者」<a href="https://daringfireball.net/projects/markdown/syntax" target="_blank" rel="external">个人网站</a></p>
 <p><strong>注:</strong> 该文档就是采用 Markdown 语法进行编辑的。</p>
 <hr>
 <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Markdown 标记语言产生的意义就是让文本编辑能够更容易的读和写。</p>
 <p>Markdown 注重可读性。可发布的 Markdown 标记的文档应该是纯文本，不应该包含用来格式化的标记。Markdown 语法由标点符号标记，标点符号的选择尽量展示其最原始的含义。例如用<code>*</code>强调，<code>&gt;</code>表示引用等等。</p>
-<p>Markdown 并不是 HTML 的替代品，它仅仅支持 HTML 的部分标签。HTML 是<strong>发布</strong>格式，Markdown 是<strong>书写</strong>格式。如果想要使用HTML中的其他标签，可以直接在Markdown文档中使用。<br><a id="more"></a><br>Markdown语法对块级别的HTML元素有使用限制，例如 <code>&lt;div&gt;</code>，<code>&lt;table&gt;</code>，<code>&lt;pre&gt;</code>，<code>&lt;p&gt;</code>等等。在使用的时候必须在块的头和尾加入空行，并且头和尾标记不能有缩进。</p>
+<p>Markdown 并不是 HTML 的替代品，它仅仅支持 HTML 的部分标签。HTML 是<strong>发布</strong>格式，Markdown 是<strong>书写</strong>格式。如果想要使用HTML中的其他标签，可以直接在Markdown文档中使用。</p>
+<p>Markdown语法对块级别的HTML元素有使用限制，例如 <code>&lt;div&gt;</code>，<code>&lt;table&gt;</code>，<code>&lt;pre&gt;</code>，<code>&lt;p&gt;</code>等等。在使用的时候必须在块的头和尾加入空行，并且头和尾标记不能有缩进。</p>
+<a id="more"></a>
 <p>例如在Markdown文档中添加HTML表格语法如下:</p>
 <pre><code>上一段落
 
@@ -334,50 +390,19 @@ _   下划线
 &lt;hr&gt;
 &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;Markdown 标记语言产生的意义就是让文本编辑能够更容易的读和写。&lt;/p&gt;
 &lt;p&gt;Markdown 注重可读性。可发布的 Markdown 标记的文档应该是纯文本，不应该包含用来格式化的标记。Markdown 语法由标点符号标记，标点符号的选择尽量展示其最原始的含义。例如用&lt;code&gt;*&lt;/code&gt;强调，&lt;code&gt;&amp;gt;&lt;/code&gt;表示引用等等。&lt;/p&gt;
-&lt;p&gt;Markdown 并不是 HTML 的替代品，它仅仅支持 HTML 的部分标签。HTML 是&lt;strong&gt;发布&lt;/strong&gt;格式，Markdown 是&lt;strong&gt;书写&lt;/strong&gt;格式。如果想要使用HTML中的其他标签，可以直接在Markdown文档中使用。&lt;br&gt;
+&lt;p&gt;Markdown 并不是 HTML 的替代品，它仅仅支持 HTML 的部分标签。HTML 是&lt;strong&gt;发布&lt;/strong&gt;格式，Markdown 是&lt;strong&gt;书写&lt;/strong&gt;格式。如果想要使用HTML中的其他标签，可以直接在Markdown文档中使用。&lt;/p&gt;
+&lt;p&gt;Markdown语法对块级别的HTML元素有使用限制，例如 &lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt;，&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;，&lt;code&gt;&amp;lt;pre&amp;gt;&lt;/code&gt;，&lt;code&gt;&amp;lt;p&amp;gt;&lt;/code&gt;等等。在使用的时候必须在块的头和尾加入空行，并且头和尾标记不能有缩进。&lt;/p&gt;
     
     </summary>
     
       <category term="100000" scheme="https://v2say.com/categories/100000/"/>
     
     
-      <category term="Markdown GitHub GFM Grammar JOHN GRUBER" scheme="https://v2say.com/tags/Markdown-GitHub-GFM-Grammar-JOHN-GRUBER/"/>
+      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
     
-  </entry>
-  
-  <entry>
-    <title>获取微信公众号所有历史文章</title>
-    <link href="https://v2say.com/2017/03/30/%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%85%AC%E4%BC%97%E5%8F%B7%E6%89%80%E6%9C%89%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0/"/>
-    <id>https://v2say.com/2017/03/30/如何获取公众号所有历史文章/</id>
-    <published>2017-03-30T05:12:30.000Z</published>
-    <updated>2017-04-24T12:50:57.107Z</updated>
+      <category term="Markdown" scheme="https://v2say.com/tags/Markdown/"/>
     
-    <content type="html"><![CDATA[<p>#如何获取公众号所有历史文章</p>
-<hr>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>微信公众号历史文章的查看大家都会，公众号里有历史文章可以翻阅。但要想看一年前的历史文章怎么办，一页一页翻？有人说历史文章可以搜索，那如果不记得文章内容或关键字怎么办。</p>
-<p>那一天你正在查看某知名大V（譬如 caoz）的历史文章，看的津津有味，这个时候女朋友的微信来了，你说是回还是不回。回完微信，再次翻阅历史或者搜索又是一阵忙碌，内心很是崩溃。这里分享一个方法教大家如何获取微信公众号的所有历史文章，你需要准备以下几个软件：</p>
-<p><strong>Fiddler</strong> ：HTTP 代理工具，可以帮我们找到公众号历史文章的链接地址<br><strong>chrome</strong> ：谷歌浏览器，可以帮我们查找微信公众号历史文章的链接规律<br><strong>微信 Windows 版</strong> ：为了方便操作，当然手机微信也可以，将手机代理改为 Fiddler 即可<br><a id="more"></a></p>
-<p>##设置代理</p>
-<p>安装 Fiddler 并将 Fiddler 设置为电脑全局代理。打开Fiddler，点击工具栏菜单Tools–&gt;Telerik Fiddler Options–&gt;Connections。设置代理端口并勾选作为系统代理选项</p>
-<p>##访问公众号历史文章<br>通过 Windows 版微信访问公众号历史文章，以caoz的公众号（caoz的梦呓）为例。点击公众号历史文章按钮，查看 Fiddler 窗口中所展示的所有链接，右键点击蓝色链接（如下图）并拷贝该URL，在 Chrome 中打开链接，此时可以看到我们在浏览器中可以查看公众号的所有历史文章。</p>
-<p>##获取公众号历史文章接口<br>在 Chrome 浏览器打开历史文章列表后，按F12打开 Chrome 的开发工具。如图所示选中XHR,在下拉公众号历史文章列表的过程中，我们可以看到有左边的链接和右边的结果。此时的结果是JSON字符串，由此我们可以断定这就是微信公众号历史文章的接口及结果集。</p>
-<p><strong>注意</strong><br><img src="http://mmbiz.qpic.cn/mmbiz_jpg/woJcTGyzhmx7XmOlCrZztIU0NKOFzSUTWID0nqfSrOVQpN8JPRJUbhJibQaibHsdFKrG1alY7EHMSdWyObVxhvQg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="图文版详情请关注下图公众号查看"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;#如何获取公众号所有历史文章&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;微信公众号历史文章的查看大家都会，公众号里有历史文章可以翻阅。但要想看一年前的历史文章怎么办，一页一页翻？有人说历史文章可以搜索，那如果不记得文章内容或关键字怎么办。&lt;/p&gt;
-&lt;p&gt;那一天你正在查看某知名大V（譬如 caoz）的历史文章，看的津津有味，这个时候女朋友的微信来了，你说是回还是不回。回完微信，再次翻阅历史或者搜索又是一阵忙碌，内心很是崩溃。这里分享一个方法教大家如何获取微信公众号的所有历史文章，你需要准备以下几个软件：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Fiddler&lt;/strong&gt; ：HTTP 代理工具，可以帮我们找到公众号历史文章的链接地址&lt;br&gt;&lt;strong&gt;chrome&lt;/strong&gt; ：谷歌浏览器，可以帮我们查找微信公众号历史文章的链接规律&lt;br&gt;&lt;strong&gt;微信 Windows 版&lt;/strong&gt; ：为了方便操作，当然手机微信也可以，将手机代理改为 Fiddler 即可&lt;br&gt;
-    
-    </summary>
-    
-      <category term="100000" scheme="https://v2say.com/categories/100000/"/>
-    
-    
-      <category term="微信公众号历史文章 所有历史文章 caoz的梦呓 小道消息 微信公众号" scheme="https://v2say.com/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0-%E6%89%80%E6%9C%89%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0-caoz%E7%9A%84%E6%A2%A6%E5%91%93-%E5%B0%8F%E9%81%93%E6%B6%88%E6%81%AF-%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/"/>
+      <category term="GitHub GFM Grammar" scheme="https://v2say.com/tags/GitHub-GFM-Grammar/"/>
     
   </entry>
   
