@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://v2say.com/"/>
-  <updated>2017-04-25T14:02:39.171Z</updated>
+  <updated>2017-04-26T04:37:04.545Z</updated>
   <id>https://v2say.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://v2say.com/2017/04/25/%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%85%AC%E4%BC%97%E5%8F%B7%E6%89%80%E6%9C%89%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0/"/>
     <id>https://v2say.com/2017/04/25/如何获取公众号所有历史文章/</id>
     <published>2017-04-25T05:12:30.000Z</published>
-    <updated>2017-04-25T14:02:39.171Z</updated>
+    <updated>2017-04-26T04:37:04.545Z</updated>
     
     <content type="html"><![CDATA[<h1 id="如何获取公众号所有历史文章"><a href="#如何获取公众号所有历史文章" class="headerlink" title="如何获取公众号所有历史文章"></a>如何获取公众号所有历史文章</h1><hr>
 <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>微信公众号历史文章的查看大家都会，公众号里有历史文章可以翻阅。但要想看一年前的历史文章怎么办，一页一页翻？有人说历史文章可以搜索，那如果不记得文章内容或关键字怎么办。</p>
@@ -30,7 +30,7 @@
 <p>安装 Fiddler 并将 Fiddler 设置为电脑全局代理。打开Fiddler，点击工具栏菜单Tools–&gt;Telerik Fiddler Options–&gt;Connections。设置代理端口并勾选作为系统代理选项<br><a id="more"></a></p>
 <p>##访问公众号历史文章<br>通过 Windows 版微信访问公众号历史文章，以caoz的公众号（caoz的梦呓）为例。点击公众号历史文章按钮，查看 Fiddler 窗口中所展示的所有链接，右键点击蓝色链接（如下图）并拷贝该URL，在 Chrome 中打开链接，此时可以看到我们在浏览器中可以查看公众号的所有历史文章。</p>
 <p>##获取公众号历史文章接口<br>在 Chrome 浏览器打开历史文章列表后，按F12打开 Chrome 的开发工具。如图所示选中XHR,在下拉公众号历史文章列表的过程中，我们可以看到有左边的链接和右边的结果。此时的结果是JSON字符串，由此我们可以断定这就是微信公众号历史文章的接口及结果集。</p>
-<p><strong>注意</strong><br><img src="http://mmbiz.qpic.cn/mmbiz_jpg/woJcTGyzhmx7XmOlCrZztIU0NKOFzSUTWID0nqfSrOVQpN8JPRJUbhJibQaibHsdFKrG1alY7EHMSdWyObVxhvQg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="图文版详情请关注下图公众号查看"></p>
+<p><strong>注意</strong><br><code>图文版详情请关注下图公众号查看</code></p>
 ]]></content>
     
     <summary type="html">
@@ -64,7 +64,7 @@
     <link href="https://v2say.com/2017/04/01/Markdown%20Tutorial%20Inline%20Syntax/"/>
     <id>https://v2say.com/2017/04/01/Markdown Tutorial Inline Syntax/</id>
     <published>2017-04-01T02:50:13.000Z</published>
-    <updated>2017-04-25T12:49:39.402Z</updated>
+    <updated>2017-04-26T04:34:10.497Z</updated>
     
     <content type="html"><![CDATA[<hr>
 <h2 id="内联元素"><a href="#内联元素" class="headerlink" title="内联元素"></a>内联元素</h2><p>内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考<a href="https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/">上一篇</a></p>
@@ -195,8 +195,7 @@ _   下划线
 -    减号
 .   英文句号
 !   感叹号
-</code></pre><p><a href="https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/">上一篇Markdown语法介绍</a></p>
-]]></content>
+</code></pre>]]></content>
     
     <summary type="html">
     
@@ -211,9 +210,9 @@ _   下划线
       <category term="100000" scheme="https://v2say.com/categories/100000/"/>
     
     
-      <category term="Markdown Grammar" scheme="https://v2say.com/tags/Markdown-Grammar/"/>
-    
       <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
+    
+      <category term="Markdown Grammar" scheme="https://v2say.com/tags/Markdown-Grammar/"/>
     
       <category term="Markdown语法" scheme="https://v2say.com/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
@@ -226,7 +225,7 @@ _   下划线
     <link href="https://v2say.com/2017/03/20/Markdown%20Tutorial%20Block%20Syntax/"/>
     <id>https://v2say.com/2017/03/20/Markdown Tutorial Block Syntax/</id>
     <published>2017-03-20T05:12:30.000Z</published>
-    <updated>2017-04-25T13:11:22.152Z</updated>
+    <updated>2017-04-26T04:33:56.616Z</updated>
     
     <content type="html"><![CDATA[<p>Markdown 语法<br>参考：JOHN GRUBER「Markdown 语法作者」<a href="https://daringfireball.net/projects/markdown/syntax" target="_blank" rel="external">个人网站</a></p>
 <p><strong>注:</strong> 该文档就是采用 Markdown 语法进行编辑的。</p>
@@ -378,7 +377,6 @@ _   下划线
 
 ---------------------------------------
 </code></pre><hr>
-<p>关于Markdown语法内联元素相关内容，请<a href="https://v2say.com/2017/04/01/Markdown%20Tutorial%20Inline%20Syntax/">点击</a></p>
 ]]></content>
     
     <summary type="html">
@@ -396,11 +394,11 @@ _   下划线
       <category term="100000" scheme="https://v2say.com/categories/100000/"/>
     
     
-      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
-    
       <category term="Markdown" scheme="https://v2say.com/tags/Markdown/"/>
     
       <category term="GitHub GFM Grammar" scheme="https://v2say.com/tags/GitHub-GFM-Grammar/"/>
+    
+      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
     
   </entry>
   
