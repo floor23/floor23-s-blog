@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://v2say.com/"/>
-  <updated>2017-04-26T04:37:04.545Z</updated>
+  <updated>2017-05-02T02:14:10.945Z</updated>
   <id>https://v2say.com/</id>
   
   <author>
@@ -16,18 +16,95 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>获取微信公众号所有历史文章(续)</title>
+    <link href="https://v2say.com/2017/05/02/%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E6%89%80%E6%9C%89%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0%EF%BC%88%E7%BB%AD%EF%BC%89/"/>
+    <id>https://v2say.com/2017/05/02/如何获取微信公众号所有历史文章（续）/</id>
+    <published>2017-05-02T02:12:30.000Z</published>
+    <updated>2017-05-02T02:14:10.945Z</updated>
+    
+    <content type="html"><![CDATA[<p>@(微信公众号小技巧)[微信公众号|所有历史文章]</p>
+<p><strong>上一篇</strong>我们介绍了如何通过<strong>Fiddler</strong> 和 <strong>Chrome</strong> 得到知名大V所有历史文章的接口。那拿到接口之后该怎么办呢？你需要一个程序员，嗯！(ง •̀_•́)ง</p>
+<blockquote>
+<p><strong>郑重声明：</strong><br>该方法获取微信公众号历史文章仅供参考，请勿恶意使用。另外说明一下，微信本身&gt; 对于抓取数据的接口已经做了限制，如果频繁使用该接口进行数据抓取，微信会暂时&gt; 禁止当前微信号获取所有公众号的历史文章。目测当前的禁止时间为5分钟。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><h2 id="接口简化"><a href="#接口简化" class="headerlink" title="接口简化"></a>接口简化</h2><p><strong>上一篇</strong>最后我们通过Chrome已经看到获取文章列表的URL<code>https://mp.weixin.qq.com/mp/profile_ext?action=getmsg&amp;__biz=MzI0MjA1Mjg2Ng==&amp;f=json&amp;frommsgid=1000000134XXXXX</code>, URL 太长，后面的大串字符我以<code>XXXXX</code>代替。格式化之后如下图所示</p>
+</blockquote>
+<p>为了简化接口，我们把没必要的参数删除，最后发现只有这几个参数是必须的</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数名</th>
+<th style="text-align:left">参数值</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">action</td>
+<td style="text-align:left">getmsg</td>
+<td style="text-align:left">这个URL的目的是干嘛的？获取message（消息）的</td>
+</tr>
+<tr>
+<td style="text-align:left">__biz</td>
+<td style="text-align:left">MzI0MjA1Mjg2Ng==</td>
+<td style="text-align:left">这个参数与微信公众号一一对应，每个公众号都不一样</td>
+</tr>
+<tr>
+<td style="text-align:left">f</td>
+<td style="text-align:left">json</td>
+<td style="text-align:left">获取数据的格式是JSON</td>
+</tr>
+<tr>
+<td style="text-align:left">frommsgid</td>
+<td style="text-align:left">1000000134</td>
+<td style="text-align:left">公众号文章的ID，该接口返回从该ID开始的10篇文章</td>
+</tr>
+</tbody>
+</table>
+<p>公众号历史文章以时间顺序排列，离当前时间最近的文章排在最前面，因此我们可以得到以下规律第一篇文章的ID为1000000142，后续应该是<strong>1000000141，1000000140… …1000000133</strong>，总共10个ID。在获取文章列表后，以最后一篇文章的ID作为拼接下一个URL的<strong>frommsgid</strong>，其他参数不变。这样就可以循环获取所有的历史文章了。</p>
+<h2 id="自动化获取"><a href="#自动化获取" class="headerlink" title="自动化获取"></a>自动化获取</h2><p>我们知道了获取历史文章的规律后，接下来就是怎么通过程序来实现自动获取并输出内容。<br>URL <code>https://mp.weixin.qq.com/mp/profile_ext?action=getmsg&amp;__biz=MzI0MjA1Mjg2Ng==&amp;f=json&amp;frommsgid=1000000134</code> 是真实的可用的地址，在我的浏览器中执行的结果如下，其中参数已经通过红色框标注。</p>
+<p>那你把这个URL拷贝到自己的浏览器中可用看到同样的结果吗？不出意外的话是不可以的。原因就是因为这个接口的正常使用是有条件的，那就是必须获得鉴权。那如何使得浏览器获得跟<strong>微信客户端</strong>同样的权利，然后再使用该接口呢？</p>
+<p>这个就不用麻烦大家自己去测试接口了。经过测试发现在<strong>Fiddler</strong>最开始的响应中有两个Cookie的写入操作，如下图所示</p>
+<p>我们将这两个Cookie写入浏览器，就可以通过以上简单的URL获取公众号历史文章了。另外如果想通过程序自动获取，那只需要在请求的时候带上这两个Cookie内容，并不断修改<strong>frommsgid</strong>就可以获取公众号所有的历史文章了。</p>
+<p><code>最后再次说明一下，频繁请求会被禁止访问所有公众号的历史文章</code> ⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄.  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;@(微信公众号小技巧)[微信公众号|所有历史文章]&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;上一篇&lt;/strong&gt;我们介绍了如何通过&lt;strong&gt;Fiddler&lt;/strong&gt; 和 &lt;strong&gt;Chrome&lt;/strong&gt; 得到知名大V所有历史文章的接口。那拿到接口之后该怎么办呢？你需要一个程序员，嗯！(ง •̀_•́)ง&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;郑重声明：&lt;/strong&gt;&lt;br&gt;该方法获取微信公众号历史文章仅供参考，请勿恶意使用。另外说明一下，微信本身&amp;gt; 对于抓取数据的接口已经做了限制，如果频繁使用该接口进行数据抓取，微信会暂时&amp;gt; 禁止当前微信号获取所有公众号的历史文章。目测当前的禁止时间为5分钟。&lt;/p&gt;
+&lt;h2 id=&quot;&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;headerlink&quot; title=&quot;&quot;&gt;&lt;/a&gt;
+    
+    </summary>
+    
+      <category term="tools" scheme="https://v2say.com/categories/tools/"/>
+    
+    
+      <category term="微信公众号历史文章" scheme="https://v2say.com/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0/"/>
+    
+      <category term="所有历史文章" scheme="https://v2say.com/tags/%E6%89%80%E6%9C%89%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0/"/>
+    
+      <category term="caoz的梦呓" scheme="https://v2say.com/tags/caoz%E7%9A%84%E6%A2%A6%E5%91%93/"/>
+    
+      <category term="小道消息" scheme="https://v2say.com/tags/%E5%B0%8F%E9%81%93%E6%B6%88%E6%81%AF/"/>
+    
+      <category term="微信公众号" scheme="https://v2say.com/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/"/>
+    
+  </entry>
+  
+  <entry>
     <title>获取微信公众号所有历史文章</title>
     <link href="https://v2say.com/2017/04/25/%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%85%AC%E4%BC%97%E5%8F%B7%E6%89%80%E6%9C%89%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0/"/>
     <id>https://v2say.com/2017/04/25/如何获取公众号所有历史文章/</id>
     <published>2017-04-25T05:12:30.000Z</published>
-    <updated>2017-04-26T04:37:04.545Z</updated>
+    <updated>2017-04-29T06:06:48.630Z</updated>
     
     <content type="html"><![CDATA[<h1 id="如何获取公众号所有历史文章"><a href="#如何获取公众号所有历史文章" class="headerlink" title="如何获取公众号所有历史文章"></a>如何获取公众号所有历史文章</h1><hr>
 <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>微信公众号历史文章的查看大家都会，公众号里有历史文章可以翻阅。但要想看一年前的历史文章怎么办，一页一页翻？有人说历史文章可以搜索，那如果不记得文章内容或关键字怎么办。</p>
 <p>那一天你正在查看某知名大V（譬如 caoz）的历史文章，看的津津有味，这个时候女朋友的微信来了，你说是回还是不回。回完微信，再次翻阅历史或者搜索又是一阵忙碌，内心很是崩溃。这里分享一个方法教大家如何获取微信公众号的所有历史文章，你需要准备以下几个软件：</p>
 <p><strong>Fiddler</strong> ：HTTP 代理工具，可以帮我们找到公众号历史文章的链接地址<br><strong>chrome</strong> ：谷歌浏览器，可以帮我们查找微信公众号历史文章的链接规律<br><strong>微信 Windows 版</strong> ：为了方便操作，当然手机微信也可以，将手机代理改为 Fiddler 即可</p>
-<p>##设置代理</p>
-<p>安装 Fiddler 并将 Fiddler 设置为电脑全局代理。打开Fiddler，点击工具栏菜单Tools–&gt;Telerik Fiddler Options–&gt;Connections。设置代理端口并勾选作为系统代理选项<br><a id="more"></a></p>
+<h2 id="设置代理"><a href="#设置代理" class="headerlink" title="设置代理"></a>设置代理</h2><p>安装 Fiddler 并将 Fiddler 设置为电脑全局代理。打开Fiddler，点击工具栏菜单Tools–&gt;Telerik Fiddler Options–&gt;Connections。设置代理端口并勾选作为系统代理选项<br><a id="more"></a></p>
 <p>##访问公众号历史文章<br>通过 Windows 版微信访问公众号历史文章，以caoz的公众号（caoz的梦呓）为例。点击公众号历史文章按钮，查看 Fiddler 窗口中所展示的所有链接，右键点击蓝色链接（如下图）并拷贝该URL，在 Chrome 中打开链接，此时可以看到我们在浏览器中可以查看公众号的所有历史文章。</p>
 <p>##获取公众号历史文章接口<br>在 Chrome 浏览器打开历史文章列表后，按F12打开 Chrome 的开发工具。如图所示选中XHR,在下拉公众号历史文章列表的过程中，我们可以看到有左边的链接和右边的结果。此时的结果是JSON字符串，由此我们可以断定这就是微信公众号历史文章的接口及结果集。</p>
 <p><strong>注意</strong><br><code>图文版详情请关注下图公众号查看</code></p>
@@ -39,8 +116,7 @@
 &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;微信公众号历史文章的查看大家都会，公众号里有历史文章可以翻阅。但要想看一年前的历史文章怎么办，一页一页翻？有人说历史文章可以搜索，那如果不记得文章内容或关键字怎么办。&lt;/p&gt;
 &lt;p&gt;那一天你正在查看某知名大V（譬如 caoz）的历史文章，看的津津有味，这个时候女朋友的微信来了，你说是回还是不回。回完微信，再次翻阅历史或者搜索又是一阵忙碌，内心很是崩溃。这里分享一个方法教大家如何获取微信公众号的所有历史文章，你需要准备以下几个软件：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Fiddler&lt;/strong&gt; ：HTTP 代理工具，可以帮我们找到公众号历史文章的链接地址&lt;br&gt;&lt;strong&gt;chrome&lt;/strong&gt; ：谷歌浏览器，可以帮我们查找微信公众号历史文章的链接规律&lt;br&gt;&lt;strong&gt;微信 Windows 版&lt;/strong&gt; ：为了方便操作，当然手机微信也可以，将手机代理改为 Fiddler 即可&lt;/p&gt;
-&lt;p&gt;##设置代理&lt;/p&gt;
-&lt;p&gt;安装 Fiddler 并将 Fiddler 设置为电脑全局代理。打开Fiddler，点击工具栏菜单Tools–&amp;gt;Telerik Fiddler Options–&amp;gt;Connections。设置代理端口并勾选作为系统代理选项&lt;br&gt;
+&lt;h2 id=&quot;设置代理&quot;&gt;&lt;a href=&quot;#设置代理&quot; class=&quot;headerlink&quot; title=&quot;设置代理&quot;&gt;&lt;/a&gt;设置代理&lt;/h2&gt;&lt;p&gt;安装 Fiddler 并将 Fiddler 设置为电脑全局代理。打开Fiddler，点击工具栏菜单Tools–&amp;gt;Telerik Fiddler Options–&amp;gt;Connections。设置代理端口并勾选作为系统代理选项&lt;br&gt;
     
     </summary>
     
@@ -210,9 +286,9 @@ _   下划线
       <category term="100000" scheme="https://v2say.com/categories/100000/"/>
     
     
-      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
-    
       <category term="Markdown Grammar" scheme="https://v2say.com/tags/Markdown-Grammar/"/>
+    
+      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
     
       <category term="Markdown语法" scheme="https://v2say.com/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
@@ -394,11 +470,11 @@ _   下划线
       <category term="100000" scheme="https://v2say.com/categories/100000/"/>
     
     
+      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
+    
       <category term="Markdown" scheme="https://v2say.com/tags/Markdown/"/>
     
       <category term="GitHub GFM Grammar" scheme="https://v2say.com/tags/GitHub-GFM-Grammar/"/>
-    
-      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
     
   </entry>
   
