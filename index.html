@@ -353,6 +353,166 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://v2say.com/2017/05/12/如何通过SOCKS代理访问谷歌/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="OOoo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="纷享">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/12/如何通过SOCKS代理访问谷歌/" itemprop="url">
+                  如何通过SOCKS代理实现科学上网
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-12T16:09:01+08:00">
+                2017-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="如何使用谷歌（一）"><a href="#如何使用谷歌（一）" class="headerlink" title="如何使用谷歌（一）"></a>如何使用谷歌（一）</h1><p>@(我要用谷歌)[手动搭梯子|YouTube|Twitter|Facebook]</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>上一篇我们介绍了如何通过修改<code>Hosts</code>文件从而科学上网。由于Hosts中配置的IP经常被封从而导致无法正常访问谷歌，频繁更新Hosts文件也比较麻烦。</p>
+<p>这一篇我们将介绍另外一种方法，即「SOCKS5代理」。SOCKS代理首先需要建立一条 SSH 隧道，然后将浏览器的请求全部由该隧道进行转发和接收。</p>
+<p>开始之前你需要准备以下软件：<br><strong>一台墙外主机</strong> ：<br>国外的云主机提供商<strong>Vultr</strong>、<strong>Linode</strong>、<strong>DigitalOcean</strong>等都可以作为选择。<br><strong>SSH工具</strong> ：<br>Windows下有<strong>Xshell</strong>、<strong>putty</strong>等，Mac 终端默认带有SSH功能<br><strong>Chrome</strong> ：<br>谷歌浏览器，谷歌浏览器，可以配置<strong>SOCKS</strong>代理切换上网方式</p>
+<h2 id="注册主机"><a href="#注册主机" class="headerlink" title="注册主机"></a>注册主机</h2><p>国外的云主机厂商很多，如果仅仅用来科学上网再顺便搭建一个博客写写日记什么的，我们需要的主机配置并不需要太高。以价格为主要参考因素的话除了<strong>Vultr</strong>有每月<strong>2.5$</strong>的，其他厂商最便宜的配置都是<strong>5$</strong>。Vultr 的注册地址为<a href="http://www.vultr.com/?ref=7023652" target="_blank" rel="external">Vultr.com</a></p>
+<h2 id="登录并部署主机"><a href="#登录并部署主机" class="headerlink" title="登录并部署主机"></a>登录并部署主机</h2><p>因为我用的是Vultr的主机，所以这里以Vultr主机为例。初次注册并登录之后，会要求先设置付款方式。支持的付款方式包括信用卡、PayPal和Bitcoin。绑定付款方式后就可以点击右上角的<code>+</code>按钮部署一台主机，如下图所示<img src="/20170512/host.png" alt="添加Vultr主机"></p>
+<p>接下来根据自己的需求选择主机位置，操作系统，系统配置，最后选择<strong>Deploy Now</strong>。等待主机运行起来之后，我们需要找到该主机的IP以及登录的用户名和密码。位置如下图所示：<img src="/20170512/hostconfig.png" alt="保存Vultr主机IP及用户名密码"></p>
+<h2 id="安装Xshell或者Putty"><a href="#安装Xshell或者Putty" class="headerlink" title="安装Xshell或者Putty"></a>安装Xshell或者Putty</h2><p>选择任意一个工具安装即可，这里以Xshell为例。安装完成后点击<strong>文件</strong>-<strong>新建</strong>，在弹窗中按照以下步骤填写信息。</p>
+<ol>
+<li>点击连接，在主机栏填写主机的IP地址。如下图所示：<br><img src="/20170512/xshellhost.png" alt="Xshell 填写主机IP地址"></li>
+<li>点击用户身份验证，填写刚刚注册的主机的用户名和密码。如下图所示：<br><img src="/20170512/xshellpassword.png" alt="Xshell 填写主机用户名密码"></li>
+<li>点击<strong>SSH</strong>-<strong>隧道</strong>-<strong>添加</strong>，然后<strong>类型（方向）</strong>选择Dynamic（SOCKS4/5），并填写监听端口，端口范围最好用四位数字。如下图所示：<br><img src="/20170512/socks.png" alt="Xshell 选择SOCKS隧道"></li>
+<li>点击确定之后会自动登录我们注册的主机，这时我们需要检查一下代理隧道是否建立成功，当我们看到状态为打开，则表示成功。如下图所示：<br><img src="/20170512/tunnel.png" alt="Xshell 查看SOCKS隧道是否建立成功"></li>
+</ol>
+<h2 id="设置Chrome并访问谷歌"><a href="#设置Chrome并访问谷歌" class="headerlink" title="设置Chrome并访问谷歌"></a>设置Chrome并访问谷歌</h2><p>Chrome支持通过SOCKS代理的方式进行网页浏览，但是默认并没有开启。我们需要做的就是在Chrome启动的时候添加代理参数即可。以我本地桌面的Chrome快捷方式为例，右键点击快捷方式图标，选择属性，然后在<strong>目标</strong>栏最后添加启动参数 <code>--proxy-server=socks5://127.0.0.1:1688</code>。参数的作用是将Chrome的所有请求都转到本地建立的<strong>SOCKS5</strong>隧道代理。设置方式如下图所示：<br><img src="/20170512/chromelink.png" alt="Xshell 查看SOCKS隧道是否建立成功"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此，我们可以通过Chrome自由的访问任何网站，包括「<a href="http://t66y.com/」,没有任何限制(" target="_blank" rel="external">http://t66y.com/」,没有任何限制(</a> •̅_•̅ )。相比较上一篇的修改<strong>Hosts</strong>文件的方式，此方法是不会被GFW封的。因为通过SOCKS5协议，GFW不知道你在做什么(●’◡’●)。</p>
+<p>但是此种方式很大的一个弊端就是所有的请求都是通过代理进行的。如果你选择了一个美国的主机，那你如果访问国内的网站，需要先请求代理主机，代理主机请求国内的目标主机，然后再返回给我们。不过我们可以双开嘛，一个浏览器用代理访问国外网站，另外一个不用代理就OK啦 ʅ(‾◡◝)。</p>
+<p><strong>预告：</strong>下一篇，我们将介绍更为智能的一种方式，即PAC代理模式。此种模式可以自定义规则从而实现自动切换国内外网站的访问方式。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://v2say.com/2017/05/07/2017最新Hosts/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1150,7 +1310,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1172,7 +1332,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
