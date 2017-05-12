@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://v2say.com/"/>
-  <updated>2017-05-12T08:17:52.078Z</updated>
+  <updated>2017-05-12T08:24:10.458Z</updated>
   <id>https://v2say.com/</id>
   
   <author>
@@ -20,12 +20,12 @@
     <link href="https://v2say.com/2017/05/12/%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87SOCKS%E4%BB%A3%E7%90%86%E8%AE%BF%E9%97%AE%E8%B0%B7%E6%AD%8C/"/>
     <id>https://v2say.com/2017/05/12/如何通过SOCKS代理访问谷歌/</id>
     <published>2017-05-12T08:09:01.000Z</published>
-    <updated>2017-05-12T08:17:52.078Z</updated>
+    <updated>2017-05-12T08:24:10.458Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="如何使用谷歌（一）"><a href="#如何使用谷歌（一）" class="headerlink" title="如何使用谷歌（一）"></a>如何使用谷歌（一）</h1><p>@(我要用谷歌)[手动搭梯子|YouTube|Twitter|Facebook]</p>
+    <content type="html"><![CDATA[<h1 id="百度一下如何使用谷歌（二）"><a href="#百度一下如何使用谷歌（二）" class="headerlink" title="百度一下如何使用谷歌（二）"></a>百度一下如何使用谷歌（二）</h1><p>@(我要用谷歌)[手动搭梯子|YouTube|Twitter|Facebook]</p>
 <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>上一篇我们介绍了如何通过修改<code>Hosts</code>文件从而科学上网。由于Hosts中配置的IP经常被封从而导致无法正常访问谷歌，频繁更新Hosts文件也比较麻烦。</p>
 <p>这一篇我们将介绍另外一种方法，即「SOCKS5代理」。SOCKS代理首先需要建立一条 SSH 隧道，然后将浏览器的请求全部由该隧道进行转发和接收。</p>
-<p>开始之前你需要准备以下软件：<br><strong>一台墙外主机</strong> ：<br>国外的云主机提供商<strong>Vultr</strong>、<strong>Linode</strong>、<strong>DigitalOcean</strong>等都可以作为选择。<br><strong>SSH工具</strong> ：<br>Windows下有<strong>Xshell</strong>、<strong>putty</strong>等，Mac 终端默认带有SSH功能<br><strong>Chrome</strong> ：<br>谷歌浏览器，谷歌浏览器，可以配置<strong>SOCKS</strong>代理切换上网方式</p>
+<p>开始之前你需要准备以下软件：<br><strong>一台墙外主机</strong> ：<br>国外的云主机提供商<strong>Vultr</strong>、<strong>Linode</strong>、<strong>DigitalOcean</strong>等都可以作为选择。<br><strong>SSH工具</strong> ：<br>Windows下有<strong>Xshell</strong>、<strong>putty</strong>等，Mac 终端默认带有SSH功能<br><strong>Chrome</strong> ：<br>谷歌浏览器，谷歌浏览器，可以配置<strong>SOCKS</strong>代理切换上网方式<br><a id="more"></a></p>
 <h2 id="注册主机"><a href="#注册主机" class="headerlink" title="注册主机"></a>注册主机</h2><p>国外的云主机厂商很多，如果仅仅用来科学上网再顺便搭建一个博客写写日记什么的，我们需要的主机配置并不需要太高。以价格为主要参考因素的话除了<strong>Vultr</strong>有每月<strong>2.5$</strong>的，其他厂商最便宜的配置都是<strong>5$</strong>。Vultr 的注册地址为<a href="http://www.vultr.com/?ref=7023652" target="_blank" rel="external">Vultr.com</a></p>
 <h2 id="登录并部署主机"><a href="#登录并部署主机" class="headerlink" title="登录并部署主机"></a>登录并部署主机</h2><p>因为我用的是Vultr的主机，所以这里以Vultr主机为例。初次注册并登录之后，会要求先设置付款方式。支持的付款方式包括信用卡、PayPal和Bitcoin。绑定付款方式后就可以点击右上角的<code>+</code>按钮部署一台主机，如下图所示<img src="/20170512/host.png" alt="添加Vultr主机"></p>
 <p>接下来根据自己的需求选择主机位置，操作系统，系统配置，最后选择<strong>Deploy Now</strong>。等待主机运行起来之后，我们需要找到该主机的IP以及登录的用户名和密码。位置如下图所示：<img src="/20170512/hostconfig.png" alt="保存Vultr主机IP及用户名密码"></p>
@@ -44,7 +44,10 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;如何使用谷歌（一）&quot;&gt;&lt;a href=&quot;#如何使用谷歌（一）&quot; class=&quot;headerlink&quot; title=&quot;如何使用谷歌（一）&quot;&gt;&lt;/a&gt;如何使用谷歌（一）&lt;/h1&gt;&lt;p&gt;@(我要用谷歌)[手动搭梯子|YouTube|Twitter|Facebook]&lt;/
+      &lt;h1 id=&quot;百度一下如何使用谷歌（二）&quot;&gt;&lt;a href=&quot;#百度一下如何使用谷歌（二）&quot; class=&quot;headerlink&quot; title=&quot;百度一下如何使用谷歌（二）&quot;&gt;&lt;/a&gt;百度一下如何使用谷歌（二）&lt;/h1&gt;&lt;p&gt;@(我要用谷歌)[手动搭梯子|YouTube|Twitter|Facebook]&lt;/p&gt;
+&lt;h2 id=&quot;准备&quot;&gt;&lt;a href=&quot;#准备&quot; class=&quot;headerlink&quot; title=&quot;准备&quot;&gt;&lt;/a&gt;准备&lt;/h2&gt;&lt;p&gt;上一篇我们介绍了如何通过修改&lt;code&gt;Hosts&lt;/code&gt;文件从而科学上网。由于Hosts中配置的IP经常被封从而导致无法正常访问谷歌，频繁更新Hosts文件也比较麻烦。&lt;/p&gt;
+&lt;p&gt;这一篇我们将介绍另外一种方法，即「SOCKS5代理」。SOCKS代理首先需要建立一条 SSH 隧道，然后将浏览器的请求全部由该隧道进行转发和接收。&lt;/p&gt;
+&lt;p&gt;开始之前你需要准备以下软件：&lt;br&gt;&lt;strong&gt;一台墙外主机&lt;/strong&gt; ：&lt;br&gt;国外的云主机提供商&lt;strong&gt;Vultr&lt;/strong&gt;、&lt;strong&gt;Linode&lt;/strong&gt;、&lt;strong&gt;DigitalOcean&lt;/strong&gt;等都可以作为选择。&lt;br&gt;&lt;strong&gt;SSH工具&lt;/strong&gt; ：&lt;br&gt;Windows下有&lt;strong&gt;Xshell&lt;/strong&gt;、&lt;strong&gt;putty&lt;/strong&gt;等，Mac 终端默认带有SSH功能&lt;br&gt;&lt;strong&gt;Chrome&lt;/strong&gt; ：&lt;br&gt;谷歌浏览器，谷歌浏览器，可以配置&lt;strong&gt;SOCKS&lt;/strong&gt;代理切换上网方式&lt;br&gt;
     
     </summary>
     
@@ -53,9 +56,13 @@
     
       <category term="翻墙" scheme="https://v2say.com/tags/%E7%BF%BB%E5%A2%99/"/>
     
+      <category term="最简单的方法使用Google" scheme="https://v2say.com/tags/%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8Google/"/>
+    
       <category term="如何通过SOCKS代理实现科学上网" scheme="https://v2say.com/tags/%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87SOCKS%E4%BB%A3%E7%90%86%E5%AE%9E%E7%8E%B0%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
     
-      <category term="最简单的方法使用Google|图文教程教你如何翻墙|10分钟的简易翻墙教程" scheme="https://v2say.com/tags/%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8Google-%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E7%BF%BB%E5%A2%99-10%E5%88%86%E9%92%9F%E7%9A%84%E7%AE%80%E6%98%93%E7%BF%BB%E5%A2%99%E6%95%99%E7%A8%8B/"/>
+      <category term="图文教程教你如何翻墙" scheme="https://v2say.com/tags/%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E7%BF%BB%E5%A2%99/"/>
+    
+      <category term="10分钟的简易翻墙教程" scheme="https://v2say.com/tags/10%E5%88%86%E9%92%9F%E7%9A%84%E7%AE%80%E6%98%93%E7%BF%BB%E5%A2%99%E6%95%99%E7%A8%8B/"/>
     
   </entry>
   
@@ -402,9 +409,9 @@ _   下划线
       <category term="100000" scheme="https://v2say.com/categories/100000/"/>
     
     
-      <category term="Markdown Grammar" scheme="https://v2say.com/tags/Markdown-Grammar/"/>
-    
       <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
+    
+      <category term="Markdown Grammar" scheme="https://v2say.com/tags/Markdown-Grammar/"/>
     
       <category term="Markdown语法" scheme="https://v2say.com/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
@@ -586,11 +593,11 @@ _   下划线
       <category term="100000" scheme="https://v2say.com/categories/100000/"/>
     
     
-      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
-    
       <category term="Markdown" scheme="https://v2say.com/tags/Markdown/"/>
     
       <category term="GitHub GFM Grammar" scheme="https://v2say.com/tags/GitHub-GFM-Grammar/"/>
+    
+      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
     
   </entry>
   
