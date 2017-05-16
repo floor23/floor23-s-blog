@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://v2say.com/"/>
-  <updated>2017-05-12T08:24:10.458Z</updated>
+  <updated>2017-05-16T01:57:08.960Z</updated>
   <id>https://v2say.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://v2say.com/2017/05/12/%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87SOCKS%E4%BB%A3%E7%90%86%E8%AE%BF%E9%97%AE%E8%B0%B7%E6%AD%8C/"/>
     <id>https://v2say.com/2017/05/12/如何通过SOCKS代理访问谷歌/</id>
     <published>2017-05-12T08:09:01.000Z</published>
-    <updated>2017-05-12T08:24:10.458Z</updated>
+    <updated>2017-05-16T01:57:08.960Z</updated>
     
     <content type="html"><![CDATA[<h1 id="百度一下如何使用谷歌（二）"><a href="#百度一下如何使用谷歌（二）" class="headerlink" title="百度一下如何使用谷歌（二）"></a>百度一下如何使用谷歌（二）</h1><p>@(我要用谷歌)[手动搭梯子|YouTube|Twitter|Facebook]</p>
 <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>上一篇我们介绍了如何通过修改<code>Hosts</code>文件从而科学上网。由于Hosts中配置的IP经常被封从而导致无法正常访问谷歌，频繁更新Hosts文件也比较麻烦。</p>
@@ -37,7 +37,7 @@
 <li>点击确定之后会自动登录我们注册的主机，这时我们需要检查一下代理隧道是否建立成功，当我们看到状态为打开，则表示成功。如下图所示：<br><img src="/20170512/tunnel.png" alt="Xshell 查看SOCKS隧道是否建立成功"></li>
 </ol>
 <h2 id="设置Chrome并访问谷歌"><a href="#设置Chrome并访问谷歌" class="headerlink" title="设置Chrome并访问谷歌"></a>设置Chrome并访问谷歌</h2><p>Chrome支持通过SOCKS代理的方式进行网页浏览，但是默认并没有开启。我们需要做的就是在Chrome启动的时候添加代理参数即可。以我本地桌面的Chrome快捷方式为例，右键点击快捷方式图标，选择属性，然后在<strong>目标</strong>栏最后添加启动参数 <code>--proxy-server=socks5://127.0.0.1:1688</code>。参数的作用是将Chrome的所有请求都转到本地建立的<strong>SOCKS5</strong>隧道代理。设置方式如下图所示：<br><img src="/20170512/chromelink.png" alt="Xshell 查看SOCKS隧道是否建立成功"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此，我们可以通过Chrome自由的访问任何网站，包括「<a href="http://t66y.com/」,没有任何限制(" target="_blank" rel="external">http://t66y.com/」,没有任何限制(</a> •̅_•̅ )。相比较上一篇的修改<strong>Hosts</strong>文件的方式，此方法是不会被GFW封的。因为通过SOCKS5协议，GFW不知道你在做什么(●’◡’●)。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此，我们可以通过Chrome自由的访问任何网站，包括「<code>http://t66y.com/</code>」, 没有任何限制( •̅_•̅ )。相比较上一篇的修改<strong>Hosts</strong>文件的方式，此方法是不会被GFW封的。因为通过SOCKS5协议，GFW不知道你在做什么(●’◡’●)。</p>
 <p>但是此种方式很大的一个弊端就是所有的请求都是通过代理进行的。如果你选择了一个美国的主机，那你如果访问国内的网站，需要先请求代理主机，代理主机请求国内的目标主机，然后再返回给我们。不过我们可以双开嘛，一个浏览器用代理访问国外网站，另外一个不用代理就OK啦 ʅ(‾◡◝)。</p>
 <p><strong>预告：</strong>下一篇，我们将介绍更为智能的一种方式，即PAC代理模式。此种模式可以自定义规则从而实现自动切换国内外网站的访问方式。</p>
 ]]></content>
