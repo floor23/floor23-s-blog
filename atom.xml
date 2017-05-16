@@ -264,13 +264,13 @@
   
   <entry>
     <title>Markdown 官方教程内联（Inline）语法（二）</title>
-    <link href="https://v2say.com/2017/04/01/Markdown%20Tutorial%20Inline%20Syntax/"/>
-    <id>https://v2say.com/2017/04/01/Markdown Tutorial Inline Syntax/</id>
+    <link href="https://v2say.com/2017/04/01/Markdown%20%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%86%85%E8%81%94%EF%BC%88Inline%EF%BC%89%E8%AF%AD%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
+    <id>https://v2say.com/2017/04/01/Markdown 官方教程内联（Inline）语法（二）/</id>
     <published>2017-04-01T02:50:13.000Z</published>
-    <updated>2017-04-26T04:34:10.497Z</updated>
+    <updated>2017-05-16T11:11:37.104Z</updated>
     
     <content type="html"><![CDATA[<hr>
-<h2 id="内联元素"><a href="#内联元素" class="headerlink" title="内联元素"></a>内联元素</h2><p>内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考<a href="https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/">上一篇</a></p>
+<h2 id="内联元素"><a href="#内联元素" class="headerlink" title="内联元素"></a>内联元素</h2><p>内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考<a href="https://v2say.com/2017/03/20/Markdown 官方教程块级（Block）语法（一）/">上一篇</a></p>
 <hr>
 <h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>Markdown 支持两种风格的链接: <strong>行内链接</strong> 和 <strong>引用链接</strong>。</p>
 <p>两种风格的链接均用中括号扩起来 [ ]。<br><a id="more"></a><br>行内链接由两部分组成，方括号<code>[ ]</code>括起来的链接描述，以及紧跟方括号的链接地址，地址由括弧<code>( )</code>包围。括弧内可以选择为该链接添加标题。例如：</p>
@@ -403,14 +403,14 @@ _   下划线
     <summary type="html">
     
       &lt;hr&gt;
-&lt;h2 id=&quot;内联元素&quot;&gt;&lt;a href=&quot;#内联元素&quot; class=&quot;headerlink&quot; title=&quot;内联元素&quot;&gt;&lt;/a&gt;内联元素&lt;/h2&gt;&lt;p&gt;内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考&lt;a href=&quot;https://v2say.com/2017/03/30/Markdown%20Tutorial%20Block%20Syntax/&quot;&gt;上一篇&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;内联元素&quot;&gt;&lt;a href=&quot;#内联元素&quot; class=&quot;headerlink&quot; title=&quot;内联元素&quot;&gt;&lt;/a&gt;内联元素&lt;/h2&gt;&lt;p&gt;内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考&lt;a href=&quot;https://v2say.com/2017/03/20/Markdown 官方教程块级（Block）语法（一）/&quot;&gt;上一篇&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&quot;链接&quot;&gt;&lt;a href=&quot;#链接&quot; class=&quot;headerlink&quot; title=&quot;链接&quot;&gt;&lt;/a&gt;链接&lt;/h3&gt;&lt;p&gt;Markdown 支持两种风格的链接: &lt;strong&gt;行内链接&lt;/strong&gt; 和 &lt;strong&gt;引用链接&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;两种风格的链接均用中括号扩起来 [ ]。&lt;br&gt;
     
     </summary>
     
-      <category term="100000" scheme="https://v2say.com/categories/100000/"/>
+      <category term="popular" scheme="https://v2say.com/categories/popular/"/>
     
     
       <category term="Markdown Grammar" scheme="https://v2say.com/tags/Markdown-Grammar/"/>
@@ -425,10 +425,10 @@ _   下划线
   
   <entry>
     <title>Markdown 官方教程块级（Block）语法（一）</title>
-    <link href="https://v2say.com/2017/03/20/Markdown%20Tutorial%20Block%20Syntax/"/>
-    <id>https://v2say.com/2017/03/20/Markdown Tutorial Block Syntax/</id>
+    <link href="https://v2say.com/2017/03/20/Markdown%20%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%9D%97%E7%BA%A7%EF%BC%88Block%EF%BC%89%E8%AF%AD%E6%B3%95%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>https://v2say.com/2017/03/20/Markdown 官方教程块级（Block）语法（一）/</id>
     <published>2017-03-20T05:12:30.000Z</published>
-    <updated>2017-04-26T04:33:56.616Z</updated>
+    <updated>2017-05-16T11:10:59.078Z</updated>
     
     <content type="html"><![CDATA[<p>Markdown 语法<br>参考：JOHN GRUBER「Markdown 语法作者」<a href="https://daringfireball.net/projects/markdown/syntax" target="_blank" rel="external">个人网站</a></p>
 <p><strong>注:</strong> 该文档就是采用 Markdown 语法进行编辑的。</p>
@@ -452,9 +452,9 @@ _   下划线
 <p>内联级别的 HTML 标签，例如 <code>&lt;span&gt;</code>, <code>&lt;cite&gt;</code> 或者 <code>&lt;del&gt;</code> 可以在任何地方使用。和块级 HTML 标签不一样的地方就是，Markdown 语法<strong>会解析</strong>内联级别内的内容。</p>
 <hr>
 <h3 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h3><p>在 HTML 中，<code>&lt;</code> 和 <code>&amp;</code> 需要特殊处理。<code>&lt;</code> 标示标签的开始，<code>&amp;</code> 标示HTML实体。如果要使用，必须采用 <code>&amp;lt;</code>和<code>&amp;amp;</code>来标示&lt;和&amp;。这个是比较麻烦的一点，例如要写“AT&amp;T”，在 Markdown 文档中必须写作 <code>AT&amp;amp;T</code>。甚至在文档中插入 URL，也需要转义，例如：</p>
-<pre><code>https://v2say.com/100000?page=1&amp;num=10
+<pre><code>https://v2say.com/popular?page=1&amp;num=10
 </code></pre><p>必须写作：</p>
-<pre><code>https://v2say.com/100000?page=1&amp;amp;num=10
+<pre><code>https://v2say.com/popular?page=1&amp;amp;num=10
 </code></pre><p>需要记住以上必须转义的地方，例如 <code>&amp;copy</code> 即 &copy; 标示版权的标记就不需要转义。</p>
 <hr>
 <h2 id="区块标记"><a href="#区块标记" class="headerlink" title="区块标记"></a>区块标记</h2><h3 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h3><p>一段话由一行或多行文本组成，并由一个或多个空行「仅包含tab 或 空格」隔开。如果想要另起一段，则在句末添加两个或多个空格，然后再回车。</p>
@@ -594,7 +594,7 @@ _   下划线
     
     </summary>
     
-      <category term="100000" scheme="https://v2say.com/categories/100000/"/>
+      <category term="popular" scheme="https://v2say.com/categories/popular/"/>
     
     
       <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
