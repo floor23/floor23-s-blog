@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://v2say.com/404.html</loc>
+    
+    <lastmod>2017-05-20T04:31:52.752Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://v2say.com/2017/04/01/Markdown%20%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%86%85%E8%81%94%EF%BC%88Inline%EF%BC%89%E8%AF%AD%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/</loc>
     
     <lastmod>2017-05-16T11:11:37.104Z</lastmod>
@@ -47,20 +54,6 @@
     <loc>https://v2say.com/about.html</loc>
     
     <lastmod>2017-04-26T04:22:08.018Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://v2say.com/404.html</loc>
-    
-    <lastmod>2017-04-25T14:05:25.104Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://v2say.com/baidu_verify_OnzDSXIkWR.html</loc>
-    
-    <lastmod>2017-03-31T04:25:38.329Z</lastmod>
     
   </url>
   
