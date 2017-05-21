@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://v2say.com/"/>
-  <updated>2017-05-20T10:21:17.252Z</updated>
+  <updated>2017-05-21T14:38:39.984Z</updated>
   <id>https://v2say.com/</id>
   
   <author>
@@ -14,6 +14,88 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>影响谷歌排名的200个关键因素：完整版（1-10）</title>
+    <link href="https://v2say.com/2017/05/21/%E5%BD%B1%E5%93%8D%E8%B0%B7%E6%AD%8C%E6%8E%92%E5%90%8D%E7%9A%84200%E4%B8%AA%E5%85%B3%E9%94%AE%E5%9B%A0%E7%B4%A0%EF%BC%9A%E5%AE%8C%E6%95%B4%E7%89%88%EF%BC%881-10%EF%BC%89/"/>
+    <id>https://v2say.com/2017/05/21/影响谷歌排名的200个关键因素：完整版（1-10）/</id>
+    <published>2017-05-21T14:33:04.000Z</published>
+    <updated>2017-05-21T14:38:39.984Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="影响谷歌排名的200个关键因素：完整版（1-10）"><a href="#影响谷歌排名的200个关键因素：完整版（1-10）" class="headerlink" title="影响谷歌排名的200个关键因素：完整版（1-10）"></a>影响谷歌排名的200个关键因素：完整版（1-10）</h1><p>你应该听过，在谷歌的排名算法中，影响排名结果的因素有大约200个。但是他们都包括哪些，分别代表什么含义？</p>
+<p>现在我将这200个因素完整地整理出来，供大家参考和讨论。</p>
+<p>这200个因素中，部分是已经被证明了的，部分是有争议的，还有一部分是SEO专家们的猜测。但是我还是将这些因素列出来，大家各抒己见，共同讨论。</p>
+<h2 id="影响谷歌排名的10个与域名相关的因素"><a href="#影响谷歌排名的10个与域名相关的因素" class="headerlink" title="影响谷歌排名的10个与域名相关的因素"></a>影响谷歌排名的10个与域名相关的因素</h2><ol>
+<li>域名年龄</li>
+</ol>
+<blockquote>
+<p>一个创建了6个月的域名和创建了1年的域名，他们之间的差异并不是那么的大<br>——Matt Cutts</p>
+</blockquote>
+<p>也就是说，谷歌排名确实会考虑这个因素，但是它并不是很重要</p>
+<ol>
+<li>顶级域名中出现的关键字</li>
+</ol>
+<p>没有像以前那么效果显著，但域名中包含关键字还是有一定作用的。</p>
+<ol>
+<li>域名以关键词开头</li>
+</ol>
+<p>以关键词开头的域名比域名中没有关键词，或者是关键词在域名中间或末尾更具有排名优势</p>
+<ol>
+<li>域名注册时长</li>
+</ol>
+<p>谷歌的一篇<a href="http://www.searchenginejournal.com/domain-age-how-important-is-it-for-seo/7296/" target="_blank" rel="external">专利</a>提到以下观点：</p>
+<blockquote>
+<p>有价值的域名通常会提前注册多年，而非法的域名则经常不超过一年。因此域名过期的时间将作为预测域名合法性的一个因素</p>
+</blockquote>
+<ol>
+<li>子域名中的关键词</li>
+</ol>
+<p>部分SEO专家说在子域名中的关键词会促进主域名的排名，例如关键词作为子域名的名称（e.g. keyword.domain.com）</p>
+<ol>
+<li>域名历史</li>
+</ol>
+<p>如果一个域名频繁易手（由 whois 查询）则会告诉搜索引擎需要重置这个网站的历史信息，删除之前指向该域名的链接</p>
+<ol>
+<li>精确匹配域名（EMD）</li>
+</ol>
+<p>EMD会给高品质网站的排名带来很大的优势。但是如果EMD指向的是一个低质量的网站，它将起相反作用。<a href="http://searchengineland.com/google-emd-update-research-and-thoughts-137340" target="_blank" rel="external">参考EMD Update</a></p>
+<ol>
+<li>whois 应该公开还是隐藏</li>
+</ol>
+<p>隐藏whois信息即对搜索引擎标示，网站有不想让他人知道的信息。</p>
+<blockquote>
+<p>当我查看whois信息时，他们隐藏了。开启whois隐私保护不是什么坏事，但是当搜索引擎发现网站有其他非正常表现时，再加上whois信息的隐藏动作，会让谷歌任务网站的可信度是不够的<br>–<a href="http://www.searchenginejournal.com/seo-question-do-whois-privacy-services-harm-seo/5874/" target="_blank" rel="external">Matt Cutts at Pubcon 2006</a></p>
+</blockquote>
+<ol>
+<li>whois的所有者被搜索引擎惩罚过</li>
+</ol>
+<p>如果谷歌确定了某人是一个“垃圾”站长，那么它肯定会仔细查看该站长所拥有的所有网站</p>
+<ol>
+<li>拥有国家后缀的顶级域名（.e.g .cn .ca .jp）</li>
+</ol>
+<p>如果域名以国家代码做后缀，那么网站的排名会在相对应的国家有所提高。但是会限制该网站在全球的排名</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;影响谷歌排名的200个关键因素：完整版（1-10）&quot;&gt;&lt;a href=&quot;#影响谷歌排名的200个关键因素：完整版（1-10）&quot; class=&quot;headerlink&quot; title=&quot;影响谷歌排名的200个关键因素：完整版（1-10）&quot;&gt;&lt;/a&gt;影响谷歌排名的200个
+    
+    </summary>
+    
+      <category term="popular" scheme="https://v2say.com/categories/popular/"/>
+    
+    
+      <category term="谷歌SEO" scheme="https://v2say.com/tags/%E8%B0%B7%E6%AD%8CSEO/"/>
+    
+      <category term="影响排名的200个因素" scheme="https://v2say.com/tags/%E5%BD%B1%E5%93%8D%E6%8E%92%E5%90%8D%E7%9A%84200%E4%B8%AA%E5%9B%A0%E7%B4%A0/"/>
+    
+      <category term="影响谷歌排名的域名因素" scheme="https://v2say.com/tags/%E5%BD%B1%E5%93%8D%E8%B0%B7%E6%AD%8C%E6%8E%92%E5%90%8D%E7%9A%84%E5%9F%9F%E5%90%8D%E5%9B%A0%E7%B4%A0/"/>
+    
+      <category term="如何选择网站域名" scheme="https://v2say.com/tags/%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E7%BD%91%E7%AB%99%E5%9F%9F%E5%90%8D/"/>
+    
+      <category term="如何在域名中加入关键字" scheme="https://v2say.com/tags/%E5%A6%82%E4%BD%95%E5%9C%A8%E5%9F%9F%E5%90%8D%E4%B8%AD%E5%8A%A0%E5%85%A5%E5%85%B3%E9%94%AE%E5%AD%97/"/>
+    
+  </entry>
   
   <entry>
     <title>域名注册时间长短对SEO影响有多大</title>
@@ -484,9 +566,9 @@ _   下划线
       <category term="popular" scheme="https://v2say.com/categories/popular/"/>
     
     
-      <category term="Markdown Grammar" scheme="https://v2say.com/tags/Markdown-Grammar/"/>
-    
       <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
+    
+      <category term="Markdown Grammar" scheme="https://v2say.com/tags/Markdown-Grammar/"/>
     
       <category term="Markdown语法" scheme="https://v2say.com/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
@@ -668,11 +750,11 @@ _   下划线
       <category term="popular" scheme="https://v2say.com/categories/popular/"/>
     
     
-      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
-    
       <category term="Markdown" scheme="https://v2say.com/tags/Markdown/"/>
     
       <category term="GitHub GFM Grammar" scheme="https://v2say.com/tags/GitHub-GFM-Grammar/"/>
+    
+      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
     
   </entry>
   
