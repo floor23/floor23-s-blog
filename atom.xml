@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://v2say.com/"/>
-  <updated>2017-06-18T04:09:29.214Z</updated>
+  <updated>2017-06-18T07:42:28.956Z</updated>
   <id>https://v2say.com/</id>
   
   <author>
@@ -20,12 +20,12 @@
     <link href="https://v2say.com/2017/06/18/%E5%BD%B1%E5%93%8D%E8%B0%B7%E6%AD%8C%E6%8E%92%E5%90%8D%E7%9A%84200%E4%B8%AA%E5%85%B3%E9%94%AE%E5%9B%A0%E7%B4%A0%EF%BC%9A%E5%AE%8C%E6%95%B4%E7%89%88%EF%BC%8862-79%EF%BC%89/"/>
     <id>https://v2say.com/2017/06/18/影响谷歌排名的200个关键因素：完整版（62-79）/</id>
     <published>2017-06-18T02:21:30.000Z</published>
-    <updated>2017-06-18T04:09:29.214Z</updated>
+    <updated>2017-06-18T07:42:28.956Z</updated>
     
     <content type="html"><![CDATA[<p>网站的整体布局，网站的内容完整性，安全性等等各个因素也会影响谷歌的排名，下面我们就列举出几个网站级的因素供大家参考。</p>
 <ol>
 <li>提供独一无二的价值和内容<br>谷歌会找出那些并不提供有用信息的网站，尤其是简单的联盟网站</li>
-<li>「关于我们」页面<br>谷歌会更喜欢那些提供联系信息的网站，如果你的「关于我们」信息与WHOIS信息匹配的话更好</li>
+<li>「关于我们」页面<br>谷歌会更喜欢那些提供联系信息的网站，如果你的「关于我们」信息与WHOIS信息匹配的话更好<a id="more"></a></li>
 <li>域名的信任和排名<br>由高可信网站链接的网站授信程度更高，这是一个极其重要的因素。关于信任排名，你可以看看<a href="http://backlinko.com/google-trustrank" target="_blank" rel="external">这篇文章</a></li>
 <li>网站架构<br>良好的网站架构能够帮助谷歌更好的组织你的网站内容</li>
 <li>网站更新<br>网站的更新频率，尤其是网站新内容是什么时候更新的，这是谷歌衡量一个网站新鲜程度的重要因素</li>
@@ -52,7 +52,7 @@
       &lt;p&gt;网站的整体布局，网站的内容完整性，安全性等等各个因素也会影响谷歌的排名，下面我们就列举出几个网站级的因素供大家参考。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;提供独一无二的价值和内容&lt;br&gt;谷歌会找出那些并不提供有用信息的网站，尤其是简单的联盟网站&lt;/li&gt;
-&lt;li&gt;「关于我们」页面&lt;b
+&lt;li&gt;「关于我们」页面&lt;br&gt;谷歌会更喜欢那些提供联系信息的网站，如果你的「关于我们」信息与WHOIS信息匹配的话更好
     
     </summary>
     
@@ -72,7 +72,7 @@
     <link href="https://v2say.com/2017/06/03/%E5%BD%B1%E5%93%8D%E8%B0%B7%E6%AD%8C%E6%8E%92%E5%90%8D%E7%9A%84200%E4%B8%AA%E5%85%B3%E9%94%AE%E5%9B%A0%E7%B4%A0%EF%BC%9A%E5%AE%8C%E6%95%B4%E7%89%88%EF%BC%8811-61%EF%BC%89/"/>
     <id>https://v2say.com/2017/06/03/影响谷歌排名的200个关键因素：完整版（11-61）/</id>
     <published>2017-06-03T15:13:58.000Z</published>
-    <updated>2017-06-18T02:58:38.836Z</updated>
+    <updated>2017-06-18T07:43:37.671Z</updated>
     
     <content type="html"><![CDATA[<p>影响谷歌排名的前十个因素是域名相关的，现在我们进入第二个阶段，来了解一下影响谷歌SEO的第二个重要因素——页面级因素</p>
 <h1 id="影响谷歌排名的60个页面级因素"><a href="#影响谷歌排名的60个页面级因素" class="headerlink" title="影响谷歌排名的60个页面级因素"></a>影响谷歌排名的60个页面级因素</h1><ol>
@@ -760,9 +760,9 @@ _   下划线
       <category term="popular" scheme="https://v2say.com/categories/popular/"/>
     
     
-      <category term="Markdown Grammar" scheme="https://v2say.com/tags/Markdown-Grammar/"/>
-    
       <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
+    
+      <category term="Markdown Grammar" scheme="https://v2say.com/tags/Markdown-Grammar/"/>
     
       <category term="Markdown语法" scheme="https://v2say.com/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
@@ -944,11 +944,11 @@ _   下划线
       <category term="popular" scheme="https://v2say.com/categories/popular/"/>
     
     
-      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
-    
       <category term="Markdown" scheme="https://v2say.com/tags/Markdown/"/>
     
       <category term="GitHub GFM Grammar" scheme="https://v2say.com/tags/GitHub-GFM-Grammar/"/>
+    
+      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
     
   </entry>
   
