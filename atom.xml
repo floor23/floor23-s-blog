@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://v2say.com/"/>
-  <updated>2017-09-30T06:56:56.697Z</updated>
+  <updated>2017-09-30T08:47:59.984Z</updated>
   <id>https://v2say.com/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>为什么 wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中</title>
+    <link href="https://v2say.com/2017/09/30/%E4%B8%BA%E4%BB%80%E4%B9%88%20wait(),notify(),notifyAll()%20%E7%9A%84%E8%B0%83%E7%94%A8%E5%BF%85%E9%A1%BB%E5%9C%A8%20synchronized%20%E4%BB%A3%E7%A0%81%E4%B8%AD/"/>
+    <id>https://v2say.com/2017/09/30/为什么 wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中/</id>
+    <published>2017-09-30T07:11:49.000Z</published>
+    <updated>2017-09-30T08:47:59.984Z</updated>
+    
+    <content type="html"><![CDATA[<p>Java中，任何对象都拥有一个Monitor的概念，这个Monitor拥有单独的一个锁，并拥有一个入队列和一个等待队列。没有被synchronized修饰的方法或语句，可以在任何时间被任何线程调用。而被synchronized修饰的方法同一时间仅能被一个拥有该对象锁的线程调用。当一个线程在调用synchronized方法时，另外的线程调用该方法时就被阻塞，并放入队列中。</p>
+<p>多线程开发中，wait(),notify(),notifyAll()方法必须在synchronized方法或代码块中，否则会抛出运行时异常：<code>java.lang.IllegalMonitorStateException: current thread not owner</code>。因为要想调用这些方法，必须要保证调用方法的线程已经获取了该对象的锁。</p>
+<a id="more"></a>
+<h1 id="wait-方法会释放所持有的锁"><a href="#wait-方法会释放所持有的锁" class="headerlink" title="wait() 方法会释放所持有的锁"></a>wait() 方法会释放所持有的锁</h1><p>当一个线程在调用wait()方法时，该线程会释放当前所持有的锁，并进入等待队列。因此要想执行该方法，前提是必须拥有这个锁，而synchronized可以保证在执行wait()时，已经拿到了锁。</p>
+<h1 id="什么情况下我们才会使用wait"><a href="#什么情况下我们才会使用wait" class="headerlink" title="什么情况下我们才会使用wait()"></a>什么情况下我们才会使用wait()</h1><p>在等待队列中的线程只会被notify()、notifyAll()唤醒并执行。</p>
+<p>一般情况下，我们在调用wait()时，肯定会加上一个限定条件。也就是说在达到某个条件之后，我们才会让当前线程wait()。而notify()、notifyAll()也是在达到某个条件之后，我们才会去唤醒其他的等待线程。而这个条件就是线程间进行通信的一个互斥条件。</p>
+<h1 id="生产者消费者模式解读"><a href="#生产者消费者模式解读" class="headerlink" title="生产者消费者模式解读"></a>生产者消费者模式解读</h1><p>以生产者消费者模式为例，消费者从缓存中取数据，生产者向缓存中写数据。消费者必须等生产者写入数据后才能取数据，生产者必须等消费者把数据取走之后才能向缓存中写数据。如果wait(),notify(),notifyAll()可以被任意方法调用，当消费者在读数据的时候，发现缓存为空，这时调用了wait()方法，而此时生产者也调用了notify()，告诉消费者有数据到达，这样消费者就永远接收不到这个通知，然后一直等下去。</p>
+<p>因此，我们必须在synchronized方法中调用wait(),notify(),notifyAll()，从而互斥地拥有锁，从而保证不会丢失通知。</p>
+<p>参考文章:<a href="http://www.xyzws.com/Javafaq/why-wait-notify-notifyall-must-be-called-inside-a-synchronized-method-block/127" target="_blank" rel="external">Why wait(), notify(), notifyAll() must be called inside a synchronized method/block?</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Java中，任何对象都拥有一个Monitor的概念，这个Monitor拥有单独的一个锁，并拥有一个入队列和一个等待队列。没有被synchronized修饰的方法或语句，可以在任何时间被任何线程调用。而被synchronized修饰的方法同一时间仅能被一个拥有该对象锁的线程调用。当一个线程在调用synchronized方法时，另外的线程调用该方法时就被阻塞，并放入队列中。&lt;/p&gt;
+&lt;p&gt;多线程开发中，wait(),notify(),notifyAll()方法必须在synchronized方法或代码块中，否则会抛出运行时异常：&lt;code&gt;java.lang.IllegalMonitorStateException: current thread not owner&lt;/code&gt;。因为要想调用这些方法，必须要保证调用方法的线程已经获取了该对象的锁。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="https://v2say.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="https://v2say.com/tags/Java/"/>
+    
+      <category term="多线程" scheme="https://v2say.com/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="Java小知识" scheme="https://v2say.com/tags/Java%E5%B0%8F%E7%9F%A5%E8%AF%86/"/>
+    
+  </entry>
   
   <entry>
     <title>微信支付签名问题汇总</title>
@@ -403,13 +439,13 @@
       <category term="popular" scheme="https://v2say.com/categories/popular/"/>
     
     
-      <category term="谷歌SEO" scheme="https://v2say.com/tags/%E8%B0%B7%E6%AD%8CSEO/"/>
-    
       <category term="SEO" scheme="https://v2say.com/tags/SEO/"/>
     
       <category term="域名年龄" scheme="https://v2say.com/tags/%E5%9F%9F%E5%90%8D%E5%B9%B4%E9%BE%84/"/>
     
       <category term="谷歌排名" scheme="https://v2say.com/tags/%E8%B0%B7%E6%AD%8C%E6%8E%92%E5%90%8D/"/>
+    
+      <category term="谷歌SEO" scheme="https://v2say.com/tags/%E8%B0%B7%E6%AD%8CSEO/"/>
     
       <category term="Domain Age" scheme="https://v2say.com/tags/Domain-Age/"/>
     
@@ -813,9 +849,9 @@ _   下划线
       <category term="popular" scheme="https://v2say.com/categories/popular/"/>
     
     
-      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
-    
       <category term="Markdown Grammar" scheme="https://v2say.com/tags/Markdown-Grammar/"/>
+    
+      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
     
       <category term="Markdown语法" scheme="https://v2say.com/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
@@ -997,11 +1033,11 @@ _   下划线
       <category term="popular" scheme="https://v2say.com/categories/popular/"/>
     
     
+      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
+    
       <category term="Markdown" scheme="https://v2say.com/tags/Markdown/"/>
     
       <category term="GitHub GFM Grammar" scheme="https://v2say.com/tags/GitHub-GFM-Grammar/"/>
-    
-      <category term="JOHN GRUBER" scheme="https://v2say.com/tags/JOHN-GRUBER/"/>
     
   </entry>
   
