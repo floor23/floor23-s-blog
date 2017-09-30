@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://v2say.com/"/>
-  <updated>2017-06-18T07:42:28.956Z</updated>
+  <updated>2017-09-30T06:56:56.697Z</updated>
   <id>https://v2say.com/</id>
   
   <author>
@@ -14,6 +14,59 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>微信支付签名问题汇总</title>
+    <link href="https://v2say.com/2017/08/31/%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%AD%BE%E5%90%8D%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/"/>
+    <id>https://v2say.com/2017/08/31/微信支付签名问题汇总/</id>
+    <published>2017-08-31T02:11:49.000Z</published>
+    <updated>2017-09-30T06:56:56.697Z</updated>
+    
+    <content type="html"><![CDATA[<p>开发微信支付功能，遇到一些很难被发现的坑，在此记录，以防后患。</p>
+<h1 id="公众号支付的场景"><a href="#公众号支付的场景" class="headerlink" title="公众号支付的场景"></a>公众号支付的场景</h1><p>商户已有H5商品页面，用户可以通过点击商城的购买链接或是扫二维码在微信客户端打开网页，从而进行支付。</p>
+<a id="more"></a>
+<h1 id="微信支付商户平台设置"><a href="#微信支付商户平台设置" class="headerlink" title="微信支付商户平台设置"></a>微信支付商户平台设置</h1><h2 id="支付授权目录配置"><a href="#支付授权目录配置" class="headerlink" title="支付授权目录配置"></a>支付授权目录配置</h2><p>登录<a href="https://pay.weixin.qq.com" target="_blank" rel="external">微信支付商户平台</a>，进入目录<strong>产品中心-开发配置-支付配置</strong>，在支付授权目录添加支付页面的目录。即：若支付页面为<code>https://domain.com/pay/pay.html</code>，则需要将<code>https://domain.com/pay/</code>添加到<strong>JSAPI支付授权目录</strong>下。</p>
+<h2 id="支付API证书及密钥配置"><a href="#支付API证书及密钥配置" class="headerlink" title="支付API证书及密钥配置"></a>支付API证书及密钥配置</h2><p>部分API（如退款）的调用需要通过证书来确定调用者的身份，不涉及则可以不用设置。</p>
+<p>如需配置，则需下载证书并放置到服务器安全目录，在调用相关接口时读取证书并使用，使用方法参考<a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=11_1" target="_blank" rel="external">微信支付DEMO</a>。</p>
+<h1 id="微信公众号设置"><a href="#微信公众号设置" class="headerlink" title="微信公众号设置"></a>微信公众号设置</h1><p>在H5页面进行支付时需要获取用户基本信息，因此还需在公众平台账户设置网页授权域名。登录微信公众号，<strong>公众号设置-功能设置-网页授权域名</strong>，添加测试或正式环境的域名；下载验证文件（类似MP<em>verify</em><em>.txt）并放置到服务器目录下。<em>*注意：该域名一个月内仅可修改3次，因此千万不要随便设置，以免影响开发</em></em></p>
+<h1 id="支付流程及参数"><a href="#支付流程及参数" class="headerlink" title="支付流程及参数"></a>支付流程及参数</h1><p>公众号支付大部分流程在服务器端进行，H5页面仅需发起下单请求和支付请求就可以了。服务端请求统一下单API，成功调用后由返回的参数中获取预支付ID<strong>prepay_id</strong>，并生成支付参数返回给H5。参数格式参照<a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&amp;index=6" target="_blank" rel="external">公众号支付参数说明</a>。<strong>注意：所有接口的参数都是大小写敏感的，因此最好拷贝各个参数而不是手动敲代码</strong></p>
+<p>支付的流程如下：</p>
+<p><img src="/20170930/wechat.pay.flowchart.png" alt="微信支付流程图"></p>
+<p>隐藏的坑：</p>
+<ol>
+<li><p>若签名失败，则在<a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=20_1" target="_blank" rel="external">签名校验地址</a>校验调用相关API的参数生成的签名是否正确</p>
+</li>
+<li><p>统一下单的接口中需要签名，返回给H5的支付参数中也有签名，<strong>两个签名的签名方式必须统一</strong>。</p>
+</li>
+</ol>
+<ul>
+<li><p>JS支付接口<code>getBrandWCPayRequest</code>仅支持MD5签名，所以统一下单接口必须使用MD5进行签名。</p>
+</li>
+<li><p>若使用JSAPI中的接口<code>WeixinJSBridge</code>进行支付，则默认为SHA1，而新版的微信支付使用的是MD5。因此综上所述，建议<strong>所有签名用MD5</strong></p>
+</li>
+</ul>
+<p>第二个坑摸索了一天一夜，最终还是通过发邮件给微信的人才搞定。通过签名接口校验所有的签名都是校验通过，但是调起支付后还是通知签名失败，建议他们修改文档，然而没有卵用，依然没有任何提示。就这样吧，踩坑愉快！</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;开发微信支付功能，遇到一些很难被发现的坑，在此记录，以防后患。&lt;/p&gt;
+&lt;h1 id=&quot;公众号支付的场景&quot;&gt;&lt;a href=&quot;#公众号支付的场景&quot; class=&quot;headerlink&quot; title=&quot;公众号支付的场景&quot;&gt;&lt;/a&gt;公众号支付的场景&lt;/h1&gt;&lt;p&gt;商户已有H5商品页面，用户可以通过点击商城的购买链接或是扫二维码在微信客户端打开网页，从而进行支付。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="https://v2say.com/categories/Java/"/>
+    
+    
+      <category term="微信支付" scheme="https://v2say.com/tags/%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98/"/>
+    
+      <category term="签名" scheme="https://v2say.com/tags/%E7%AD%BE%E5%90%8D/"/>
+    
+      <category term="支付签名校验失败" scheme="https://v2say.com/tags/%E6%94%AF%E4%BB%98%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C%E5%A4%B1%E8%B4%A5/"/>
+    
+      <category term="微信公众号支付" scheme="https://v2say.com/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E6%94%AF%E4%BB%98/"/>
+    
+  </entry>
   
   <entry>
     <title>影响谷歌排名的200个关键因素：完整版（62-79）</title>
@@ -350,13 +403,13 @@
       <category term="popular" scheme="https://v2say.com/categories/popular/"/>
     
     
+      <category term="谷歌SEO" scheme="https://v2say.com/tags/%E8%B0%B7%E6%AD%8CSEO/"/>
+    
       <category term="SEO" scheme="https://v2say.com/tags/SEO/"/>
     
       <category term="域名年龄" scheme="https://v2say.com/tags/%E5%9F%9F%E5%90%8D%E5%B9%B4%E9%BE%84/"/>
     
       <category term="谷歌排名" scheme="https://v2say.com/tags/%E8%B0%B7%E6%AD%8C%E6%8E%92%E5%90%8D/"/>
-    
-      <category term="谷歌SEO" scheme="https://v2say.com/tags/%E8%B0%B7%E6%AD%8CSEO/"/>
     
       <category term="Domain Age" scheme="https://v2say.com/tags/Domain-Age/"/>
     
