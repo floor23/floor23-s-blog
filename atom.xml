@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://v2say.com/"/>
-  <updated>2017-09-30T08:47:59.984Z</updated>
+  <updated>2017-10-10T06:26:04.752Z</updated>
   <id>https://v2say.com/</id>
   
   <author>
@@ -14,6 +14,78 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>排序算法之冒泡排序及其优化</title>
+    <link href="https://v2say.com/2017/10/10/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B9%8B%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%8F%8A%E5%85%B6%E4%BC%98%E5%8C%96/"/>
+    <id>https://v2say.com/2017/10/10/排序算法之冒泡排序及其优化/</id>
+    <published>2017-10-10T04:19:43.000Z</published>
+    <updated>2017-10-10T06:26:04.752Z</updated>
+    
+    <content type="html"><![CDATA[<p>冒泡排序是最笨的排序算法，得名于它的排序过程，即（以升序排序为例）：给定一个数组，比较相邻数值，若左侧数大于右侧，则交换两者；假定有N个数，则一趟排序需要比较N-1次，然后最大的数值在一轮比较之后被交换至最右侧。类似气泡往上冒一样，最大的数值依次往右边移动，故称为冒泡排序。</p>
+<a id="more"></a>
+<h1 id="冒泡排序特点"><a href="#冒泡排序特点" class="headerlink" title="冒泡排序特点"></a>冒泡排序特点</h1><p>冒泡排序最差的时间复杂度为O(n<sup>2</sup>),最好为O(n)，属于稳定排序，空间复杂度为O(1)。</p>
+<h1 id="原始冒泡排序"><a href="#原始冒泡排序" class="headerlink" title="原始冒泡排序"></a>原始冒泡排序</h1><p>按照冒泡的基本思路实现的代码（Go版本）如下：</p>
+<pre><code>func MainFunc (args []int) {
+    swapTimes := len(args) - 1
+    exchange, compare := 0,0
+    for swapTimes &gt; 0 {
+        bound := swapTimes
+        for i := 0; i &lt; bound; i++ {
+            compare++
+            if args[i] &gt; args[i + 1] {
+                exchange++
+                args[i], args[i + 1] = args[i + 1], args[i]
+            }
+        }
+        swapTimes--
+    }
+    fmt.Println(&quot;compare:&quot;, compare, &quot;exchange: &quot; , exchange)
+    fmt.Println(args)
+}
+</code></pre><h1 id="优化冒泡排序"><a href="#优化冒泡排序" class="headerlink" title="优化冒泡排序"></a>优化冒泡排序</h1><p>对于基本有序的数组进行排序，其实可以做一下优化。当某次比较过程中发现并没有数据交换，那则表明该段数据已经有序，仅需记录该段数据的起始下标，对下标之前的数据进行排序即可，代码（Go版本）如下：</p>
+<pre><code>func MainFuncQuickEnd(args []int) {
+    flag := len(args) - 1
+    exchange, compare := 0,0
+    for flag &gt; 0 {
+        limit := flag
+        preExchange := exchange
+        for i := 0; i &lt; limit; i++ {
+            compare++
+            if args[i] &gt; args[i + 1] {
+                exchange++
+                flag = i
+                args[i], args[i + 1] = args[i + 1], args[i]
+            }
+        }
+        if preExchange == exchange {
+            break
+        }
+    }
+    fmt.Println(&quot;compare:&quot;, compare, &quot;exchange: &quot; , exchange)
+    fmt.Println(args)
+}
+</code></pre><h1 id="优化前后对比"><a href="#优化前后对比" class="headerlink" title="优化前后对比"></a>优化前后对比</h1><p>对于基本有序的数组，如{2,1,5,4,0,6,7,8,9}，进行排序，优化前需要比较36次，交换6次；优化后需要比较14次，交换6次。对于完全乱序的数组，两者差别并不是很大。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;冒泡排序是最笨的排序算法，得名于它的排序过程，即（以升序排序为例）：给定一个数组，比较相邻数值，若左侧数大于右侧，则交换两者；假定有N个数，则一趟排序需要比较N-1次，然后最大的数值在一轮比较之后被交换至最右侧。类似气泡往上冒一样，最大的数值依次往右边移动，故称为冒泡排序。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="algorithm" scheme="https://v2say.com/categories/algorithm/"/>
+    
+    
+      <category term="排序算法" scheme="https://v2say.com/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="冒泡排序" scheme="https://v2say.com/tags/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/"/>
+    
+      <category term="go语言" scheme="https://v2say.com/tags/go%E8%AF%AD%E8%A8%80/"/>
+    
+      <category term="golang 学习" scheme="https://v2say.com/tags/golang-%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>为什么 wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中</title>
@@ -328,7 +400,7 @@
     <link href="https://v2say.com/2017/05/21/%E5%BD%B1%E5%93%8D%E8%B0%B7%E6%AD%8C%E6%8E%92%E5%90%8D%E7%9A%84200%E4%B8%AA%E5%85%B3%E9%94%AE%E5%9B%A0%E7%B4%A0%EF%BC%9A%E5%AE%8C%E6%95%B4%E7%89%88%EF%BC%881-10%EF%BC%89/"/>
     <id>https://v2say.com/2017/05/21/影响谷歌排名的200个关键因素：完整版（1-10）/</id>
     <published>2017-05-21T14:33:04.000Z</published>
-    <updated>2017-06-18T02:12:02.909Z</updated>
+    <updated>2017-10-10T04:23:12.415Z</updated>
     
     <content type="html"><![CDATA[<p>你应该听过，在谷歌的排名算法中，影响排名结果的因素有大约200个。但是他们都包括哪些，分别代表什么含义？</p>
 <p>现在我将这200个因素完整地整理出来，供大家参考和讨论。</p>
