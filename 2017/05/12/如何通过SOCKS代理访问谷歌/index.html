@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何通过SOCKS代理实现科学上网 | 纷享</title>
+  <meta name="author" content="OOoo">
+  
+  <meta name="description" content="分享&amp;成长">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="如何通过SOCKS代理实现科学上网"/>
+  <meta property="og:site_name" content="纷享"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="纷享" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">纷享</a><span class="split"></span><span class="title">如何通过SOCKS代理实现科学上网</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2017-05-12</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <h1 id="百度一下如何使用谷歌（二）"><a href="#百度一下如何使用谷歌（二）" class="headerlink" title="百度一下如何使用谷歌（二）"></a>百度一下如何使用谷歌（二）</h1><p>@(我要用谷歌)[手动搭梯子|YouTube|Twitter|Facebook]</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>上一篇我们介绍了如何通过修改<code>Hosts</code>文件从而科学上网。由于Hosts中配置的IP经常被封从而导致无法正常访问谷歌，频繁更新Hosts文件也比较麻烦。</p>
+<p>这一篇我们将介绍另外一种方法，即「SOCKS5代理」。SOCKS代理首先需要建立一条 SSH 隧道，然后将浏览器的请求全部由该隧道进行转发和接收。</p>
+<p>开始之前你需要准备以下软件：<br><strong>一台墙外主机</strong> ：<br>国外的云主机提供商<strong>Vultr</strong>、<strong>Linode</strong>、<strong>DigitalOcean</strong>等都可以作为选择。<br><strong>SSH工具</strong> ：<br>Windows下有<strong>Xshell</strong>、<strong>putty</strong>等，Mac 终端默认带有SSH功能<br><strong>Chrome</strong> ：<br>谷歌浏览器，谷歌浏览器，可以配置<strong>SOCKS</strong>代理切换上网方式<br><a id="more"></a></p>
+<h2 id="注册主机"><a href="#注册主机" class="headerlink" title="注册主机"></a>注册主机</h2><p>国外的云主机厂商很多，如果仅仅用来科学上网再顺便搭建一个博客写写日记什么的，我们需要的主机配置并不需要太高。以价格为主要参考因素的话除了<strong>Vultr</strong>有每月<strong>2.5$</strong>的，其他厂商最便宜的配置都是<strong>5$</strong>。Vultr 的注册地址为<a href="http://www.vultr.com/?ref=7023652" target="_blank" rel="external">Vultr.com</a></p>
+<h2 id="登录并部署主机"><a href="#登录并部署主机" class="headerlink" title="登录并部署主机"></a>登录并部署主机</h2><p>因为我用的是Vultr的主机，所以这里以Vultr主机为例。初次注册并登录之后，会要求先设置付款方式。支持的付款方式包括信用卡、PayPal和Bitcoin。绑定付款方式后就可以点击右上角的<code>+</code>按钮部署一台主机，如下图所示<img src="/20170512/host.png" alt="添加Vultr主机"></p>
+<p>接下来根据自己的需求选择主机位置，操作系统，系统配置，最后选择<strong>Deploy Now</strong>。等待主机运行起来之后，我们需要找到该主机的IP以及登录的用户名和密码。位置如下图所示：<img src="/20170512/hostconfig.png" alt="保存Vultr主机IP及用户名密码"></p>
+<h2 id="安装Xshell或者Putty"><a href="#安装Xshell或者Putty" class="headerlink" title="安装Xshell或者Putty"></a>安装Xshell或者Putty</h2><p>选择任意一个工具安装即可，这里以Xshell为例。安装完成后点击<strong>文件</strong>-<strong>新建</strong>，在弹窗中按照以下步骤填写信息。</p>
+<ol>
+<li>点击连接，在主机栏填写主机的IP地址。如下图所示：<br><img src="/20170512/xshellhost.png" alt="Xshell 填写主机IP地址"></li>
+<li>点击用户身份验证，填写刚刚注册的主机的用户名和密码。如下图所示：<br><img src="/20170512/xshellpassword.png" alt="Xshell 填写主机用户名密码"></li>
+<li>点击<strong>SSH</strong>-<strong>隧道</strong>-<strong>添加</strong>，然后<strong>类型（方向）</strong>选择Dynamic（SOCKS4/5），并填写监听端口，端口范围最好用四位数字。如下图所示：<br><img src="/20170512/socks.png" alt="Xshell 选择SOCKS隧道"></li>
+<li>点击确定之后会自动登录我们注册的主机，这时我们需要检查一下代理隧道是否建立成功，当我们看到状态为打开，则表示成功。如下图所示：<br><img src="/20170512/tunnel.png" alt="Xshell 查看SOCKS隧道是否建立成功"></li>
+</ol>
+<h2 id="设置Chrome并访问谷歌"><a href="#设置Chrome并访问谷歌" class="headerlink" title="设置Chrome并访问谷歌"></a>设置Chrome并访问谷歌</h2><p>Chrome支持通过SOCKS代理的方式进行网页浏览，但是默认并没有开启。我们需要做的就是在Chrome启动的时候添加代理参数即可。以我本地桌面的Chrome快捷方式为例，右键点击快捷方式图标，选择属性，然后在<strong>目标</strong>栏最后添加启动参数 <code>--proxy-server=socks5://127.0.0.1:1688</code>。参数的作用是将Chrome的所有请求都转到本地建立的<strong>SOCKS5</strong>隧道代理。设置方式如下图所示：<br><img src="/20170512/chromelink.png" alt="Xshell 查看SOCKS隧道是否建立成功"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此，我们可以通过Chrome自由的访问任何网站，包括「<code>http://t66y.com/</code>」, 没有任何限制( •̅_•̅ )。相比较上一篇的修改<strong>Hosts</strong>文件的方式，此方法是不会被GFW封的。因为通过SOCKS5协议，GFW不知道你在做什么(●’◡’●)。</p>
+<p>但是此种方式很大的一个弊端就是所有的请求都是通过代理进行的。如果你选择了一个美国的主机，那你如果访问国内的网站，需要先请求代理主机，代理主机请求国内的目标主机，然后再返回给我们。不过我们可以双开嘛，一个浏览器用代理访问国外网站，另外一个不用代理就OK啦 ʅ(‾◡◝)。</p>
+<p><strong>预告：</strong>下一篇，我们将介绍更为智能的一种方式，即PAC代理模式。此种模式可以自定义规则从而实现自动切换国内外网站的访问方式。</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+			
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2017/05/07/2017最新Hosts/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2017 OOoo
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>

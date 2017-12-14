@@ -574,13 +574,13 @@
       <category term="popular" scheme="floor23.github.io/categories/popular/"/>
     
     
-      <category term="谷歌SEO" scheme="floor23.github.io/tags/%E8%B0%B7%E6%AD%8CSEO/"/>
-    
       <category term="SEO" scheme="floor23.github.io/tags/SEO/"/>
     
       <category term="域名年龄" scheme="floor23.github.io/tags/%E5%9F%9F%E5%90%8D%E5%B9%B4%E9%BE%84/"/>
     
       <category term="谷歌排名" scheme="floor23.github.io/tags/%E8%B0%B7%E6%AD%8C%E6%8E%92%E5%90%8D/"/>
+    
+      <category term="谷歌SEO" scheme="floor23.github.io/tags/%E8%B0%B7%E6%AD%8CSEO/"/>
     
       <category term="Domain Age" scheme="floor23.github.io/tags/Domain-Age/"/>
     
@@ -984,9 +984,9 @@ _   下划线
       <category term="popular" scheme="floor23.github.io/categories/popular/"/>
     
     
-      <category term="JOHN GRUBER" scheme="floor23.github.io/tags/JOHN-GRUBER/"/>
-    
       <category term="Markdown Grammar" scheme="floor23.github.io/tags/Markdown-Grammar/"/>
+    
+      <category term="JOHN GRUBER" scheme="floor23.github.io/tags/JOHN-GRUBER/"/>
     
       <category term="Markdown语法" scheme="floor23.github.io/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
@@ -1168,11 +1168,11 @@ _   下划线
       <category term="popular" scheme="floor23.github.io/categories/popular/"/>
     
     
+      <category term="JOHN GRUBER" scheme="floor23.github.io/tags/JOHN-GRUBER/"/>
+    
       <category term="Markdown" scheme="floor23.github.io/tags/Markdown/"/>
     
       <category term="GitHub GFM Grammar" scheme="floor23.github.io/tags/GitHub-GFM-Grammar/"/>
-    
-      <category term="JOHN GRUBER" scheme="floor23.github.io/tags/JOHN-GRUBER/"/>
     
   </entry>
   

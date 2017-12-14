@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>获取微信公众号所有历史文章(续) | 纷享</title>
+  <meta name="author" content="OOoo">
+  
+  <meta name="description" content="分享&amp;成长">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="获取微信公众号所有历史文章(续)"/>
+  <meta property="og:site_name" content="纷享"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="纷享" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">纷享</a><span class="split"></span><span class="title">获取微信公众号所有历史文章(续)</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2017-05-02</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <p>@(微信公众号小技巧)[微信公众号|所有历史文章]</p>
+<p><strong>上一篇</strong>我们介绍了如何通过<strong>Fiddler</strong> 和 <strong>Chrome</strong> 得到知名大V所有历史文章的接口。那拿到接口之后该怎么办呢？你需要一个程序员，嗯！(ง •̀_•́)ง</p>
+<blockquote>
+<p><strong>郑重声明：</strong><br>该方法获取微信公众号历史文章仅供参考，请勿恶意使用。另外说明一下，微信本身&gt; 对于抓取数据的接口已经做了限制，如果频繁使用该接口进行数据抓取，微信会暂时&gt; 禁止当前微信号获取所有公众号的历史文章。目测当前的禁止时间为5分钟。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><h2 id="接口简化"><a href="#接口简化" class="headerlink" title="接口简化"></a>接口简化</h2><p><strong>上一篇</strong>最后我们通过Chrome已经看到获取文章列表的URL<code>https://mp.weixin.qq.com/mp/profile_ext?action=getmsg&amp;__biz=MzI0MjA1Mjg2Ng==&amp;f=json&amp;frommsgid=1000000134XXXXX</code>, URL 太长，后面的大串字符我以<code>XXXXX</code>代替。格式化之后如下图所示</p>
+</blockquote>
+<p>为了简化接口，我们把没必要的参数删除，最后发现只有这几个参数是必须的</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数名</th>
+<th style="text-align:left">参数值</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">action</td>
+<td style="text-align:left">getmsg</td>
+<td style="text-align:left">这个URL的目的是干嘛的？获取message（消息）的</td>
+</tr>
+<tr>
+<td style="text-align:left">__biz</td>
+<td style="text-align:left">MzI0MjA1Mjg2Ng==</td>
+<td style="text-align:left">这个参数与微信公众号一一对应，每个公众号都不一样</td>
+</tr>
+<tr>
+<td style="text-align:left">f</td>
+<td style="text-align:left">json</td>
+<td style="text-align:left">获取数据的格式是JSON</td>
+</tr>
+<tr>
+<td style="text-align:left">frommsgid</td>
+<td style="text-align:left">1000000134</td>
+<td style="text-align:left">公众号文章的ID，该接口返回从该ID开始的10篇文章</td>
+</tr>
+</tbody>
+</table>
+<p>公众号历史文章以时间顺序排列，离当前时间最近的文章排在最前面，因此我们可以得到以下规律第一篇文章的ID为1000000142，后续应该是<strong>1000000141，1000000140… …1000000133</strong>，总共10个ID。在获取文章列表后，以最后一篇文章的ID作为拼接下一个URL的<strong>frommsgid</strong>，其他参数不变。这样就可以循环获取所有的历史文章了。</p>
+<h2 id="自动化获取"><a href="#自动化获取" class="headerlink" title="自动化获取"></a>自动化获取</h2><p>我们知道了获取历史文章的规律后，接下来就是怎么通过程序来实现自动获取并输出内容。<br>URL <code>https://mp.weixin.qq.com/mp/profile_ext?action=getmsg&amp;__biz=MzI0MjA1Mjg2Ng==&amp;f=json&amp;frommsgid=1000000134</code> 是真实的可用的地址，在我的浏览器中执行的结果如下，其中参数已经通过红色框标注。</p>
+<p>那你把这个URL拷贝到自己的浏览器中可用看到同样的结果吗？不出意外的话是不可以的。原因就是因为这个接口的正常使用是有条件的，那就是必须获得鉴权。那如何使得浏览器获得跟<strong>微信客户端</strong>同样的权利，然后再使用该接口呢？</p>
+<p>这个就不用麻烦大家自己去测试接口了。经过测试发现在<strong>Fiddler</strong>最开始的响应中有两个Cookie的写入操作，如下图所示</p>
+<p>我们将这两个Cookie写入浏览器，就可以通过以上简单的URL获取公众号历史文章了。另外如果想通过程序自动获取，那只需要在请求的时候带上这两个Cookie内容，并不断修改<strong>frommsgid</strong>就可以获取公众号所有的历史文章了。</p>
+<p><code>最后再次说明一下，频繁请求会被禁止访问所有公众号的历史文章</code> ⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄.  </p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+		
+	
+		
+			
+		
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+	
+		
+	
+	
+	
+		<li class="prev"><a href="/2017/05/07/2017最新Hosts/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2017/04/25/如何获取公众号所有历史文章/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2017 OOoo
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+</body>
+</html>
