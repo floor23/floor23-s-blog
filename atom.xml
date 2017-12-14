@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="floor23.github.io/"/>
-  <updated>2017-10-10T06:26:04.752Z</updated>
+  <updated>2017-12-14T07:57:53.195Z</updated>
   <id>floor23.github.io/</id>
   
   <author>
@@ -14,6 +14,69 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>微信支付接入注意事项</title>
+    <link href="floor23.github.io/2017/12/14/%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E6%8E%A5%E5%85%A5%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"/>
+    <id>floor23.github.io/2017/12/14/微信支付接入注意事项/</id>
+    <published>2017-12-14T07:28:06.000Z</published>
+    <updated>2017-12-14T07:57:53.195Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="微信支付接入注意事项"><a href="#微信支付接入注意事项" class="headerlink" title="微信支付接入注意事项"></a>微信支付接入注意事项</h1><p>微信支付截止目前为止支持5种场景的接入，每一种场景需要特定的开发工作，列举如下：</p>
+<ol>
+<li>公众号支付，适用于在公众号、朋友圈、聊天窗口等微信内完成支付的场景。</li>
+<li>APP支付，适用于在移动端APP中集成微信支付功能的场景。</li>
+<li>扫码支付，适用于PC网站支付、实体店单品等场景。</li>
+<li>刷卡支付，适用于线下面对面收银的场景，如超市、便利店等。</li>
+<li>H5支付，适用于具有H5网页版商城，通过移动端网页调起微信客户端进行支付的场景。</li>
+<li>微信买单，无需开发。</li>
+</ol>
+<h2 id="公众号支付"><a href="#公众号支付" class="headerlink" title="公众号支付"></a>公众号支付</h2><p>需要商户已有H5网站，在微信客户端内发起支付流程。</p>
+<h3 id="公众号内配置"><a href="#公众号内配置" class="headerlink" title="公众号内配置"></a>公众号内配置</h3><p>公众号支付需要在H5页面通过JS接口发起微信支付申请，因此需要在公众号内设置JS接口安全域名。只有在设置的域名或路径下才有权限调用微信开放的JS接口。设置目录为：公众平台–&gt;设置–&gt;公众号设置–&gt;功能设置。<br>JS接口安全域名设置注意事项：</p>
+<ol>
+<li>最多可以添加3个域名或路径（建议写域名，这样域名下任何路径的H5页面均可以在微信中使用JS开放接口）</li>
+<li>域名必须通过ICP备案</li>
+<li>下载验证文件并放至服务器根目录，确保通过域名可以访问。例如域名设置为「m.jxedt.com」，则文件要放置的路径为「m.jxedt.com/MP_verify_XXX.txt」</li>
+<li>最重要的一点，<strong>安全域名一个月仅能修改3次</strong>，确认好业务域名或路径后，尽量把三个域名全部利用起来。</li>
+</ol>
+<p><img src="./20171214/safe_domain.png" alt="安全域名设置"></p>
+<h3 id="微信支付商户平台配置"><a href="#微信支付商户平台配置" class="headerlink" title="微信支付商户平台配置"></a>微信支付商户平台配置</h3><h4 id="支付授权目录配置"><a href="#支付授权目录配置" class="headerlink" title="支付授权目录配置"></a>支付授权目录配置</h4><p>公众号支付在请求支付的时候会校验请求来源是否有在商户平台做了配置，所以必须确保支付目录已经正确的被配置，否则将验证失败，请求支付不成功。<br>支付授权目录的配置路径：商户平台–&gt;产品中心–&gt;开发配置–&gt;支付配置</p>
+<p><img src="./20171214/pay_jsapi.png" alt="支付授权目录配置"></p>
+<h4 id="API证书下载及密钥设置"><a href="#API证书下载及密钥设置" class="headerlink" title="API证书下载及密钥设置"></a>API证书下载及密钥设置</h4><p>部分安全性要求较高的API需要使用API证书来确认调用者的身份，公众号支付中退款接口需要证书。</p>
+<p>API密钥的作用：</p>
+<blockquote>
+<p>在API调用时用来按照指定规则对你的请求参数进行签名，服务器收到你的请求时会进行签名验证，既可以界定你的身份也可以防止其他人恶意篡改请求数据。部分API单独使用API密钥签名进行安全加固，部分安全性要求更高的API会要求使用API密钥签名和API证书同时进行安全加固。</p>
+</blockquote>
+<p>证书下载及密钥设置路径：商户平台–&gt;账户中心–&gt;账户安全–&gt;API安全<br><img src="./20171214/pay_cert.png" alt="API证书下载及密钥设置"></p>
+<h3 id="支付流程"><a href="#支付流程" class="headerlink" title="支付流程"></a>支付流程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">d_start=&gt;start: 开始</div><div class="line">end=&gt;end: 结束</div><div class="line">unified=&gt;operation: 统一下单</div><div class="line">prepay=&gt;operation: 给H5预支付信息</div><div class="line">userpay=&gt;operation: 用户发起支付</div><div class="line">callback=&gt;operation: 处理异步回调</div><div class="line">process=&gt;operation: 保存订单状态</div><div class="line">chk_unified=&gt;condition: 是否下单成功</div><div class="line">chk_prepay=&gt;condition: 订单号及签名校验</div><div class="line">callback=&gt;operation: 回调处理</div><div class="line">d_start-&gt;unified</div><div class="line">unified-&gt;chk_unified</div><div class="line">chk_unified(no)-&gt;end</div><div class="line">chk_unified(yes)-&gt;prepay</div><div class="line">prepay-&gt;chk_prepay</div><div class="line">chk_prepay(yes)-&gt;userpay</div><div class="line">chk_prepay(no)-&gt;end</div><div class="line">userpay-&gt;callback</div><div class="line">callback-&gt;end</div></pre></td></tr></table></figure>
+<h3 id="支付业务时序图"><a href="#支付业务时序图" class="headerlink" title="支付业务时序图"></a>支付业务时序图</h3><p><img src="./20171214/wechat_pay_timeline.png" alt="时序图"></p>
+<h3 id="Server开发注意事项"><a href="#Server开发注意事项" class="headerlink" title="Server开发注意事项"></a>Server开发注意事项</h3><ul>
+<li>微信有两套JS接口可以调起支付（JS-SDK和WeixinJSBridge），所有参数确保与对应的接口保持一致，包括大小写</li>
+<li>统一订单生成时所使用的签名算法，与返回给H5页面的预支付信息中的<strong>签名算法必须保持一致</strong>。为确保不出现莫名签名失败问题，最好统一使用MD5.</li>
+<li>支付回调接口，需做幂等处理，防止多次回调引起业务逻辑问题。</li>
+<li><strong>订单查询功能</strong>可以查看当前订单的状态，进而处理下一步业务逻辑<ul>
+<li>当商户后台、网络、服务器等出现异常，商户系统最终未接收到支付通知；</li>
+<li>调用支付接口后，返回系统错误或未知交易状态情况；</li>
+<li>调用刷卡支付API，返回USERPAYING的状态；</li>
+<li>调用关单或撤销接口API之前，需确认支付状态；</li>
+</ul>
+</li>
+<li><strong>订单关闭功能</strong>使用场景（<strong>订单生成后5分钟内不能关单</strong>）<ul>
+<li>商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付</li>
+<li>系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;微信支付接入注意事项&quot;&gt;&lt;a href=&quot;#微信支付接入注意事项&quot; class=&quot;headerlink&quot; title=&quot;微信支付接入注意事项&quot;&gt;&lt;/a&gt;微信支付接入注意事项&lt;/h1&gt;&lt;p&gt;微信支付截止目前为止支持5种场景的接入，每一种场景需要特定的开发工作，列举如
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>排序算法之冒泡排序及其优化</title>
@@ -128,7 +191,7 @@
     <link href="floor23.github.io/2017/08/31/%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%AD%BE%E5%90%8D%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/"/>
     <id>floor23.github.io/2017/08/31/微信支付签名问题汇总/</id>
     <published>2017-08-31T02:11:49.000Z</published>
-    <updated>2017-09-30T06:56:56.697Z</updated>
+    <updated>2017-09-30T06:56:56.698Z</updated>
     
     <content type="html"><![CDATA[<p>开发微信支付功能，遇到一些很难被发现的坑，在此记录，以防后患。</p>
 <h1 id="公众号支付的场景"><a href="#公众号支付的场景" class="headerlink" title="公众号支付的场景"></a>公众号支付的场景</h1><p>商户已有H5商品页面，用户可以通过点击商城的购买链接或是扫二维码在微信客户端打开网页，从而进行支付。</p>
@@ -361,7 +424,7 @@
     <link href="floor23.github.io/2017/05/25/%E6%9F%B4%E8%A1%B2%E6%98%AF%E4%B8%80%E5%8F%AA%E9%B8%B5%E9%B8%9F/"/>
     <id>floor23.github.io/2017/05/25/柴衲是一只鸵鸟/</id>
     <published>2017-05-25T10:21:56.000Z</published>
-    <updated>2017-05-26T08:24:54.109Z</updated>
+    <updated>2017-05-26T08:24:54.110Z</updated>
     
     <content type="html"><![CDATA[<p>我是鸵鸟柴衲，生活在车迟王国。我有一个幸福美满的家庭，这是一个庞大的家族，除了父母和兄弟姐妹，还有叔叔、阿姨、爷爷、奶奶…</p>
 <p>我们家的院子有一堵围墙，墙不高，只是告诉路人不能随便进入。渐渐地，有些人开始不守规矩了，一些胆大的家伙趁我们不注意溜进来偷东西。</p>
@@ -400,7 +463,7 @@
     <link href="floor23.github.io/2017/05/21/%E5%BD%B1%E5%93%8D%E8%B0%B7%E6%AD%8C%E6%8E%92%E5%90%8D%E7%9A%84200%E4%B8%AA%E5%85%B3%E9%94%AE%E5%9B%A0%E7%B4%A0%EF%BC%9A%E5%AE%8C%E6%95%B4%E7%89%88%EF%BC%881-10%EF%BC%89/"/>
     <id>floor23.github.io/2017/05/21/影响谷歌排名的200个关键因素：完整版（1-10）/</id>
     <published>2017-05-21T14:33:04.000Z</published>
-    <updated>2017-10-10T04:23:12.415Z</updated>
+    <updated>2017-10-10T04:23:12.416Z</updated>
     
     <content type="html"><![CDATA[<p>你应该听过，在谷歌的排名算法中，影响排名结果的因素有大约200个。但是他们都包括哪些，分别代表什么含义？</p>
 <p>现在我将这200个因素完整地整理出来，供大家参考和讨论。</p>
@@ -457,7 +520,7 @@
     <link href="floor23.github.io/2017/05/20/%E5%9F%9F%E5%90%8D%E6%B3%A8%E5%86%8C%E6%97%B6%E9%97%B4%E9%95%BF%E7%9F%AD%E5%AF%B9SEO%E5%BD%B1%E5%93%8D%E6%9C%89%E5%A4%9A%E5%A4%A7/"/>
     <id>floor23.github.io/2017/05/20/域名注册时间长短对SEO影响有多大/</id>
     <published>2017-05-20T09:57:40.000Z</published>
-    <updated>2017-05-20T10:21:17.252Z</updated>
+    <updated>2017-05-20T10:21:17.253Z</updated>
     
     <content type="html"><![CDATA[<h1 id="域名注册时长对SEO到底有多重要？"><a href="#域名注册时长对SEO到底有多重要？" class="headerlink" title="域名注册时长对SEO到底有多重要？"></a>域名注册时长对SEO到底有多重要？</h1><p>一个经常被提及的有关SEO的问题就是：<strong>域名注册的时间</strong>对SEO的影响是否重要。其实可以反过来思考这个问题：</p>
 <ul>
@@ -655,7 +718,7 @@
     <link href="floor23.github.io/2017/05/02/%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E6%89%80%E6%9C%89%E5%8E%86%E5%8F%B2%E6%96%87%E7%AB%A0%EF%BC%88%E7%BB%AD%EF%BC%89/"/>
     <id>floor23.github.io/2017/05/02/如何获取微信公众号所有历史文章（续）/</id>
     <published>2017-05-02T02:12:30.000Z</published>
-    <updated>2017-05-02T02:14:10.945Z</updated>
+    <updated>2017-05-02T02:14:10.946Z</updated>
     
     <content type="html"><![CDATA[<p>@(微信公众号小技巧)[微信公众号|所有历史文章]</p>
 <p><strong>上一篇</strong>我们介绍了如何通过<strong>Fiddler</strong> 和 <strong>Chrome</strong> 得到知名大V所有历史文章的接口。那拿到接口之后该怎么办呢？你需要一个程序员，嗯！(ง •̀_•́)ง</p>
@@ -775,7 +838,7 @@
     <link href="floor23.github.io/2017/04/01/Markdown%20%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%86%85%E8%81%94%EF%BC%88Inline%EF%BC%89%E8%AF%AD%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
     <id>floor23.github.io/2017/04/01/Markdown 官方教程内联（Inline）语法（二）/</id>
     <published>2017-04-01T02:50:13.000Z</published>
-    <updated>2017-05-16T11:11:37.104Z</updated>
+    <updated>2017-05-16T11:11:37.105Z</updated>
     
     <content type="html"><![CDATA[<hr>
 <h2 id="内联元素"><a href="#内联元素" class="headerlink" title="内联元素"></a>内联元素</h2><p>内联元素指的是与行内元素，与块状元素相对应。主要包括链接，代码，强调，图片等元素。块状元素的 Markdown 语法可以参考<a href="https://v2say.com/2017/03/20/Markdown 官方教程块级（Block）语法（一）/" target="_blank" rel="external">上一篇</a></p>
@@ -936,7 +999,7 @@ _   下划线
     <link href="floor23.github.io/2017/03/20/Markdown%20%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%9D%97%E7%BA%A7%EF%BC%88Block%EF%BC%89%E8%AF%AD%E6%B3%95%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>floor23.github.io/2017/03/20/Markdown 官方教程块级（Block）语法（一）/</id>
     <published>2017-03-20T05:12:30.000Z</published>
-    <updated>2017-05-16T11:10:59.078Z</updated>
+    <updated>2017-05-16T11:10:59.079Z</updated>
     
     <content type="html"><![CDATA[<p>Markdown 语法<br>参考：JOHN GRUBER「Markdown 语法作者」<a href="https://daringfireball.net/projects/markdown/syntax" target="_blank" rel="external">个人网站</a></p>
 <p><strong>注:</strong> 该文档就是采用 Markdown 语法进行编辑的。</p>
