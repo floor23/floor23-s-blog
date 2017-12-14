@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="floor23.github.io/"/>
-  <updated>2017-12-14T07:57:53.195Z</updated>
+  <updated>2017-12-14T09:31:43.055Z</updated>
   <id>floor23.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="floor23.github.io/2017/12/14/%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E6%8E%A5%E5%85%A5%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"/>
     <id>floor23.github.io/2017/12/14/微信支付接入注意事项/</id>
     <published>2017-12-14T07:28:06.000Z</published>
-    <updated>2017-12-14T07:57:53.195Z</updated>
+    <updated>2017-12-14T09:31:43.055Z</updated>
     
     <content type="html"><![CDATA[<h1 id="微信支付接入注意事项"><a href="#微信支付接入注意事项" class="headerlink" title="微信支付接入注意事项"></a>微信支付接入注意事项</h1><p>微信支付截止目前为止支持5种场景的接入，每一种场景需要特定的开发工作，列举如下：</p>
 <ol>
@@ -39,17 +39,17 @@
 <li>下载验证文件并放至服务器根目录，确保通过域名可以访问。例如域名设置为「m.jxedt.com」，则文件要放置的路径为「m.jxedt.com/MP_verify_XXX.txt」</li>
 <li>最重要的一点，<strong>安全域名一个月仅能修改3次</strong>，确认好业务域名或路径后，尽量把三个域名全部利用起来。</li>
 </ol>
-<p><img src="./20171214/safe_domain.png" alt="安全域名设置"></p>
+<p><img src="../20171214/safe_domain.png" alt="安全域名设置"></p>
 <h3 id="微信支付商户平台配置"><a href="#微信支付商户平台配置" class="headerlink" title="微信支付商户平台配置"></a>微信支付商户平台配置</h3><h4 id="支付授权目录配置"><a href="#支付授权目录配置" class="headerlink" title="支付授权目录配置"></a>支付授权目录配置</h4><p>公众号支付在请求支付的时候会校验请求来源是否有在商户平台做了配置，所以必须确保支付目录已经正确的被配置，否则将验证失败，请求支付不成功。<br>支付授权目录的配置路径：商户平台–&gt;产品中心–&gt;开发配置–&gt;支付配置</p>
-<p><img src="./20171214/pay_jsapi.png" alt="支付授权目录配置"></p>
+<p><img src="../20171214/pay_jsapi.png" alt="支付授权目录配置"></p>
 <h4 id="API证书下载及密钥设置"><a href="#API证书下载及密钥设置" class="headerlink" title="API证书下载及密钥设置"></a>API证书下载及密钥设置</h4><p>部分安全性要求较高的API需要使用API证书来确认调用者的身份，公众号支付中退款接口需要证书。</p>
 <p>API密钥的作用：</p>
 <blockquote>
 <p>在API调用时用来按照指定规则对你的请求参数进行签名，服务器收到你的请求时会进行签名验证，既可以界定你的身份也可以防止其他人恶意篡改请求数据。部分API单独使用API密钥签名进行安全加固，部分安全性要求更高的API会要求使用API密钥签名和API证书同时进行安全加固。</p>
 </blockquote>
-<p>证书下载及密钥设置路径：商户平台–&gt;账户中心–&gt;账户安全–&gt;API安全<br><img src="./20171214/pay_cert.png" alt="API证书下载及密钥设置"></p>
-<h3 id="支付流程"><a href="#支付流程" class="headerlink" title="支付流程"></a>支付流程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">d_start=&gt;start: 开始</div><div class="line">end=&gt;end: 结束</div><div class="line">unified=&gt;operation: 统一下单</div><div class="line">prepay=&gt;operation: 给H5预支付信息</div><div class="line">userpay=&gt;operation: 用户发起支付</div><div class="line">callback=&gt;operation: 处理异步回调</div><div class="line">process=&gt;operation: 保存订单状态</div><div class="line">chk_unified=&gt;condition: 是否下单成功</div><div class="line">chk_prepay=&gt;condition: 订单号及签名校验</div><div class="line">callback=&gt;operation: 回调处理</div><div class="line">d_start-&gt;unified</div><div class="line">unified-&gt;chk_unified</div><div class="line">chk_unified(no)-&gt;end</div><div class="line">chk_unified(yes)-&gt;prepay</div><div class="line">prepay-&gt;chk_prepay</div><div class="line">chk_prepay(yes)-&gt;userpay</div><div class="line">chk_prepay(no)-&gt;end</div><div class="line">userpay-&gt;callback</div><div class="line">callback-&gt;end</div></pre></td></tr></table></figure>
-<h3 id="支付业务时序图"><a href="#支付业务时序图" class="headerlink" title="支付业务时序图"></a>支付业务时序图</h3><p><img src="./20171214/wechat_pay_timeline.png" alt="时序图"></p>
+<p>证书下载及密钥设置路径：商户平台–&gt;账户中心–&gt;账户安全–&gt;API安全<br><img src="../20171214/pay_cert.png" alt="API证书下载及密钥设置"></p>
+<h3 id="支付流程"><a href="#支付流程" class="headerlink" title="支付流程"></a>支付流程</h3><p><img src="../20171214/pay_flow.png" alt="微信支付流程图"></p>
+<h3 id="支付业务时序图"><a href="#支付业务时序图" class="headerlink" title="支付业务时序图"></a>支付业务时序图</h3><p><img src="../20171214/wechat_pay_timeline.png" alt="时序图"></p>
 <h3 id="Server开发注意事项"><a href="#Server开发注意事项" class="headerlink" title="Server开发注意事项"></a>Server开发注意事项</h3><ul>
 <li>微信有两套JS接口可以调起支付（JS-SDK和WeixinJSBridge），所有参数确保与对应的接口保持一致，包括大小写</li>
 <li>统一订单生成时所使用的签名算法，与返回给H5页面的预支付信息中的<strong>签名算法必须保持一致</strong>。为确保不出现莫名签名失败问题，最好统一使用MD5.</li>
@@ -75,6 +75,10 @@
     
     </summary>
     
+      <category term="微信" scheme="floor23.github.io/categories/%E5%BE%AE%E4%BF%A1/"/>
+    
+    
+      <category term="微信公众号支付" scheme="floor23.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E6%94%AF%E4%BB%98/"/>
     
   </entry>
   
@@ -229,13 +233,13 @@
       <category term="Java" scheme="floor23.github.io/categories/Java/"/>
     
     
+      <category term="微信公众号支付" scheme="floor23.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E6%94%AF%E4%BB%98/"/>
+    
       <category term="微信支付" scheme="floor23.github.io/tags/%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98/"/>
     
       <category term="签名" scheme="floor23.github.io/tags/%E7%AD%BE%E5%90%8D/"/>
     
       <category term="支付签名校验失败" scheme="floor23.github.io/tags/%E6%94%AF%E4%BB%98%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C%E5%A4%B1%E8%B4%A5/"/>
-    
-      <category term="微信公众号支付" scheme="floor23.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E6%94%AF%E4%BB%98/"/>
     
   </entry>
   
@@ -625,11 +629,11 @@
       <category term="tools" scheme="floor23.github.io/categories/tools/"/>
     
     
+      <category term="如何通过SOCKS代理实现科学上网" scheme="floor23.github.io/tags/%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87SOCKS%E4%BB%A3%E7%90%86%E5%AE%9E%E7%8E%B0%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
+    
       <category term="翻墙" scheme="floor23.github.io/tags/%E7%BF%BB%E5%A2%99/"/>
     
       <category term="最简单的方法使用Google" scheme="floor23.github.io/tags/%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8Google/"/>
-    
-      <category term="如何通过SOCKS代理实现科学上网" scheme="floor23.github.io/tags/%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87SOCKS%E4%BB%A3%E7%90%86%E5%AE%9E%E7%8E%B0%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
     
       <category term="图文教程教你如何翻墙" scheme="floor23.github.io/tags/%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E7%BF%BB%E5%A2%99/"/>
     
@@ -705,11 +709,11 @@
       <category term="tools" scheme="floor23.github.io/categories/tools/"/>
     
     
-      <category term="2017最新Hosts" scheme="floor23.github.io/tags/2017%E6%9C%80%E6%96%B0Hosts/"/>
-    
       <category term="翻墙" scheme="floor23.github.io/tags/%E7%BF%BB%E5%A2%99/"/>
     
       <category term="最简单的方法使用Google" scheme="floor23.github.io/tags/%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8Google/"/>
+    
+      <category term="2017最新Hosts" scheme="floor23.github.io/tags/2017%E6%9C%80%E6%96%B0Hosts/"/>
     
   </entry>
   

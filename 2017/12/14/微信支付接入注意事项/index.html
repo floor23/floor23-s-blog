@@ -75,17 +75,17 @@
 <li>下载验证文件并放至服务器根目录，确保通过域名可以访问。例如域名设置为「m.jxedt.com」，则文件要放置的路径为「m.jxedt.com/MP_verify_XXX.txt」</li>
 <li>最重要的一点，<strong>安全域名一个月仅能修改3次</strong>，确认好业务域名或路径后，尽量把三个域名全部利用起来。</li>
 </ol>
-<p><img src="./20171214/safe_domain.png" alt="安全域名设置"></p>
+<p><img src="../20171214/safe_domain.png" alt="安全域名设置"></p>
 <h3 id="微信支付商户平台配置"><a href="#微信支付商户平台配置" class="headerlink" title="微信支付商户平台配置"></a>微信支付商户平台配置</h3><h4 id="支付授权目录配置"><a href="#支付授权目录配置" class="headerlink" title="支付授权目录配置"></a>支付授权目录配置</h4><p>公众号支付在请求支付的时候会校验请求来源是否有在商户平台做了配置，所以必须确保支付目录已经正确的被配置，否则将验证失败，请求支付不成功。<br>支付授权目录的配置路径：商户平台–&gt;产品中心–&gt;开发配置–&gt;支付配置</p>
-<p><img src="./20171214/pay_jsapi.png" alt="支付授权目录配置"></p>
+<p><img src="../20171214/pay_jsapi.png" alt="支付授权目录配置"></p>
 <h4 id="API证书下载及密钥设置"><a href="#API证书下载及密钥设置" class="headerlink" title="API证书下载及密钥设置"></a>API证书下载及密钥设置</h4><p>部分安全性要求较高的API需要使用API证书来确认调用者的身份，公众号支付中退款接口需要证书。</p>
 <p>API密钥的作用：</p>
 <blockquote>
 <p>在API调用时用来按照指定规则对你的请求参数进行签名，服务器收到你的请求时会进行签名验证，既可以界定你的身份也可以防止其他人恶意篡改请求数据。部分API单独使用API密钥签名进行安全加固，部分安全性要求更高的API会要求使用API密钥签名和API证书同时进行安全加固。</p>
 </blockquote>
-<p>证书下载及密钥设置路径：商户平台–&gt;账户中心–&gt;账户安全–&gt;API安全<br><img src="./20171214/pay_cert.png" alt="API证书下载及密钥设置"></p>
-<h3 id="支付流程"><a href="#支付流程" class="headerlink" title="支付流程"></a>支付流程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">d_start=&gt;start: 开始</div><div class="line">end=&gt;end: 结束</div><div class="line">unified=&gt;operation: 统一下单</div><div class="line">prepay=&gt;operation: 给H5预支付信息</div><div class="line">userpay=&gt;operation: 用户发起支付</div><div class="line">callback=&gt;operation: 处理异步回调</div><div class="line">process=&gt;operation: 保存订单状态</div><div class="line">chk_unified=&gt;condition: 是否下单成功</div><div class="line">chk_prepay=&gt;condition: 订单号及签名校验</div><div class="line">callback=&gt;operation: 回调处理</div><div class="line">d_start-&gt;unified</div><div class="line">unified-&gt;chk_unified</div><div class="line">chk_unified(no)-&gt;end</div><div class="line">chk_unified(yes)-&gt;prepay</div><div class="line">prepay-&gt;chk_prepay</div><div class="line">chk_prepay(yes)-&gt;userpay</div><div class="line">chk_prepay(no)-&gt;end</div><div class="line">userpay-&gt;callback</div><div class="line">callback-&gt;end</div></pre></td></tr></table></figure>
-<h3 id="支付业务时序图"><a href="#支付业务时序图" class="headerlink" title="支付业务时序图"></a>支付业务时序图</h3><p><img src="./20171214/wechat_pay_timeline.png" alt="时序图"></p>
+<p>证书下载及密钥设置路径：商户平台–&gt;账户中心–&gt;账户安全–&gt;API安全<br><img src="../20171214/pay_cert.png" alt="API证书下载及密钥设置"></p>
+<h3 id="支付流程"><a href="#支付流程" class="headerlink" title="支付流程"></a>支付流程</h3><p><img src="../20171214/pay_flow.png" alt="微信支付流程图"></p>
+<h3 id="支付业务时序图"><a href="#支付业务时序图" class="headerlink" title="支付业务时序图"></a>支付业务时序图</h3><p><img src="../20171214/wechat_pay_timeline.png" alt="时序图"></p>
 <h3 id="Server开发注意事项"><a href="#Server开发注意事项" class="headerlink" title="Server开发注意事项"></a>Server开发注意事项</h3><ul>
 <li>微信有两套JS接口可以调起支付（JS-SDK和WeixinJSBridge），所有参数确保与对应的接口保持一致，包括大小写</li>
 <li>统一订单生成时所使用的签名算法，与返回给H5页面的预支付信息中的<strong>签名算法必须保持一致</strong>。为确保不出现莫名签名失败问题，最好统一使用MD5.</li>
