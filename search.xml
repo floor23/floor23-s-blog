@@ -3,6 +3,64 @@
   
     
     <entry>
+      <title><![CDATA[DOS 命令小结]]></title>
+      <url>/2018/01/09/DOS-%E5%91%BD%E4%BB%A4%E5%B0%8F%E7%BB%93/</url>
+      <content type="html"><![CDATA[<h1 id="DOS命令简介"><a href="#DOS命令简介" class="headerlink" title="DOS命令简介"></a>DOS命令简介</h1><p>Dos命令可以在不借助其他编程语言和环境的情况下完成很多自动化的任务，今天刚好有个Windows服务器下的脚本需要定时调用，因此就学了一下基本的命令并在此记录，以备后用。</p>
+<h2 id="echo命令"><a href="#echo命令" class="headerlink" title="echo命令"></a>echo命令</h2><p>echo 用来显示执行的命令或执行命令的结果「注：在bat脚本中两个冒号标示注释」</p>
+<pre><code>bash
+::打开echo回显，执行Dos命令之后不仅会显示命令本身，还会显示命令执行结果
+echo on
+::关闭echo回显，执行Dos命令之后不会显示命令本身，仅显示命令执行结果
+echo off
+::输出变量「DIR」到文件log.txt中,每次写入文件会覆盖之前的记录
+echo %DIR%  &gt; log.txt
+::输出变量「DIR」到文件log.txt中,每次写入文件会追加到log.txt文件末尾
+echo %DIR%  &gt;&gt; log.txt
+</code></pre><h2 id="文件及文件夹路径相关"><a href="#文件及文件夹路径相关" class="headerlink" title="文件及文件夹路径相关"></a>文件及文件夹路径相关</h2><p>Dos命令中可以直接使用内置变量来获取当前路径及文件的相关信息(<strong>注：</strong>下述命令中「I」为变量占位符，其中「0」代表执行文件本身，「1」代表「#1」，「2」代表「#2」…)</p>
+<pre><code>bash
+%~I         - 移除变量两边的引号 (&quot;)，例如「%~0」表示当前文件的全路径
+%~fI        - 全路径
+%~dI        - 仅包含驱动器路径
+%~pI        - 仅包含路径
+%~nI        - 仅包含文件名称
+</code></pre><h2 id="字符串操作"><a href="#字符串操作" class="headerlink" title="字符串操作"></a>字符串操作</h2><p>在Dos命令中，两个「%」包围起来的是我们定义的变量，如果变量是个字符串，我们可以在两个「%」中对该字符进行截断</p>
+<pre><code>bash
+%date%  -代表date字符串
+%date:~2%  -标示date字符串由第二个字符开始往后所有字符
+%date:~-2%  -标示date字符串由倒数第二个字符开始往前所有字符
+%date:~2,5%  -标示date字符串由第二个字符开始往后5个字符
+</code></pre><h2 id="FOR语法"><a href="#FOR语法" class="headerlink" title="FOR语法"></a>FOR语法</h2><p>FOR 语法中可以带多个参数其中「/R」表示递归查找， 「%%i」其中i为占位符，可以是任何<strong>单个</strong>字母，表示循环变量。in 后面的括号中可以利用正则匹配文件名称，如「*.txt」表示任何以「.txt」结尾的文件。</p>
+<pre><code>bash
+for /R %DIR% %%i in (*start.bat) do (
+echo &quot;%%i&quot;  &gt;&gt; start.log
+)
+</code></pre><p>以上例子会将「DIR」路径下所有以start.bat结尾的文件输出到start.log中</p>
+<h2 id="Call和Start"><a href="#Call和Start" class="headerlink" title="Call和Start"></a>Call和Start</h2><p>Call会调用命令或其他批处理，会等待调用的命令执行完毕然后再继续当前操作<br>Start会另外启动一个新的窗口来运行其他命令或批处理。也就是说Start命令会另起一个「线程」完成指定的任务。</p>
+<p>此次使用DOS命令目的是定时执行我们服务器上一个目录下的所有脚本，以上是使用到的命令及相关介绍，配合Windows自身的「任务计划程序」，简单实用，非常好用。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> TECH </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> DOS </tag>
+            
+            <tag> bat </tag>
+            
+            <tag> cmd </tag>
+            
+            <tag> 遍历文件夹，调用批处理 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[微信支付接入注意事项]]></title>
       <url>/2017/12/14/%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E6%8E%A5%E5%85%A5%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
       <content type="html"><![CDATA[<h1 id="微信支付接入注意事项"><a href="#微信支付接入注意事项" class="headerlink" title="微信支付接入注意事项"></a>微信支付接入注意事项</h1><p>微信支付截止目前为止支持5种场景的接入，每一种场景需要特定的开发工作，列举如下：</p>
@@ -896,9 +954,9 @@ _   下划线
         
         <tags>
             
-            <tag> JOHN GRUBER </tag>
-            
             <tag> Markdown Grammar </tag>
+            
+            <tag> JOHN GRUBER </tag>
             
             <tag> Markdown语法 </tag>
             
@@ -1072,11 +1130,11 @@ _   下划线
         
         <tags>
             
+            <tag> JOHN GRUBER </tag>
+            
             <tag> Markdown </tag>
             
             <tag> GitHub GFM Grammar </tag>
-            
-            <tag> JOHN GRUBER </tag>
             
         </tags>
         
