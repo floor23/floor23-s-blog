@@ -112,7 +112,7 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
       
         <categories>
             
-            <category> 微信 </category>
+            <category> TECH </category>
             
         </categories>
         
@@ -176,7 +176,7 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
       
         <categories>
             
-            <category> algorithm </category>
+            <category> TECH </category>
             
         </categories>
         
@@ -211,7 +211,7 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
       
         <categories>
             
-            <category> Java </category>
+            <category> TECH </category>
             
         </categories>
         
@@ -259,7 +259,7 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
       
         <categories>
             
-            <category> Java </category>
+            <category> TECH </category>
             
         </categories>
         
@@ -434,9 +434,9 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
         
         <tags>
             
-            <tag> 柴衲 </tag>
-            
             <tag> 鸵鸟心态 </tag>
+            
+            <tag> 柴衲 </tag>
             
             <tag> 翻越围墙 </tag>
             
@@ -570,7 +570,7 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
       
         <categories>
             
-            <category> popular </category>
+            <category> SEO </category>
             
         </categories>
         
@@ -754,7 +754,7 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
       
         <categories>
             
-            <category> tools </category>
+            <category> TECH </category>
             
         </categories>
         
@@ -790,7 +790,7 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
       
         <categories>
             
-            <category> tools </category>
+            <category> TECH </category>
             
         </categories>
         
