@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>为什么 wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中 | 纷享</title>
+  <title>纷享</title>
   <meta name="author" content="OOoo">
   
   <meta name="description" content="分享&amp;成长">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="为什么 wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中"/>
+  
   <meta property="og:site_name" content="纷享"/>
 
   
@@ -45,7 +45,7 @@
   <div class="container" id="container">
 	<div class="content">
 	  <div class="page-header">		
-  <h1><a class="brand" href="/">纷享</a><span class="split"></span><span class="title">为什么 wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2017-09-30</span></h1>
+  <h1><a class="brand" href="/">纷享</a><span class="split"></span><span class="title"></span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2017-09-30</span></h1>
 </div>		
 
 <div class="row page">
@@ -58,9 +58,12 @@
 	  
 
 	  <!-- content -->
-	  <p>Java中，任何对象都拥有一个Monitor的概念，这个Monitor拥有单独的一个锁，并拥有一个入队列和一个等待队列。没有被synchronized修饰的方法或语句，可以在任何时间被任何线程调用。而被synchronized修饰的方法同一时间仅能被一个拥有该对象锁的线程调用。当一个线程在调用synchronized方法时，另外的线程调用该方法时就被阻塞，并放入队列中。</p>
+	  <h1 id="为什么-wait-notify-notifyAll-的调用必须在-synchronized-代码中"><a href="#为什么-wait-notify-notifyAll-的调用必须在-synchronized-代码中" class="headerlink" title="为什么 wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中"></a>为什么 wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中</h1><p><strong>关键字</strong>：Java,多线程</p>
+<p>Java中，任何对象都拥有一个Monitor的概念，这个Monitor拥有单独的一个锁，并拥有一个入队列和一个等待队列。没有被synchronized修饰的方法或语句，可以在任何时间被任何线程调用。而被synchronized修饰的方法同一时间仅能被一个拥有该对象锁的线程调用。当一个线程在调用synchronized方法时，另外的线程调用该方法时就被阻塞，并放入队列中。</p>
 <p>多线程开发中，wait(),notify(),notifyAll()方法必须在synchronized方法或代码块中，否则会抛出运行时异常：<code>java.lang.IllegalMonitorStateException: current thread not owner</code>。因为要想调用这些方法，必须要保证调用方法的线程已经获取了该对象的锁。</p>
-<a id="more"></a>
+<p>示例代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObjWait</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Object lock = <span class="keyword">new</span> Object();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> Thread thread = <span class="keyword">new</span> Thread(() -&gt; &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                lock.wait();</div><div class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        thread.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Exception in thread <span class="string">"Thread-0"</span> java.lang.IllegalMonitorStateException</div><div class="line">	at java.lang.Object.wait(Native Method)</div><div class="line">	at java.lang.Object.wait(Object.java:<span class="number">502</span>)</div><div class="line">	at interrupt.ObjWait.lambda$main$<span class="number">0</span>(ObjWait.java:<span class="number">9</span>)</div><div class="line">	at java.lang.Thread.run(Thread.java:<span class="number">748</span>)</div></pre></td></tr></table></figure>
 <h1 id="wait-方法会释放所持有的锁"><a href="#wait-方法会释放所持有的锁" class="headerlink" title="wait() 方法会释放所持有的锁"></a>wait() 方法会释放所持有的锁</h1><p>当一个线程在调用wait()方法时，该线程会释放当前所持有的锁，并进入等待队列。因此要想执行该方法，前提是必须拥有这个锁，而synchronized可以保证在执行wait()时，已经拿到了锁。</p>
 <h1 id="什么情况下我们才会使用wait"><a href="#什么情况下我们才会使用wait" class="headerlink" title="什么情况下我们才会使用wait()"></a>什么情况下我们才会使用wait()</h1><p>在等待队列中的线程只会被notify()、notifyAll()唤醒并执行。</p>
 <p>一般情况下，我们在调用wait()时，肯定会加上一个限定条件。也就是说在达到某个条件之后，我们才会让当前线程wait()。而notify()、notifyAll()也是在达到某个条件之后，我们才会去唤醒其他的等待线程。而这个条件就是线程间进行通信的一个互斥条件。</p>
@@ -80,24 +83,12 @@
 	
 	
 		
-			
+	
 		
 	
 		
-			
-		
 	
 		
-			
-		
-	
-		
-			
-			
-		
-	
-		
-			
 			
 			
 		
@@ -112,29 +103,13 @@
 	
 		
 	
-		
-	
-		
-	
-		
-			
-		
-	
-		
-			
-		
-	
-		
-	
-		
 	
 	
-	
-		<li class="prev"><a href="/2017/10/10/排序算法之冒泡排序及其优化/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
 	
 	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
 	
-		<li class="next"><a href="/2017/08/31/微信支付签名问题汇总/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+		<li class="next disabled"><a>next<i class="fa fa-arrow-circle-o-right"></i></a></li>
 	
 </ul>
 </div>
@@ -150,7 +125,7 @@
   </div>
   <div class="container-narrow">
 	<footer> <p>
-  &copy; 2018 OOoo
+  &copy; 2019 OOoo
   
       with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
 </p> </footer>
