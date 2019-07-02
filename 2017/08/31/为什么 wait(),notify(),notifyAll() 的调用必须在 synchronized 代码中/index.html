@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中 | 纷享</title>
+  <meta name="author" content="OOoo">
+  
+  <meta name="description" content="分享&amp;成长">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中"/>
+  <meta property="og:site_name" content="纷享"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="纷享" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">纷享</a><span class="split"></span><span class="title">wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2017-08-31</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <p><strong>关键字</strong>：Java,多线程</p>
+<p>Java中，任何对象都拥有一个Monitor的概念，这个Monitor拥有单独的一个锁，并拥有一个入队列和一个等待队列。没有被synchronized修饰的方法或语句，可以在任何时间被任何线程调用。而被synchronized修饰的方法同一时间仅能被一个拥有该对象锁的线程调用。当一个线程在调用synchronized方法时，另外的线程调用该方法时就被阻塞，并放入队列中。</p>
+<p>多线程开发中，wait(),notify(),notifyAll()方法必须在synchronized方法或代码块中，否则会抛出运行时异常：<code>java.lang.IllegalMonitorStateException: current thread not owner</code>。因为要想调用这些方法，必须要保证调用方法的线程已经获取了该对象的锁。</p>
+<p>示例代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObjWait</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Object lock = <span class="keyword">new</span> Object();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> Thread thread = <span class="keyword">new</span> Thread(() -&gt; &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                lock.wait();</div><div class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        thread.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Exception in thread <span class="string">"Thread-0"</span> java.lang.IllegalMonitorStateException</div><div class="line">	at java.lang.Object.wait(Native Method)</div><div class="line">	at java.lang.Object.wait(Object.java:<span class="number">502</span>)</div><div class="line">	at interrupt.ObjWait.lambda$main$<span class="number">0</span>(ObjWait.java:<span class="number">9</span>)</div><div class="line">	at java.lang.Thread.run(Thread.java:<span class="number">748</span>)</div></pre></td></tr></table></figure>
+<h1 id="wait-方法会释放所持有的锁"><a href="#wait-方法会释放所持有的锁" class="headerlink" title="wait() 方法会释放所持有的锁"></a>wait() 方法会释放所持有的锁</h1><p>当一个线程在调用wait()方法时，该线程会释放当前所持有的锁，并进入等待队列。因此要想执行该方法，前提是必须拥有这个锁，而synchronized可以保证在执行wait()时，已经拿到了锁。</p>
+<h1 id="什么情况下我们才会使用wait"><a href="#什么情况下我们才会使用wait" class="headerlink" title="什么情况下我们才会使用wait()"></a>什么情况下我们才会使用wait()</h1><p>在等待队列中的线程只会被notify()、notifyAll()唤醒并执行。</p>
+<p>一般情况下，我们在调用wait()时，肯定会加上一个限定条件。也就是说在达到某个条件之后，我们才会让当前线程wait()。而notify()、notifyAll()也是在达到某个条件之后，我们才会去唤醒其他的等待线程。而这个条件就是线程间进行通信的一个互斥条件。</p>
+<h1 id="生产者消费者模式解读"><a href="#生产者消费者模式解读" class="headerlink" title="生产者消费者模式解读"></a>生产者消费者模式解读</h1><p>以生产者消费者模式为例，消费者从缓存中取数据，生产者向缓存中写数据。消费者必须等生产者写入数据后才能取数据，生产者必须等消费者把数据取走之后才能向缓存中写数据。如果wait(),notify(),notifyAll()可以被任意方法调用，当消费者在读数据的时候，发现缓存为空，这时调用了wait()方法，而此时生产者也调用了notify()，告诉消费者有数据到达，这样消费者就永远接收不到这个通知，然后一直等下去。</p>
+<p>因此，我们必须在synchronized方法中调用wait(),notify(),notifyAll()，从而互斥地拥有锁，从而保证不会丢失通知。</p>
+<p>参考文章:<a href="http://www.xyzws.com/Javafaq/why-wait-notify-notifyall-must-be-called-inside-a-synchronized-method-block/127" target="_blank" rel="external">Why wait(), notify(), notifyAll() must be called inside a synchronized method/block?</a></p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next disabled"><a>next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 OOoo
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>

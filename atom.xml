@@ -215,36 +215,6 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
   </entry>
   
   <entry>
-    <title></title>
-    <link href="floor23.github.io/2017/09/30/%E4%B8%BA%E4%BB%80%E4%B9%88%20wait(),notify(),notifyAll()%20%E7%9A%84%E8%B0%83%E7%94%A8%E5%BF%85%E9%A1%BB%E5%9C%A8%20synchronized%20%E4%BB%A3%E7%A0%81%E4%B8%AD/"/>
-    <id>floor23.github.io/2017/09/30/为什么 wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中/</id>
-    <published>2017-09-30T07:13:12.673Z</published>
-    <updated>2019-07-02T06:35:49.223Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="为什么-wait-notify-notifyAll-的调用必须在-synchronized-代码中"><a href="#为什么-wait-notify-notifyAll-的调用必须在-synchronized-代码中" class="headerlink" title="为什么 wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中"></a>为什么 wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中</h1><p><strong>关键字</strong>：Java,多线程</p>
-<p>Java中，任何对象都拥有一个Monitor的概念，这个Monitor拥有单独的一个锁，并拥有一个入队列和一个等待队列。没有被synchronized修饰的方法或语句，可以在任何时间被任何线程调用。而被synchronized修饰的方法同一时间仅能被一个拥有该对象锁的线程调用。当一个线程在调用synchronized方法时，另外的线程调用该方法时就被阻塞，并放入队列中。</p>
-<p>多线程开发中，wait(),notify(),notifyAll()方法必须在synchronized方法或代码块中，否则会抛出运行时异常：<code>java.lang.IllegalMonitorStateException: current thread not owner</code>。因为要想调用这些方法，必须要保证调用方法的线程已经获取了该对象的锁。</p>
-<p>示例代码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObjWait</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Object lock = <span class="keyword">new</span> Object();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> Thread thread = <span class="keyword">new</span> Thread(() -&gt; &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                lock.wait();</div><div class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        thread.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Exception in thread <span class="string">"Thread-0"</span> java.lang.IllegalMonitorStateException</div><div class="line">	at java.lang.Object.wait(Native Method)</div><div class="line">	at java.lang.Object.wait(Object.java:<span class="number">502</span>)</div><div class="line">	at interrupt.ObjWait.lambda$main$<span class="number">0</span>(ObjWait.java:<span class="number">9</span>)</div><div class="line">	at java.lang.Thread.run(Thread.java:<span class="number">748</span>)</div></pre></td></tr></table></figure>
-<h1 id="wait-方法会释放所持有的锁"><a href="#wait-方法会释放所持有的锁" class="headerlink" title="wait() 方法会释放所持有的锁"></a>wait() 方法会释放所持有的锁</h1><p>当一个线程在调用wait()方法时，该线程会释放当前所持有的锁，并进入等待队列。因此要想执行该方法，前提是必须拥有这个锁，而synchronized可以保证在执行wait()时，已经拿到了锁。</p>
-<h1 id="什么情况下我们才会使用wait"><a href="#什么情况下我们才会使用wait" class="headerlink" title="什么情况下我们才会使用wait()"></a>什么情况下我们才会使用wait()</h1><p>在等待队列中的线程只会被notify()、notifyAll()唤醒并执行。</p>
-<p>一般情况下，我们在调用wait()时，肯定会加上一个限定条件。也就是说在达到某个条件之后，我们才会让当前线程wait()。而notify()、notifyAll()也是在达到某个条件之后，我们才会去唤醒其他的等待线程。而这个条件就是线程间进行通信的一个互斥条件。</p>
-<h1 id="生产者消费者模式解读"><a href="#生产者消费者模式解读" class="headerlink" title="生产者消费者模式解读"></a>生产者消费者模式解读</h1><p>以生产者消费者模式为例，消费者从缓存中取数据，生产者向缓存中写数据。消费者必须等生产者写入数据后才能取数据，生产者必须等消费者把数据取走之后才能向缓存中写数据。如果wait(),notify(),notifyAll()可以被任意方法调用，当消费者在读数据的时候，发现缓存为空，这时调用了wait()方法，而此时生产者也调用了notify()，告诉消费者有数据到达，这样消费者就永远接收不到这个通知，然后一直等下去。</p>
-<p>因此，我们必须在synchronized方法中调用wait(),notify(),notifyAll()，从而互斥地拥有锁，从而保证不会丢失通知。</p>
-<p>参考文章:<a href="http://www.xyzws.com/Javafaq/why-wait-notify-notifyall-must-be-called-inside-a-synchronized-method-block/127" target="_blank" rel="external">Why wait(), notify(), notifyAll() must be called inside a synchronized method/block?</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;为什么-wait-notify-notifyAll-的调用必须在-synchronized-代码中&quot;&gt;&lt;a href=&quot;#为什么-wait-notify-notifyAll-的调用必须在-synchronized-代码中&quot; class=&quot;headerlink&quot; t
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>微信支付签名问题汇总</title>
     <link href="floor23.github.io/2017/08/31/%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E7%AD%BE%E5%90%8D%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/"/>
     <id>floor23.github.io/2017/08/31/微信支付签名问题汇总/</id>
@@ -294,6 +264,43 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
       <category term="签名" scheme="floor23.github.io/tags/%E7%AD%BE%E5%90%8D/"/>
     
       <category term="支付签名校验失败" scheme="floor23.github.io/tags/%E6%94%AF%E4%BB%98%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C%E5%A4%B1%E8%B4%A5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中</title>
+    <link href="floor23.github.io/2017/08/31/%E4%B8%BA%E4%BB%80%E4%B9%88%20wait(),notify(),notifyAll()%20%E7%9A%84%E8%B0%83%E7%94%A8%E5%BF%85%E9%A1%BB%E5%9C%A8%20synchronized%20%E4%BB%A3%E7%A0%81%E4%B8%AD/"/>
+    <id>floor23.github.io/2017/08/31/为什么 wait(),notify(),notifyAll() 的调用必须在 synchronized 代码中/</id>
+    <published>2017-08-31T02:11:49.000Z</published>
+    <updated>2019-07-02T08:32:58.732Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>关键字</strong>：Java,多线程</p>
+<p>Java中，任何对象都拥有一个Monitor的概念，这个Monitor拥有单独的一个锁，并拥有一个入队列和一个等待队列。没有被synchronized修饰的方法或语句，可以在任何时间被任何线程调用。而被synchronized修饰的方法同一时间仅能被一个拥有该对象锁的线程调用。当一个线程在调用synchronized方法时，另外的线程调用该方法时就被阻塞，并放入队列中。</p>
+<p>多线程开发中，wait(),notify(),notifyAll()方法必须在synchronized方法或代码块中，否则会抛出运行时异常：<code>java.lang.IllegalMonitorStateException: current thread not owner</code>。因为要想调用这些方法，必须要保证调用方法的线程已经获取了该对象的锁。</p>
+<p>示例代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObjWait</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Object lock = <span class="keyword">new</span> Object();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> Thread thread = <span class="keyword">new</span> Thread(() -&gt; &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                lock.wait();</div><div class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        thread.start();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Exception in thread <span class="string">"Thread-0"</span> java.lang.IllegalMonitorStateException</div><div class="line">	at java.lang.Object.wait(Native Method)</div><div class="line">	at java.lang.Object.wait(Object.java:<span class="number">502</span>)</div><div class="line">	at interrupt.ObjWait.lambda$main$<span class="number">0</span>(ObjWait.java:<span class="number">9</span>)</div><div class="line">	at java.lang.Thread.run(Thread.java:<span class="number">748</span>)</div></pre></td></tr></table></figure>
+<h1 id="wait-方法会释放所持有的锁"><a href="#wait-方法会释放所持有的锁" class="headerlink" title="wait() 方法会释放所持有的锁"></a>wait() 方法会释放所持有的锁</h1><p>当一个线程在调用wait()方法时，该线程会释放当前所持有的锁，并进入等待队列。因此要想执行该方法，前提是必须拥有这个锁，而synchronized可以保证在执行wait()时，已经拿到了锁。</p>
+<h1 id="什么情况下我们才会使用wait"><a href="#什么情况下我们才会使用wait" class="headerlink" title="什么情况下我们才会使用wait()"></a>什么情况下我们才会使用wait()</h1><p>在等待队列中的线程只会被notify()、notifyAll()唤醒并执行。</p>
+<p>一般情况下，我们在调用wait()时，肯定会加上一个限定条件。也就是说在达到某个条件之后，我们才会让当前线程wait()。而notify()、notifyAll()也是在达到某个条件之后，我们才会去唤醒其他的等待线程。而这个条件就是线程间进行通信的一个互斥条件。</p>
+<h1 id="生产者消费者模式解读"><a href="#生产者消费者模式解读" class="headerlink" title="生产者消费者模式解读"></a>生产者消费者模式解读</h1><p>以生产者消费者模式为例，消费者从缓存中取数据，生产者向缓存中写数据。消费者必须等生产者写入数据后才能取数据，生产者必须等消费者把数据取走之后才能向缓存中写数据。如果wait(),notify(),notifyAll()可以被任意方法调用，当消费者在读数据的时候，发现缓存为空，这时调用了wait()方法，而此时生产者也调用了notify()，告诉消费者有数据到达，这样消费者就永远接收不到这个通知，然后一直等下去。</p>
+<p>因此，我们必须在synchronized方法中调用wait(),notify(),notifyAll()，从而互斥地拥有锁，从而保证不会丢失通知。</p>
+<p>参考文章:<a href="http://www.xyzws.com/Javafaq/why-wait-notify-notifyall-must-be-called-inside-a-synchronized-method-block/127" target="_blank" rel="external">Why wait(), notify(), notifyAll() must be called inside a synchronized method/block?</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;关键字&lt;/strong&gt;：Java,多线程&lt;/p&gt;
+&lt;p&gt;Java中，任何对象都拥有一个Monitor的概念，这个Monitor拥有单独的一个锁，并拥有一个入队列和一个等待队列。没有被synchronized修饰的方法或语句，可以在任何时间被任何线程调用。而
+    
+    </summary>
+    
+      <category term="Java" scheme="floor23.github.io/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="floor23.github.io/tags/Java/"/>
+    
+      <category term="多线程" scheme="floor23.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
@@ -568,9 +575,9 @@ _   下划线
       <category term="popular" scheme="floor23.github.io/categories/popular/"/>
     
     
-      <category term="Markdown Grammar" scheme="floor23.github.io/tags/Markdown-Grammar/"/>
-    
       <category term="JOHN GRUBER" scheme="floor23.github.io/tags/JOHN-GRUBER/"/>
+    
+      <category term="Markdown Grammar" scheme="floor23.github.io/tags/Markdown-Grammar/"/>
     
       <category term="Markdown语法" scheme="floor23.github.io/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
@@ -752,11 +759,11 @@ _   下划线
       <category term="popular" scheme="floor23.github.io/categories/popular/"/>
     
     
-      <category term="JOHN GRUBER" scheme="floor23.github.io/tags/JOHN-GRUBER/"/>
-    
       <category term="Markdown" scheme="floor23.github.io/tags/Markdown/"/>
     
       <category term="GitHub GFM Grammar" scheme="floor23.github.io/tags/GitHub-GFM-Grammar/"/>
+    
+      <category term="JOHN GRUBER" scheme="floor23.github.io/tags/JOHN-GRUBER/"/>
     
   </entry>
   
