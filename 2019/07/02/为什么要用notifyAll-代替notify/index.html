@@ -58,7 +58,25 @@
 	  
 
 	  <!-- content -->
-	  <h2 id="notify-做了什么"><a href="#notify-做了什么" class="headerlink" title="notify 做了什么"></a>notify 做了什么</h2><p>wait方法在调用之后，当前线程会释放已占有的对象锁，从而进入block状态。</p>
+	  <h2 id="什么是锁池"><a href="#什么是锁池" class="headerlink" title="什么是锁池"></a>什么是锁池</h2><p>如果一个线程A想要获取对象O的锁（例如进入synchronized代码块），而该对象O的锁已经被其他线程B占用，则此时A就会进入对象O的锁池中。</p>
+<h2 id="什么是等待池"><a href="#什么是等待池" class="headerlink" title="什么是等待池"></a>什么是等待池</h2><p>如果一个线程A调用了对象O的wait方法，则此时A就会进入对象O的等待池中。</p>
+<h2 id="notify-做了什么"><a href="#notify-做了什么" class="headerlink" title="notify 做了什么"></a>notify 做了什么</h2><p>wait方法在调用之后，当前线程会释放已占有的对象锁，从而进入block状态。notify会由等待池中<strong>随机</strong>选择一个线程进行唤醒。notifyAll会唤醒所有等待的线程，这些线程通过竞争获取对象锁。</p>
+<h2 id="notify是如何导致死锁的"><a href="#notify是如何导致死锁的" class="headerlink" title="notify是如何导致死锁的"></a>notify是如何导致死锁的</h2><p>以生产者消费者为例。有P1，P2，P3三个生产者，C1，C2，C3三个消费者，为简化描述，假设缓存空间为1，用于存放生产的对象。初始状态下，所有线程均在竞争锁。以下为产生死锁的步骤：</p>
+<ol>
+<li>P1拿到锁并生产一个对象</li>
+<li>P2尝试put，判断缓存满了，然后wait</li>
+<li>P3尝试put，然后wait</li>
+<li>C1拿到锁并get。C2尝试get，未拿到锁，wait。C3尝试get，未拿到锁，wait</li>
+<li>此时P2，P3，C2，C3均在wait，C1执行完get后notify，唤醒一个等待的线程</li>
+<li>C2被唤醒，发现缓存为空，wait</li>
+<li>C3被唤醒，wait</li>
+<li>P2拿到锁并put，notify</li>
+<li>P3被唤醒，执行put，发现缓存已满，wait</li>
+<li>此时P3，C2，C3均在wait，发生死锁</li>
+</ol>
+<h2 id="notifyAll做了什么"><a href="#notifyAll做了什么" class="headerlink" title="notifyAll做了什么"></a>notifyAll做了什么</h2><p>notifyAll在调用之后，所有等待的线程会依次尝试获取锁，获取到锁后再执行相关逻辑。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="什么场景使用notify"><a href="#什么场景使用notify" class="headerlink" title="什么场景使用notify"></a>什么场景使用notify</h3><p>等待的线程不在乎先后顺序，无论唤醒哪个都可以。例如Java线程池，当有新任务加入线程池后，notify任何一个线程，然后执行任务即可。</p>
+<h3 id="什么场景使用notifyAll"><a href="#什么场景使用notifyAll" class="headerlink" title="什么场景使用notifyAll"></a>什么场景使用notifyAll</h3><p>等待的线程具有不同的目的，并且这些线程可以同时执行。例如有一个公共资源供多个线程使用，当公共资源准备完成之后，再通过notifyAll去通知所有等待的线程去执行后续逻辑</p>
 	  
 
 	  <div>
