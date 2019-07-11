@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://floor23.github.io/"/>
-  <updated>2019-07-03T08:48:05.781Z</updated>
+  <updated>2019-07-11T14:07:44.250Z</updated>
   <id>https://floor23.github.io/</id>
   
   <author>
@@ -14,6 +14,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>InterruptedException 应该如何处理？</title>
+    <link href="https://floor23.github.io/2019/07/04/InterruptedException-%E5%BA%94%E8%AF%A5%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F/"/>
+    <id>https://floor23.github.io/2019/07/04/InterruptedException-应该如何处理？/</id>
+    <published>2019-07-04T06:47:39.000Z</published>
+    <updated>2019-07-11T14:07:44.250Z</updated>
+    
+    <content type="html"><![CDATA[<p>以下代码Java编程中经常会遇到，sleep 会抛出一个 InterruptedException 表示当前线程被其他线程中断。那这种处理 InterruptedException 的方式是否合理呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    TimeUnit.SECONDS.sleep(<span class="number">10</span>);</div><div class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="阻塞方法"><a href="#阻塞方法" class="headerlink" title="阻塞方法"></a>阻塞方法</h2><p>如果一个方法会抛出 InterruptedException，表明当前方法是一个阻塞方法，同时这个方法可以尝试结束阻塞并提前返回。阻塞方法的执行，依赖外部条件，例如超时、I/O完成或其他线程的某个动作（释放锁、某个状态值满足条件等）。阻塞方法事实上可以永久地等待某个条件发生，所以需要能提前结束或取消。Thread.sleep() 和 Object.wait() 支持抛出  InterruptedException ，如果抛出该异常表明当前线程被中断，可以提前结束或取消。</p>
+<h2 id="处理-InterruptedException"><a href="#处理-InterruptedException" class="headerlink" title="处理 InterruptedException"></a>处理 InterruptedException</h2><p>最简单的方式是将 InterruptedException 抛出，由上层调用者决定如何处理。</p>
+<p>有的场景可能需要在抛出 InterruptedException 后做一些后续工作，这样就需要在当前线程捕获该异常，并在 catch 块中完成后续工作，最后在将异常重新抛出。</p>
+<h2 id="不要直接「吃掉」-InterruptedException"><a href="#不要直接「吃掉」-InterruptedException" class="headerlink" title="不要直接「吃掉」 InterruptedException"></a>不要直接「吃掉」 InterruptedException</h2><p>以下场景是我们经常遇到的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> ExecutorService executorService = Executors.newSingleThreadExecutor();</div><div class="line">executorService.submit(() -&gt; &#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        Thread.sleep(<span class="number">1000</span>);</div><div class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">        Thread.currentThread().interrupt();</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>一个线程内部会抛出 InterruptedException ，但无法向外抛出。此时需要在捕获异常之后，设置当前线程的中断状态，即调用 Thread.currentThread().interrupt() 。这样调用栈上能够处理该异常的方法就会对该状态做出响应。</p>
+<p>捕获到 InterruptedException 后最坏的做法就是直接「吃掉」，即便已经记录日志。标准线程池（ThreadPoolExecutor）针对线程中断有专门的处理，这样线程池中的线程就能响应「取消任务」、「线程池关闭」等中断请求。</p>
+<h2 id="不可中断的阻塞方法"><a href="#不可中断的阻塞方法" class="headerlink" title="不可中断的阻塞方法"></a>不可中断的阻塞方法</h2><p>并不是所有的阻塞方法都能够响应中断。例如input 和 output stream 会阻塞等待 I/O 完成。阻塞发生在 synchronized 代码块，也无法中断。</p>
+<h2 id="无法取消的任务"><a href="#无法取消的任务" class="headerlink" title="无法取消的任务"></a>无法取消的任务</h2><p>以下场景，不允许中断任务的执行，然而这种情况下，也需要保存任务的中断状态，这样在方法调用返回的时候能够保存中断状态，供调用方做处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Task <span class="title">getNextTask</span><span class="params">(BlockingQueue&lt;Task&gt; queue)</span> </span>&#123;</div><div class="line">    <span class="keyword">boolean</span> interrupted = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="keyword">return</span> queue.take();</div><div class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                interrupted = <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        <span class="keyword">if</span> (interrupted)</div><div class="line">            Thread.currentThread().interrupt();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>利用中断机制可以实现灵活的取消策略来响应中断，线程可以决定任务取消与否，并进行相关的清理工作。如果当前方法忽略中断，那确保中断状态能重新抛出给上层调用方。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;以下代码Java编程中经常会遇到，sleep 会抛出一个 InterruptedException 表示当前线程被其他线程中断。那这种处理 InterruptedException 的方式是否合理呢？&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;
+    
+    </summary>
+    
+      <category term="Java" scheme="https://floor23.github.io/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="https://floor23.github.io/tags/Java/"/>
+    
+      <category term="多线程" scheme="https://floor23.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="InterruptedException" scheme="https://floor23.github.io/tags/InterruptedException/"/>
+    
+  </entry>
   
   <entry>
     <title>为什么要用notifyAll()代替notify()</title>
@@ -67,7 +107,7 @@
     <link href="https://floor23.github.io/2019/07/02/%E4%B8%BA%E4%BB%80%E4%B9%88wait%20notify%20notifyAll%20%E7%9A%84%E8%B0%83%E7%94%A8%E5%BF%85%E9%A1%BB%E5%9C%A8%20synchronized%20%E4%BB%A3%E7%A0%81%E4%B8%AD/"/>
     <id>https://floor23.github.io/2019/07/02/为什么wait notify notifyAll 的调用必须在 synchronized 代码中/</id>
     <published>2019-07-02T08:34:18.000Z</published>
-    <updated>2019-07-02T08:35:02.689Z</updated>
+    <updated>2019-07-04T06:50:22.948Z</updated>
     
     <content type="html"><![CDATA[<p><strong>关键字</strong>：Java,多线程</p>
 <p>Java中，任何对象都拥有一个Monitor的概念，这个Monitor拥有单独的一个锁，并拥有一个入队列和一个等待队列。没有被synchronized修饰的方法或语句，可以在任何时间被任何线程调用。而被synchronized修饰的方法同一时间仅能被一个拥有该对象锁的线程调用。当一个线程在调用synchronized方法时，另外的线程调用该方法时就被阻塞，并放入队列中。</p>
@@ -341,13 +381,13 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
       <category term="TECH" scheme="https://floor23.github.io/categories/TECH/"/>
     
     
+      <category term="微信公众号支付" scheme="https://floor23.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E6%94%AF%E4%BB%98/"/>
+    
       <category term="微信支付" scheme="https://floor23.github.io/tags/%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98/"/>
     
       <category term="签名" scheme="https://floor23.github.io/tags/%E7%AD%BE%E5%90%8D/"/>
     
       <category term="支付签名校验失败" scheme="https://floor23.github.io/tags/%E6%94%AF%E4%BB%98%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C%E5%A4%B1%E8%B4%A5/"/>
-    
-      <category term="微信公众号支付" scheme="https://floor23.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E6%94%AF%E4%BB%98/"/>
     
   </entry>
   
@@ -622,9 +662,9 @@ _   下划线
       <category term="popular" scheme="https://floor23.github.io/categories/popular/"/>
     
     
-      <category term="JOHN GRUBER" scheme="https://floor23.github.io/tags/JOHN-GRUBER/"/>
-    
       <category term="Markdown Grammar" scheme="https://floor23.github.io/tags/Markdown-Grammar/"/>
+    
+      <category term="JOHN GRUBER" scheme="https://floor23.github.io/tags/JOHN-GRUBER/"/>
     
       <category term="Markdown语法" scheme="https://floor23.github.io/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
@@ -637,7 +677,7 @@ _   下划线
     <link href="https://floor23.github.io/2017/03/20/Markdown%20%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%9D%97%E7%BA%A7%EF%BC%88Block%EF%BC%89%E8%AF%AD%E6%B3%95%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>https://floor23.github.io/2017/03/20/Markdown 官方教程块级（Block）语法（一）/</id>
     <published>2017-03-20T05:12:30.000Z</published>
-    <updated>2017-05-16T11:10:59.079Z</updated>
+    <updated>2019-07-04T06:49:13.175Z</updated>
     
     <content type="html"><![CDATA[<p>Markdown 语法<br>参考：JOHN GRUBER「Markdown 语法作者」<a href="https://daringfireball.net/projects/markdown/syntax" target="_blank" rel="external">个人网站</a></p>
 <p><strong>注:</strong> 该文档就是采用 Markdown 语法进行编辑的。</p>
@@ -806,11 +846,11 @@ _   下划线
       <category term="popular" scheme="https://floor23.github.io/categories/popular/"/>
     
     
+      <category term="JOHN GRUBER" scheme="https://floor23.github.io/tags/JOHN-GRUBER/"/>
+    
       <category term="Markdown" scheme="https://floor23.github.io/tags/Markdown/"/>
     
       <category term="GitHub GFM Grammar" scheme="https://floor23.github.io/tags/GitHub-GFM-Grammar/"/>
-    
-      <category term="JOHN GRUBER" scheme="https://floor23.github.io/tags/JOHN-GRUBER/"/>
     
   </entry>
   

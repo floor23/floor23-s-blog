@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>InterruptedException 应该如何处理？ | 纷享</title>
+  <meta name="author" content="zhao">
+  
+  <meta name="description" content="分享&amp;成长">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="InterruptedException 应该如何处理？"/>
+  <meta property="og:site_name" content="纷享"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="纷享" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">  
+  <link rel="stylesheet" href="/css/sidenav.css" media="screen" type="text/css">  
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+
+<body id="body" data-spy="scroll" data-target=".toc">
+  <div class="container" id="container">
+	<div class="content">
+	  <div class="page-header">		
+  <h1><a class="brand" href="/">纷享</a><span class="split"></span><span class="title">InterruptedException 应该如何处理？</span><span class="date" id="title-date"><i class="fa fa-clock-o"></i> 2019-07-04</span></h1>
+</div>		
+
+<div class="row page">
+  <!-- cols -->	
+  
+  
+
+  
+	<div class="col-md-12">
+	  
+
+	  <!-- content -->
+	  <p>以下代码Java编程中经常会遇到，sleep 会抛出一个 InterruptedException 表示当前线程被其他线程中断。那这种处理 InterruptedException 的方式是否合理呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    TimeUnit.SECONDS.sleep(<span class="number">10</span>);</div><div class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="阻塞方法"><a href="#阻塞方法" class="headerlink" title="阻塞方法"></a>阻塞方法</h2><p>如果一个方法会抛出 InterruptedException，表明当前方法是一个阻塞方法，同时这个方法可以尝试结束阻塞并提前返回。阻塞方法的执行，依赖外部条件，例如超时、I/O完成或其他线程的某个动作（释放锁、某个状态值满足条件等）。阻塞方法事实上可以永久地等待某个条件发生，所以需要能提前结束或取消。Thread.sleep() 和 Object.wait() 支持抛出  InterruptedException ，如果抛出该异常表明当前线程被中断，可以提前结束或取消。</p>
+<h2 id="处理-InterruptedException"><a href="#处理-InterruptedException" class="headerlink" title="处理 InterruptedException"></a>处理 InterruptedException</h2><p>最简单的方式是将 InterruptedException 抛出，由上层调用者决定如何处理。</p>
+<p>有的场景可能需要在抛出 InterruptedException 后做一些后续工作，这样就需要在当前线程捕获该异常，并在 catch 块中完成后续工作，最后在将异常重新抛出。</p>
+<h2 id="不要直接「吃掉」-InterruptedException"><a href="#不要直接「吃掉」-InterruptedException" class="headerlink" title="不要直接「吃掉」 InterruptedException"></a>不要直接「吃掉」 InterruptedException</h2><p>以下场景是我们经常遇到的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> ExecutorService executorService = Executors.newSingleThreadExecutor();</div><div class="line">executorService.submit(() -&gt; &#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        Thread.sleep(<span class="number">1000</span>);</div><div class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">        Thread.currentThread().interrupt();</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>一个线程内部会抛出 InterruptedException ，但无法向外抛出。此时需要在捕获异常之后，设置当前线程的中断状态，即调用 Thread.currentThread().interrupt() 。这样调用栈上能够处理该异常的方法就会对该状态做出响应。</p>
+<p>捕获到 InterruptedException 后最坏的做法就是直接「吃掉」，即便已经记录日志。标准线程池（ThreadPoolExecutor）针对线程中断有专门的处理，这样线程池中的线程就能响应「取消任务」、「线程池关闭」等中断请求。</p>
+<h2 id="不可中断的阻塞方法"><a href="#不可中断的阻塞方法" class="headerlink" title="不可中断的阻塞方法"></a>不可中断的阻塞方法</h2><p>并不是所有的阻塞方法都能够响应中断。例如input 和 output stream 会阻塞等待 I/O 完成。阻塞发生在 synchronized 代码块，也无法中断。</p>
+<h2 id="无法取消的任务"><a href="#无法取消的任务" class="headerlink" title="无法取消的任务"></a>无法取消的任务</h2><p>以下场景，不允许中断任务的执行，然而这种情况下，也需要保存任务的中断状态，这样在方法调用返回的时候能够保存中断状态，供调用方做处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Task <span class="title">getNextTask</span><span class="params">(BlockingQueue&lt;Task&gt; queue)</span> </span>&#123;</div><div class="line">    <span class="keyword">boolean</span> interrupted = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="keyword">return</span> queue.take();</div><div class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                interrupted = <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        <span class="keyword">if</span> (interrupted)</div><div class="line">            Thread.currentThread().interrupt();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>利用中断机制可以实现灵活的取消策略来响应中断，线程可以决定任务取消与否，并进行相关的清理工作。如果当前方法忽略中断，那确保中断状态能重新抛出给上层调用方。</p>
+	  
+
+	  <div>
+  		<center>
+		  <div class="pagination">
+<ul class="pagination">
+	
+	
+	
+	
+	
+	
+		
+			
+			
+		
+	
+		
+			
+			
+			
+		
+			
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+	
+	
+		<li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>prev</a></li>
+	
+	<li><a href="/"><i class="fa fa-archive"></i>Home</a></li>
+	
+		<li class="next"><a href="/2019/07/02/为什么要用notifyAll代替notify/" class="alignright next">next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+	
+</ul>
+</div>
+
+		</center>
+	  </div>
+	  
+	</div> <!-- col-md-9/col-md-12 -->
+	
+  </div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+	<footer> <p>
+  &copy; 2019 zhao
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-wixo/">Wixo</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.tableofcontents.min.js"></script>
+<script src="/js/tocgenerator.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+</body>
+</html>
