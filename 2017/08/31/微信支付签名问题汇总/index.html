@@ -67,7 +67,7 @@
 <h1 id="微信公众号设置"><a href="#微信公众号设置" class="headerlink" title="微信公众号设置"></a>微信公众号设置</h1><p>在H5页面进行支付时需要获取用户基本信息，因此还需在公众平台账户设置网页授权域名。登录微信公众号，<strong>公众号设置-功能设置-网页授权域名</strong>，添加测试或正式环境的域名；下载验证文件（类似MP<em>verify</em><em>.txt）并放置到服务器目录下。<em>*注意：该域名一个月内仅可修改3次，因此千万不要随便设置，以免影响开发</em></em></p>
 <h1 id="支付流程及参数"><a href="#支付流程及参数" class="headerlink" title="支付流程及参数"></a>支付流程及参数</h1><p>公众号支付大部分流程在服务器端进行，H5页面仅需发起下单请求和支付请求就可以了。服务端请求统一下单API，成功调用后由返回的参数中获取预支付ID<strong>prepay_id</strong>，并生成支付参数返回给H5。参数格式参照<a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&amp;index=6" target="_blank" rel="external">公众号支付参数说明</a>。<strong>注意：所有接口的参数都是大小写敏感的，因此最好拷贝各个参数而不是手动敲代码</strong></p>
 <p>支付的流程如下：</p>
-<p><img src="/20170930/wechat.pay.flowchart.png" alt="微信支付流程图"></p>
+<p><img src="https://floor23.github.io/20170930/wechat.pay.flowchart.png" alt="微信支付流程图"></p>
 <p>隐藏的坑：</p>
 <ol>
 <li><p>若签名失败，则在<a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=20_1" target="_blank" rel="external">签名校验地址</a>校验调用相关API的参数生成的签名是否正确</p>
@@ -93,6 +93,8 @@
 	
 	
 	
+	
+		
 	
 		
 	

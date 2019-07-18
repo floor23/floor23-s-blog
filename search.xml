@@ -3,11 +3,37 @@
   
     
     <entry>
+      <title><![CDATA[Java小细节【1】]]></title>
+      <url>/2019/07/16/Java%E5%B0%8F%E7%BB%86%E8%8A%82%E3%80%901%E3%80%91/</url>
+      <content type="html"><![CDATA[<p>Java 8 中 stream 效率如何？</p>
+<p>Stream 操作较 for 循环更简洁直观，并提供了更多的 API 供过滤、归并等操作。</p>
+<a id="more"></a>]]></content>
+      
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Java </tag>
+            
+            <tag> 细节 </tag>
+            
+            <tag> 技巧 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[InterruptedException 应该如何处理？]]></title>
       <url>/2019/07/04/InterruptedException-%E5%BA%94%E8%AF%A5%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F/</url>
       <content type="html"><![CDATA[<p>以下代码Java编程中经常会遇到，sleep 会抛出一个 InterruptedException 表示当前线程被其他线程中断。那这种处理 InterruptedException 的方式是否合理呢？</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    TimeUnit.SECONDS.sleep(<span class="number">10</span>);</div><div class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="阻塞方法"><a href="#阻塞方法" class="headerlink" title="阻塞方法"></a>阻塞方法</h2><p>如果一个方法会抛出 InterruptedException，表明当前方法是一个阻塞方法，同时这个方法可以尝试结束阻塞并提前返回。阻塞方法的执行，依赖外部条件，例如超时、I/O完成或其他线程的某个动作（释放锁、某个状态值满足条件等）。阻塞方法事实上可以永久地等待某个条件发生，所以需要能提前结束或取消。Thread.sleep() 和 Object.wait() 支持抛出  InterruptedException ，如果抛出该异常表明当前线程被中断，可以提前结束或取消。</p>
+<h2 id="阻塞方法"><a href="#阻塞方法" class="headerlink" title="阻塞方法"></a>阻塞方法</h2><p>如果一个方法会抛出 InterruptedException，表明当前方法是一个阻塞方法，同时这个方法可以尝试结束阻塞并提前返回。阻塞方法的执行，依赖外部条件，例如超时、I/O完成或其他线程的某个动作（释放锁、某个状态值满足条件等）。阻塞方法事实上可以永久地等待某个条件发生，所以需要能提前结束或取消。Thread.sleep() 和 Object.wait() 支持抛出  InterruptedException ，如果抛出该异常表明当前线程被中断，可以提前结束或取消。<br><a id="more"></a></p>
 <h2 id="处理-InterruptedException"><a href="#处理-InterruptedException" class="headerlink" title="处理 InterruptedException"></a>处理 InterruptedException</h2><p>最简单的方式是将 InterruptedException 抛出，由上层调用者决定如何处理。</p>
 <p>有的场景可能需要在抛出 InterruptedException 后做一些后续工作，这样就需要在当前线程捕获该异常，并在 catch 块中完成后续工作，最后在将异常重新抛出。</p>
 <h2 id="不要直接「吃掉」-InterruptedException"><a href="#不要直接「吃掉」-InterruptedException" class="headerlink" title="不要直接「吃掉」 InterruptedException"></a>不要直接「吃掉」 InterruptedException</h2><p>以下场景是我们经常遇到的：</p>
@@ -193,20 +219,20 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
 <ol>
 <li>最多可以添加3个域名或路径（建议写域名，这样域名下任何路径的H5页面均可以在微信中使用JS开放接口）</li>
 <li>域名必须通过ICP备案</li>
-<li>下载验证文件并放至服务器根目录，确保通过域名可以访问。例如域名设置为「m.jxedt.com」，则文件要放置的路径为「m.jxedt.com/MP_verify_XXX.txt」</li>
+<li>下载验证文件并放至服务器根目录，确保通过域名可以访问。例如域名设置为「m.com」，则文件要放置的路径为「m.com/MP_verify_XXX.txt」</li>
 <li>最重要的一点，<strong>安全域名一个月仅能修改3次</strong>，确认好业务域名或路径后，尽量把三个域名全部利用起来。</li>
 </ol>
-<p><img src="../20171214/safe_domain.png" alt="安全域名设置"></p>
+<p><img src="https://floor23.github.io/20171214/safe_domain.png" alt="安全域名设置"></p>
 <h3 id="微信支付商户平台配置"><a href="#微信支付商户平台配置" class="headerlink" title="微信支付商户平台配置"></a>微信支付商户平台配置</h3><h4 id="支付授权目录配置"><a href="#支付授权目录配置" class="headerlink" title="支付授权目录配置"></a>支付授权目录配置</h4><p>公众号支付在请求支付的时候会校验请求来源是否有在商户平台做了配置，所以必须确保支付目录已经正确的被配置，否则将验证失败，请求支付不成功。<br>支付授权目录的配置路径：商户平台–&gt;产品中心–&gt;开发配置–&gt;支付配置</p>
-<p><img src="../20171214/pay_jsapi.png" alt="支付授权目录配置"></p>
+<p><img src="https://floor23.github.io/20171214/pay_jsapi.png" alt="支付授权目录配置"></p>
 <h4 id="API证书下载及密钥设置"><a href="#API证书下载及密钥设置" class="headerlink" title="API证书下载及密钥设置"></a>API证书下载及密钥设置</h4><p>部分安全性要求较高的API需要使用API证书来确认调用者的身份，公众号支付中退款接口需要证书。</p>
 <p>API密钥的作用：</p>
 <blockquote>
 <p>在API调用时用来按照指定规则对你的请求参数进行签名，服务器收到你的请求时会进行签名验证，既可以界定你的身份也可以防止其他人恶意篡改请求数据。部分API单独使用API密钥签名进行安全加固，部分安全性要求更高的API会要求使用API密钥签名和API证书同时进行安全加固。</p>
 </blockquote>
-<p>证书下载及密钥设置路径：商户平台–&gt;账户中心–&gt;账户安全–&gt;API安全<br><img src="../20171214/pay_cert.png" alt="API证书下载及密钥设置"></p>
-<h3 id="支付流程"><a href="#支付流程" class="headerlink" title="支付流程"></a>支付流程</h3><p><img src="../20171214/pay_flow.png" alt="微信支付流程图"></p>
-<h3 id="支付业务时序图"><a href="#支付业务时序图" class="headerlink" title="支付业务时序图"></a>支付业务时序图</h3><p><img src="../20171214/wechat_pay_timeline.png" alt="时序图"></p>
+<p>证书下载及密钥设置路径：商户平台–&gt;账户中心–&gt;账户安全–&gt;API安全<br><img src="https://floor23.github.io/20171214/pay_cert.png" alt="API证书下载及密钥设置"></p>
+<h3 id="支付流程"><a href="#支付流程" class="headerlink" title="支付流程"></a>支付流程</h3><p><img src="https://floor23.github.io/20171214/pay_flow.png" alt="微信支付流程图"></p>
+<h3 id="支付业务时序图"><a href="#支付业务时序图" class="headerlink" title="支付业务时序图"></a>支付业务时序图</h3><p><img src="https://floor23.github.io/20171214/wechat_pay_timeline.png" alt="时序图"></p>
 <h3 id="Server开发注意事项"><a href="#Server开发注意事项" class="headerlink" title="Server开发注意事项"></a>Server开发注意事项</h3><ul>
 <li>微信有两套JS接口可以调起支付（JS-SDK和WeixinJSBridge），所有参数确保与对应的接口保持一致，包括大小写</li>
 <li>统一订单生成时所使用的签名算法，与返回给H5页面的预支付信息中的<strong>签名算法必须保持一致</strong>。为确保不出现莫名签名失败问题，最好统一使用MD5.</li>
@@ -323,7 +349,7 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
 <h1 id="微信公众号设置"><a href="#微信公众号设置" class="headerlink" title="微信公众号设置"></a>微信公众号设置</h1><p>在H5页面进行支付时需要获取用户基本信息，因此还需在公众平台账户设置网页授权域名。登录微信公众号，<strong>公众号设置-功能设置-网页授权域名</strong>，添加测试或正式环境的域名；下载验证文件（类似MP<em>verify</em><em>.txt）并放置到服务器目录下。<em>*注意：该域名一个月内仅可修改3次，因此千万不要随便设置，以免影响开发</em></em></p>
 <h1 id="支付流程及参数"><a href="#支付流程及参数" class="headerlink" title="支付流程及参数"></a>支付流程及参数</h1><p>公众号支付大部分流程在服务器端进行，H5页面仅需发起下单请求和支付请求就可以了。服务端请求统一下单API，成功调用后由返回的参数中获取预支付ID<strong>prepay_id</strong>，并生成支付参数返回给H5。参数格式参照<a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&amp;index=6" target="_blank" rel="external">公众号支付参数说明</a>。<strong>注意：所有接口的参数都是大小写敏感的，因此最好拷贝各个参数而不是手动敲代码</strong></p>
 <p>支付的流程如下：</p>
-<p><img src="/20170930/wechat.pay.flowchart.png" alt="微信支付流程图"></p>
+<p><img src="https://floor23.github.io/20170930/wechat.pay.flowchart.png" alt="微信支付流程图"></p>
 <p>隐藏的坑：</p>
 <ol>
 <li><p>若签名失败，则在<a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=20_1" target="_blank" rel="external">签名校验地址</a>校验调用相关API的参数生成的签名是否正确</p>
@@ -349,13 +375,13 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
         
         <tags>
             
-            <tag> 微信公众号支付 </tag>
-            
             <tag> 微信支付 </tag>
             
             <tag> 签名 </tag>
             
             <tag> 支付签名校验失败 </tag>
+            
+            <tag> 微信公众号支付 </tag>
             
         </tags>
         
@@ -612,9 +638,9 @@ _   下划线
         
         <tags>
             
-            <tag> Markdown Grammar </tag>
-            
             <tag> JOHN GRUBER </tag>
+            
+            <tag> Markdown Grammar </tag>
             
             <tag> Markdown语法 </tag>
             
@@ -788,11 +814,11 @@ _   下划线
         
         <tags>
             
-            <tag> JOHN GRUBER </tag>
-            
             <tag> Markdown </tag>
             
             <tag> GitHub GFM Grammar </tag>
+            
+            <tag> JOHN GRUBER </tag>
             
         </tags>
         
