@@ -5,9 +5,27 @@
     <entry>
       <title><![CDATA[Java小细节【1】]]></title>
       <url>/2019/07/16/Java%E5%B0%8F%E7%BB%86%E8%8A%82%E3%80%901%E3%80%91/</url>
-      <content type="html"><![CDATA[<p>Java 8 中 stream 效率如何？</p>
-<p>Stream 操作较 for 循环更简洁直观，并提供了更多的 API 供过滤、归并等操作。</p>
-<a id="more"></a>]]></content>
+      <content type="html"><![CDATA[<h2 id="Java-8-中-stream-效率如何？"><a href="#Java-8-中-stream-效率如何？" class="headerlink" title="Java 8 中 stream 效率如何？"></a>Java 8 中 stream 效率如何？</h2><p>Stream 操作较 for 循环更简洁直观，并提供了更多的 API 供过滤、归并等操作。传统 for 循环在数据量较小的情况下效率与 stream 差别不大。多核 CPU 下， parallelStream 效率更高。</p>
+<a id="more"></a>
+<h2 id="Lombok-设置默认值"><a href="#Lombok-设置默认值" class="headerlink" title="Lombok 设置默认值"></a>Lombok 设置默认值</h2><p>字段赋值时，如果将某字段赋值为 null ，则接口返回时整个字段都丢失，与接口定义矛盾。前端建议增加默认值。</p>
+<ol>
+<li>@Builder.Default 注解添加在需要设置默认值的属性上</li>
+<li>给属性赋值，赋值内容为需要设定的默认值</li>
+<li>使用 lombok.Builder 创建对象</li>
+</ol>
+<h2 id="InterruptedException-应该如何处理？"><a href="#InterruptedException-应该如何处理？" class="headerlink" title="InterruptedException 应该如何处理？"></a>InterruptedException 应该如何处理？</h2><ol>
+<li>Thread.interrupt()方法和InterruptedException异常的关系</li>
+<li>Thread.interrupt() 后线程是什么状态</li>
+<li>interrupt用途？unBlock操作，支持任务cancel， 数据清理</li>
+<li>通过 Runtime.getRuntime().addShutdownHook 添加线程池清理工作</li>
+<li>线程池 shutdown 和 shutdownNow 区别？ shutdown 方法确保无新任务提交，进行中的任务会继续执行。</li>
+<li>awaitTermination 与 shutdown 方法配合使用</li>
+</ol>
+<h2 id="后续了解"><a href="#后续了解" class="headerlink" title="后续了解"></a>后续了解</h2><ol>
+<li>Lombok 逐步淘汰</li>
+<li>Stream 底层实现，多线程如何实现</li>
+</ol>
+]]></content>
       
         <categories>
             
