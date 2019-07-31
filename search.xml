@@ -3,10 +3,57 @@
   
     
     <entry>
+      <title><![CDATA[Java中的happens-before]]></title>
+      <url>/2019/07/31/Java%E4%B8%AD%E7%9A%84happens-before/</url>
+      <content type="html"><![CDATA[<p>Java 多线程开发中常遇到的问题就是如何在线程间共享变量，其中一个重要的原则就是 happens-before 。</p>
+<h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><blockquote>
+<p>如果线程 A 中的操作对线程 B 可见，那么 A 操作结果则对 B 可见</p>
+</blockquote>
+<p>现代操作系统都是多核 CPU，CPU 内部的多级缓存，内存，磁盘组成计算机的所有存储单元。下图是一个简单的示例：<br> <img src="https://floor23.github.io/20190731/os_memory_architecture.png" alt="操作系统内存模型"></p>
+<p> Java 的线程在某个CPU内部执行，此时对某个变量的操作如果要保证能够对其他线程可见，则需要通过关键字 volatile 进行修饰。 volatile 关键字修饰的变量默认具有 happens-before 语义。即：</p>
+<h2 id="Happens-before-关系"><a href="#Happens-before-关系" class="headerlink" title="Happens-before 关系"></a>Happens-before 关系</h2><p>两个操作可以具有 happens-before 关系，如果一个操作 happens-before 另外一个，那么第一个操作对第二个是可见的，并且第一个一定会先于第二个发生。</p>
+<p>假设现有两个操作 X 和 Y ，使用 hb(X, Y) 代表 X happens-before Y。</p>
+<ul>
+<li>如果 X 和 Y 在同一线程内，并且程序中 X 出现在 Y 之前，则 hb(X, Y)</li>
+<li>一个对象的构造 Happens-before 该对象的回收</li>
+<li>如果 X 和 Y 操作被 synchronized 包围，则 hb(X, Y)</li>
+<li>如果 hb(X, Y) 并且 hb(Y, Z) 则 hb(X, Z)</li>
+</ul>
+<p>需要注意的是如果两个操作存在 happens-before 关系，并不一定要求这两个操作在实际代码中保持该顺序。如果重排序后不影响执行结果，那么这也是可接受的。例如，一个线程内部会创建并初始化一个对象，那么这个对象的创建可以发生在线程开始之前，初始化可以发生在线程开始之后。另外一点就是具有 happens-before 关系的操作与不受该关系约束的操作互不干扰。</p>
+<p>Happens-before 关系往往会带来数据竞争（如果存在针对同一个变量有两个或以上的操作，这些操作不存在 happens-before 关系约束，这种情况称为数据竞争），下面这些同步操作是存在 happens-before 关系的：</p>
+<ul>
+<li>一个对象 monitor  的 unlock 操作 happens-before 该 monitor  的 lock 操作</li>
+<li>volatile 变量的写操作 happens-before 后续的所有读写操作</li>
+<li>线程 start 方法的调用 happens-before 该线程的启动</li>
+<li>一个线程所有操作 happens-before 所有其他 join 的线程成功返回结果</li>
+<li>任何对象的初始化 happens-before 该对象的其他操作</li>
+</ul>
+<p>参考：Java doc <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-17.html?source=post_page---------------------------#jls-17.4.5" target="_blank" rel="external">地址</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Java </tag>
+            
+            <tag> happens-before </tag>
+            
+            <tag> 内存可见性 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Java小细节【1】]]></title>
       <url>/2019/07/16/Java%E5%B0%8F%E7%BB%86%E8%8A%82%E3%80%901%E3%80%91/</url>
       <content type="html"><![CDATA[<h2 id="Java-8-中-stream-效率如何？"><a href="#Java-8-中-stream-效率如何？" class="headerlink" title="Java 8 中 stream 效率如何？"></a>Java 8 中 stream 效率如何？</h2><p>Stream 操作较 for 循环更简洁直观，并提供了更多的 API 供过滤、归并等操作。传统 for 循环在数据量较小的情况下效率与 stream 差别不大。多核 CPU 下， parallelStream 效率更高。</p>
-<a id="more"></a>
 <h2 id="Lombok-设置默认值"><a href="#Lombok-设置默认值" class="headerlink" title="Lombok 设置默认值"></a>Lombok 设置默认值</h2><p>字段赋值时，如果将某字段赋值为 null ，则接口返回时整个字段都丢失，与接口定义矛盾。前端建议增加默认值。</p>
 <ol>
 <li>@Builder.Default 注解添加在需要设置默认值的属性上</li>
@@ -393,13 +440,13 @@ echo &quot;%%i&quot;  &gt;&gt; start.log
         
         <tags>
             
+            <tag> 微信公众号支付 </tag>
+            
             <tag> 微信支付 </tag>
             
             <tag> 签名 </tag>
             
             <tag> 支付签名校验失败 </tag>
-            
-            <tag> 微信公众号支付 </tag>
             
         </tags>
         
@@ -656,9 +703,9 @@ _   下划线
         
         <tags>
             
-            <tag> JOHN GRUBER </tag>
-            
             <tag> Markdown Grammar </tag>
+            
+            <tag> JOHN GRUBER </tag>
             
             <tag> Markdown语法 </tag>
             
@@ -832,11 +879,11 @@ _   下划线
         
         <tags>
             
+            <tag> JOHN GRUBER </tag>
+            
             <tag> Markdown </tag>
             
             <tag> GitHub GFM Grammar </tag>
-            
-            <tag> JOHN GRUBER </tag>
             
         </tags>
         
