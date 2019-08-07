@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://floor23.github.io/"/>
-  <updated>2019-08-07T07:40:01.806Z</updated>
+  <updated>2019-08-07T08:46:19.469Z</updated>
   <id>https://floor23.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://floor23.github.io/2019/08/07/%E5%8F%8C%E9%87%8D%E6%A0%A1%E9%AA%8C%E9%94%81%E5%8D%95%E4%BE%8B%E4%B8%BA%E4%BD%95%E8%BF%99%E4%B9%88%E5%AE%9E%E7%8E%B0%EF%BC%9F/"/>
     <id>https://floor23.github.io/2019/08/07/双重校验锁单例为何这么实现？/</id>
     <published>2019-08-07T06:46:34.000Z</published>
-    <updated>2019-08-07T07:40:01.806Z</updated>
+    <updated>2019-08-07T08:46:19.469Z</updated>
     
     <content type="html"><![CDATA[<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DoubleCheck</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> DoubleCheck instance;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">DoubleCheck</span><span class="params">()</span></span>&#123;&#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DoubleCheck <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance) &#123;</div><div class="line">            <span class="keyword">synchronized</span> (DoubleCheck.class) &#123;</div><div class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> == instance) &#123;</div><div class="line">                    instance = <span class="keyword">new</span> DoubleCheck();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="开始问为什么"><a href="#开始问为什么" class="headerlink" title="开始问为什么"></a>开始问为什么</h2><h3 id="为什么-instance-需要-static-修饰"><a href="#为什么-instance-需要-static-修饰" class="headerlink" title="为什么 instance 需要 static 修饰"></a>为什么 instance 需要 static 修饰</h3><p>单例的访问一般是通过类名进行，在该例中，如果要获取实例对象方法是 DoubleCheck.getInstance() ,即通过静态方法去获取，静态方法只能访问静态变量，因此 instance 必须是静态变量。</p>
@@ -35,6 +35,8 @@
       &lt;h2 id=&quot;代码实现&quot;&gt;&lt;a href=&quot;#代码实现&quot; class=&quot;headerlink&quot; title=&quot;代码实现&quot;&gt;&lt;/a&gt;代码实现&lt;/h2&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre
     
     </summary>
+    
+      <category term="Java" scheme="https://floor23.github.io/categories/Java/"/>
     
     
       <category term="Java" scheme="https://floor23.github.io/tags/Java/"/>

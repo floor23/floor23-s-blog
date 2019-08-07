@@ -13,6 +13,12 @@
 <h3 id="为什么-instance-需要-volatile-修饰"><a href="#为什么-instance-需要-volatile-修饰" class="headerlink" title="为什么 instance 需要 volatile 修饰"></a>为什么 instance 需要 volatile 修饰</h3><p>关键字 volatile 在这里使用是为了保证变量 instance 的可见性。即 new DoubleCheck() 初始化类完成之后，赋值给 instance ，此时对其他线程在拿到 instance 时肯定是非 null 的。如果不加 volatile 关键字，线程 A 在释放锁之后，instance 变量仅存在了 CPU 缓存中，而没有写入主存，此时线程 B 获取锁并判断 instance 为空，会再次初始化。</p>
 ]]></content>
       
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
         
         <tags>
             
