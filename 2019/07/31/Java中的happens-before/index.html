@@ -62,7 +62,7 @@
 <h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><blockquote>
 <p>如果线程 A 中的操作对线程 B 可见，那么 A 操作结果则对 B 可见</p>
 </blockquote>
-<p>现代操作系统都是多核 CPU，CPU 内部的多级缓存，内存，磁盘组成计算机的所有存储单元。下图是一个简单的示例：<br> <img src="https://floor23.github.io/20190731/os_memory_architecture.png" alt="操作系统内存模型"></p>
+<p>现代操作系统都是多核 CPU，CPU 内部的多级缓存，内存，磁盘组成计算机的所有存储单元。下图是一个简单的示例：<br> <img src="https://floor23.github.io/20190731/os_memory_architecture.jpg" alt="操作系统内存模型"></p>
 <p> Java 的线程在某个CPU内部执行，此时对某个变量的操作如果要保证能够对其他线程可见，则需要通过关键字 volatile 进行修饰。 volatile 关键字修饰的变量默认具有 happens-before 语义。即：</p>
 <h2 id="Happens-before-关系"><a href="#Happens-before-关系" class="headerlink" title="Happens-before 关系"></a>Happens-before 关系</h2><p>两个操作可以具有 happens-before 关系，如果一个操作 happens-before 另外一个，那么第一个操作对第二个是可见的，并且第一个一定会先于第二个发生。</p>
 <p>假设现有两个操作 X 和 Y ，使用 hb(X, Y) 代表 X happens-before Y。</p>
@@ -93,6 +93,8 @@
 	
 	
 	
+	
+		
 	
 		
 			

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://floor23.github.io/"/>
-  <updated>2019-07-31T08:13:41.722Z</updated>
+  <updated>2019-08-07T07:40:01.806Z</updated>
   <id>https://floor23.github.io/</id>
   
   <author>
@@ -16,17 +16,51 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>双重校验锁单例为何这么实现？</title>
+    <link href="https://floor23.github.io/2019/08/07/%E5%8F%8C%E9%87%8D%E6%A0%A1%E9%AA%8C%E9%94%81%E5%8D%95%E4%BE%8B%E4%B8%BA%E4%BD%95%E8%BF%99%E4%B9%88%E5%AE%9E%E7%8E%B0%EF%BC%9F/"/>
+    <id>https://floor23.github.io/2019/08/07/双重校验锁单例为何这么实现？/</id>
+    <published>2019-08-07T06:46:34.000Z</published>
+    <updated>2019-08-07T07:40:01.806Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DoubleCheck</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> DoubleCheck instance;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">DoubleCheck</span><span class="params">()</span></span>&#123;&#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DoubleCheck <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == instance) &#123;</div><div class="line">            <span class="keyword">synchronized</span> (DoubleCheck.class) &#123;</div><div class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> == instance) &#123;</div><div class="line">                    instance = <span class="keyword">new</span> DoubleCheck();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="开始问为什么"><a href="#开始问为什么" class="headerlink" title="开始问为什么"></a>开始问为什么</h2><h3 id="为什么-instance-需要-static-修饰"><a href="#为什么-instance-需要-static-修饰" class="headerlink" title="为什么 instance 需要 static 修饰"></a>为什么 instance 需要 static 修饰</h3><p>单例的访问一般是通过类名进行，在该例中，如果要获取实例对象方法是 DoubleCheck.getInstance() ,即通过静态方法去获取，静态方法只能访问静态变量，因此 instance 必须是静态变量。</p>
+<h3 id="为什么需要第一个判空"><a href="#为什么需要第一个判空" class="headerlink" title="为什么需要第一个判空"></a>为什么需要第一个判空</h3><p>此次判断可以在类初始化完成后不再进入同步代码块去等待获取锁，进而去初始化。提高效率。</p>
+<h3 id="为什么需要-synchronized-加锁"><a href="#为什么需要-synchronized-加锁" class="headerlink" title="为什么需要 synchronized 加锁"></a>为什么需要 synchronized 加锁</h3><p>此处加锁可以将同步块降低为最小粒度。多线程条件下，同步块越小，效率越高。加锁之后进行初始化，防止其他线程重复初始化。</p>
+<h3 id="同步块中为什么需要再次判空"><a href="#同步块中为什么需要再次判空" class="headerlink" title="同步块中为什么需要再次判空"></a>同步块中为什么需要再次判空</h3><p>线程之间的切换是由 CPU 决定的。如果线程 A 在 执行完 new DoubleCheck() 后，还未赋值给 instance ，此时发生了线程切换。线程 B 在第一次判断时会发现 instance 是 null ，这样就进入同步代码块等待锁释放。然后再切换到线程 A 执行，赋值给 instance 并释放锁。这时线程 B 获取锁，如果没有第二次判空，则会将 instance 再初始化一次。</p>
+<h3 id="为什么-instance-需要-volatile-修饰"><a href="#为什么-instance-需要-volatile-修饰" class="headerlink" title="为什么 instance 需要 volatile 修饰"></a>为什么 instance 需要 volatile 修饰</h3><p>关键字 volatile 在这里使用是为了保证变量 instance 的可见性。即 new DoubleCheck() 初始化类完成之后，赋值给 instance ，此时对其他线程在拿到 instance 时肯定是非 null 的。如果不加 volatile 关键字，线程 A 在释放锁之后，instance 变量仅存在了 CPU 缓存中，而没有写入主存，此时线程 B 获取锁并判断 instance 为空，会再次初始化。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;代码实现&quot;&gt;&lt;a href=&quot;#代码实现&quot; class=&quot;headerlink&quot; title=&quot;代码实现&quot;&gt;&lt;/a&gt;代码实现&lt;/h2&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="https://floor23.github.io/tags/Java/"/>
+    
+      <category term="单例" scheme="https://floor23.github.io/tags/%E5%8D%95%E4%BE%8B/"/>
+    
+      <category term="DCL" scheme="https://floor23.github.io/tags/DCL/"/>
+    
+      <category term="Double-Check Lock" scheme="https://floor23.github.io/tags/Double-Check-Lock/"/>
+    
+      <category term="双重校验" scheme="https://floor23.github.io/tags/%E5%8F%8C%E9%87%8D%E6%A0%A1%E9%AA%8C/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Java中的happens-before</title>
     <link href="https://floor23.github.io/2019/07/31/Java%E4%B8%AD%E7%9A%84happens-before/"/>
     <id>https://floor23.github.io/2019/07/31/Java中的happens-before/</id>
     <published>2019-07-31T06:52:01.000Z</published>
-    <updated>2019-07-31T08:13:41.722Z</updated>
+    <updated>2019-08-07T07:43:13.173Z</updated>
     
     <content type="html"><![CDATA[<p>Java 多线程开发中常遇到的问题就是如何在线程间共享变量，其中一个重要的原则就是 happens-before 。</p>
 <h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><blockquote>
 <p>如果线程 A 中的操作对线程 B 可见，那么 A 操作结果则对 B 可见</p>
 </blockquote>
-<p>现代操作系统都是多核 CPU，CPU 内部的多级缓存，内存，磁盘组成计算机的所有存储单元。下图是一个简单的示例：<br> <img src="https://floor23.github.io/20190731/os_memory_architecture.png" alt="操作系统内存模型"></p>
+<p>现代操作系统都是多核 CPU，CPU 内部的多级缓存，内存，磁盘组成计算机的所有存储单元。下图是一个简单的示例：<br> <img src="https://floor23.github.io/20190731/os_memory_architecture.jpg" alt="操作系统内存模型"></p>
 <p> Java 的线程在某个CPU内部执行，此时对某个变量的操作如果要保证能够对其他线程可见，则需要通过关键字 volatile 进行修饰。 volatile 关键字修饰的变量默认具有 happens-before 语义。即：</p>
 <h2 id="Happens-before-关系"><a href="#Happens-before-关系" class="headerlink" title="Happens-before 关系"></a>Happens-before 关系</h2><p>两个操作可以具有 happens-before 关系，如果一个操作 happens-before 另外一个，那么第一个操作对第二个是可见的，并且第一个一定会先于第二个发生。</p>
 <p>假设现有两个操作 X 和 Y ，使用 hb(X, Y) 代表 X happens-before Y。</p>
@@ -759,9 +793,9 @@ _   下划线
       <category term="popular" scheme="https://floor23.github.io/categories/popular/"/>
     
     
-      <category term="Markdown Grammar" scheme="https://floor23.github.io/tags/Markdown-Grammar/"/>
-    
       <category term="JOHN GRUBER" scheme="https://floor23.github.io/tags/JOHN-GRUBER/"/>
+    
+      <category term="Markdown Grammar" scheme="https://floor23.github.io/tags/Markdown-Grammar/"/>
     
       <category term="Markdown语法" scheme="https://floor23.github.io/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
@@ -943,11 +977,11 @@ _   下划线
       <category term="popular" scheme="https://floor23.github.io/categories/popular/"/>
     
     
-      <category term="JOHN GRUBER" scheme="https://floor23.github.io/tags/JOHN-GRUBER/"/>
-    
       <category term="Markdown" scheme="https://floor23.github.io/tags/Markdown/"/>
     
       <category term="GitHub GFM Grammar" scheme="https://floor23.github.io/tags/GitHub-GFM-Grammar/"/>
+    
+      <category term="JOHN GRUBER" scheme="https://floor23.github.io/tags/JOHN-GRUBER/"/>
     
   </entry>
   
